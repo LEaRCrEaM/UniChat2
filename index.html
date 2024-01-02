@@ -53,6 +53,9 @@ setTimeout(() => {
     window2.document.querySelector('input').addEventListener('input', () => {
         sendRequest(window2.document.querySelector('input').value);
     });
+    window2.document.querySelectorAll('input')[1].addEventListener('input', () => {
+        sendRequest(window2.document.querySelector('input').value);
+    });
 }, 1000);
   </script>
 
