@@ -30,8 +30,10 @@
             if (t = document.querySelector('.UserInfoContainerStyle-userNameRank.UserInfoContainerStyle-textDecoration')) {
                 if (t.textContent.includes('[')) {
                     User.clan = t.textContent.match(/\[.+\]/g)[0];
+                    User.name = t.textContent.replace(t.textContent.match(/\[.+\]/g)[0], '').trim();
+                } else {
+                    User.name = t.textContent.trim();
                 };
-                User.name = t.textContent.replace(t.textContent.match(/\[.+\]/g)[0], '').trim();
             };
         };
         if (!User.turret.name || !User.hull.name) {
