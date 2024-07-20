@@ -18,6 +18,9 @@
         GS: null,
         rank: null,
         exp: null,
+        crystals: null,
+        tankoins: null,
+        friends: [],
         getTank() {
             return `${this.turret.name} ${this.turret.upgrades} | ${this.hull.name} ${this.hull.upgrades}`;
         },
@@ -34,6 +37,15 @@
                 } else {
                     User.name = t.textContent.trim();
                 };
+            };
+        };
+        if (User.friends.length < 1) {
+            if (document.querySelector('.FriendListComponentStyle-scrollCommunity')) {
+                document.querySelectorAll('[class*="-nickName"]').forEach(e => {
+                    if (!User.friends.includes(e.textContent)) {
+                        User.friends.push(e.textContent);
+                    };
+                });
             };
         };
         if (!User.turret.name || !User.hull.name) {
@@ -87,6 +99,7 @@
                     exp: null,
                     crystals: null,
                     tankoins: null,
+                    friends: [],
                     getTank() {
                         return `${this.turret.name} ${this.turret.upgrades} | ${this.hull.name} ${this.hull.upgrades}`;
                     },
