@@ -39,14 +39,12 @@
                 };
             };
         };
-        if (User.friends.length < 1) {
-            if (document.querySelector('.FriendListComponentStyle-scrollCommunity')) {
-                document.querySelectorAll('[class*="-nickName"]').forEach(e => {
-                    if (!User.friends.includes(e.textContent)) {
-                        User.friends.push(e.textContent);
-                    };
-                });
-            };
+        if (document.querySelector('.FriendListComponentStyle-scrollCommunity')) {
+            document.querySelectorAll('[class*="-nickName"]').forEach(e => {
+                if (!User.friends.includes(e.textContent)) {
+                    User.friends.push(e.textContent);
+                };
+            });
         };
         if (!User.turret.name || !User.hull.name) {
             if (!Array.from(document.querySelectorAll('.Font-regular')).filter(t => t.classList.length == 2)[0] && Array.from(document.querySelectorAll('.HotKey-commonBlockForHotKey')).filter(t => t.textContent.toLowerCase() == 't')[0]) {
