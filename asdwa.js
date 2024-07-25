@@ -78,6 +78,10 @@
                 User.crystals = parseInt(document.querySelectorAll('.HeaderCommonStyle-icons')[1].textContent.replaceAll(' ', ''));
             };
         };
+        if (document.querySelectorAll('.HeaderCommonStyle-icons').length == 2 && !window.getTank) {
+            window.getTank = true;
+            window.flagPos1 = null;
+        };
         if (t = document.querySelector('.UserInfoContainerStyle-progressValue')) {
             if (t.textContent !== User.exp) {
                 User1 = User;
