@@ -81,7 +81,7 @@
         if (document.querySelectorAll('.HeaderCommonStyle-icons').length == 2 && (!window.getTank || TEST.length > 0)) {
             window.getTank = true;
             window.flagPos1 = null;
-            TEST = [];
+            window.TEST = [];
         };
         if (t = document.querySelector('.UserInfoContainerStyle-progressValue')) {
             if (t.textContent !== User.exp) {
