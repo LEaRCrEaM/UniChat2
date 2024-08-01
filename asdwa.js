@@ -78,7 +78,7 @@
                 User.crystals = parseInt(document.querySelectorAll('.HeaderCommonStyle-icons')[1].textContent.replaceAll(' ', ''));
             };
         };
-        if (document.querySelectorAll('.BreadcrumbsComponentStyle-exitGameButton') && (!window.getTank || TEST.length > 0)) {
+        if (document.querySelector('.BreadcrumbsComponentStyle-exitGameButton') && (!window.getTank || TEST.length > 0)) {
             window.getTank = true;
             window.flagPos1 = null;
             window.TEST = [];
