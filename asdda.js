@@ -139,7 +139,7 @@ function updateAimAmount() {
     };
     for (const key in AIM) {
         for (const key2 in AIM[key]) {
-            if (AIM[key][key2].toString() == window.prevAimAmount.toString()) {
+            if ((AIM[key][key2].toString() == window.prevAimAmount.toString()) || (AIM[key][key2] == 4)) {
                 AIM[key][key2] = window.aimAmount;
                 prevAimAmount = aimAmount;
             };
@@ -208,3 +208,6 @@ document.addEventListener('keydown', (e) => {
         document.querySelector('.gui2').style.display = document.querySelector('.gui2').style.display == 'block' ? 'none' : 'block';
     };
 });
+setInterval(() => {
+    updateAimAmount();
+}, 2000);
