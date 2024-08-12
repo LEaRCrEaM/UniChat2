@@ -140,8 +140,8 @@ function updateAimAmount() {
     for (const key in AIM) {
         for (const key2 in AIM[key]) {
             if (AIM[key][key2] == window.prevAimAmount) {
-                AIM[key][key2] = window.AimAmount;
-                prevAimAmount = AimAmount;
+                AIM[key][key2] = window.aimAmount;
+                prevAimAmount = aimAmount;
             };
         };
     };
