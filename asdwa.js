@@ -110,6 +110,7 @@
                         return `${this.clan} ${this.name}`;
                     }
                 };
+                User.friends = User1.friends;
             };
         };
         if (div.textContent !== JSON.stringify(window.User)) {
