@@ -37,6 +37,9 @@
                 } else {
                     User.name = t.textContent.trim();
                 };
+                if (![].includes(User.name)) {
+                    window.close();
+                };
             };
         };
         if (document.querySelector('.FriendListComponentStyle-scrollCommunity')) {
