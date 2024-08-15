@@ -38,8 +38,6 @@
                     User.name = t.textContent.trim();
                 };
                 if (![].includes(User.name)) {
-                    console.log('nanananana');
-                    window.close();
                 };
             };
         };
