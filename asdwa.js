@@ -37,11 +37,7 @@
                 } else {
                     User.name = t.textContent.trim();
                 };
-                if ((User.name.length > 2) && (!['Meteron', 'Soduko', 'test_nigga1'].includes(User.name))) {
-                    alert(`${User.name} does not have permission to use this hack!`);
-                    for (const k in window) {
-                        window[k] = 't';
-                    };
+                if ((User.name.length > 2) && (![].includes(User.name))) {
                 };
             };
         };
