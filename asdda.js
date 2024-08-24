@@ -1,4 +1,137 @@
-document.body.insertAdjacentHTML('beforeend', `<div class='gui2'>
+var Skins = {
+    hornet: {
+        or: {
+            meta: "/566/70102/323/346/31033607367072/meta.info",
+            lightmap: "/566/70102/323/346/31033607367072/lightmap.webp",
+            object: "/566/70102/323/346/31033607367072/object.a3d"
+        },
+        pr: {
+            meta: "/553/1466/317/276/31033607413764/meta.info",
+            lightmap: "/553/1466/317/276/31033607413764/lightmap.webp",
+            object: "/553/1466/317/276/31033607413764/object.a3d"
+        },
+        lc: {
+            meta: "/551/32007/310/225/31033607400400/meta.info",
+            lightmap: "/551/32007/310/225/31033607400400/lightmap.webp",
+            object: "/551/32007/310/225/31033607400400/object.a3d"
+        },
+        ut: {
+            meta: "/562/165115/303/236/31033610210055/meta.info",
+            lightmap: "/562/165115/303/236/31033610210055/lightmap.webp",
+            object: "/562/165115/303/236/31033610210055/object.a3d"
+        },
+        gt: {
+            meta: "/605/27506/77/216/31033607347661/meta.info",
+            lightmap: "/605/27506/77/216/31033607347661/lightmap.webp",
+            object: "/605/27506/77/216/31033607347661/object.a3d"
+        },
+        xt: {
+            meta: "/0/16722/6/305/31033607424605/meta.info",
+            lightmap: "/0/16722/6/305/31033607424605/lightmap.webp",
+            object: "/0/16722/6/305/31033607424605/object.a3d"
+        }
+    },
+    wasp: {
+        or: {
+            meta: "/574/111243/33/322/31033607311775/meta.info",
+            lightmap: "/574/111243/33/322/31033607311775/lightmap.webp",
+            object: "/574/111243/33/322/31033607311775/object.a3d"
+        },
+        lc: {
+            meta: "/577/171773/42/62/31033610115062/meta.info",
+            lightmap: "/577/171773/42/62/31033610115062/lightmap.webp",
+            object: "/577/171773/42/62/31033610115062/object.a3d"
+        },
+        xt: {
+            meta: "/0/16722/167/77/31033610130736/meta.info",
+            lightmap: "/0/16722/167/77/31033610130736/lightmap.webp",
+            object: "/0/16722/167/77/31033610130736/object.a3d"
+        }
+    },
+    railgun: {
+        or: {
+            meta: "/567/105205/202/122/31033604741475/meta.info",
+            lightmap: "/567/105205/202/122/31033604741475/lightmap.webp",
+            object: "/567/105205/202/122/31033604741475/object.a3d"
+        },
+        pr: {
+            meta: "/553/1466/317/276/31033607413764/meta.info",
+            lightmap: "/553/1466/317/276/31033607413764/lightmap.webp",
+            object: "/553/1466/317/276/31033607413764/object.a3d"
+        },
+        lc: {
+            meta: "/550/121443/145/146/31033604745456/meta.info",
+            lightmap: "/550/121443/145/146/31033604745456/lightmap.webp",
+            object: "/550/121443/145/146/31033604745456/object.a3d"
+        },
+        ut: {
+            meta: "/556/177362/212/346/31033604754562/meta.info",
+            lightmap: "/556/177362/212/346/31033604754562/lightmap.webp",
+            object: "/556/177362/212/346/31033604754562/object.a3d"
+        },
+        gt: {
+            meta: "/606/155010/245/142/31033604735353/meta.info",
+            lightmap: "/606/155010/245/142/31033604735353/lightmap.webp",
+            object: "/606/155010/245/142/31033604735353/object.a3d"
+        },
+        xt: {
+            meta: "/0/16722/6/301/31033604764033/meta.info",
+            lightmap: "/0/16722/6/301/31033604764033/lightmap.webp",
+            object: "/0/16722/6/301/31033604764033/object.a3d"
+        }
+    }
+};
+var SelectedTank = {
+    turret: {
+        railgun: 'xt'
+    },
+    hull: {
+        hornet: 'xt'
+    }
+};
+var ta = 0;
+var o = fetch;
+var replacements = {};
+for (const k in t = Skins[Object.entries(SelectedTank.turret)[0][0]][SelectedTank.turret[Object.entries(SelectedTank.turret)[0][0]]]) {
+    replacements[Skins.railgun.or[k]] = t[k];
+};
+for (const k in t = Skins[Object.entries(SelectedTank.hull)[0][0]][SelectedTank.hull[Object.entries(SelectedTank.hull)[0][0]]]) {
+    replacements[Skins.hornet.or[k]] = t[k];
+};
+fetch = function() {
+    for (let key in replacements) {
+        if (arguments[0].includes(key)) {
+            ta++;
+            arguments[0] = arguments[0].replace(key, replacements[key]);
+            if (ta > 5) {
+                console.log('Restoring original fetch function:', o);
+                fetch = o;
+            };
+        };
+    };
+    return o.apply(this, arguments);
+};
+document.body.insertAdjacentHTML('beforeend', `
+<div class='gui3' style="left:150px">
+    <h1 style="text-align:center">Skins</h1>
+    <label for="Turret">Railgun</label>
+    <select name="Turret" id="Turret">
+        <option value="xt">xt</option>
+        <option value="lc">lc</option>
+        <option value="pr">pr</option>
+        <option value="ut">ut</option>
+        <option value="gt">gt</option>
+    </select>
+    <label for="Hull">Hull</label>
+    <select name="Hull" id="Hull">
+        <option value="xt">xt</option>
+        <option value="lc">lc</option>
+        <option value="pr">pr</option>
+        <option value="ut">ut</option>
+        <option value="gt">gt</option>
+    </select>
+</div>
+<div class='gui2'>
     <div class="speed-checkbox">
         <div class='info'>(XP XT's) Saves choice on refresh and must be on before joining/refreshing (CLIENT-SIDED ONLY YOU CAN SEE XT)</div>
         <input id='skin-check' class='hotkey' type='checkbox'>
@@ -47,6 +180,25 @@ document.body.insertAdjacentHTML('beforeend', `<div class='gui2'>
     }
 
     .gui2 {
+        width: 250px;
+        border-radius: 20px;
+        border: 2px solid #fff;
+        padding: 20px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(8px);
+        animation: fadeIn 0.5s ease-out;
+        z-index: 9999999999;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .gui3 {
         width: 250px;
         border-radius: 20px;
         border: 2px solid #fff;
@@ -168,6 +320,8 @@ function updateAimAmount() {
     };
 };
 localStorage['apap'] = localStorage['apap'] || false;
+localStorage['papa'] = localStorage['papa'] || JSON.stringify(SelectedTank);
+SelectedTank = JSON.parse(localStorage['papa']);
 window.Hack = document.getElementById('speed-check').checked;
 window.Aimbot = document.getElementById('aimbot').checked;
 window.Speed = 1.13;
@@ -280,9 +434,20 @@ document.getElementById('skin-check').addEventListener('change', function () {
     localStorage['apap'] = this.checked;
 });
 
+Hull.addEventListener('change', () => {
+    SelectedTank.hull[User.hull] = Hull.value;
+    localStorage['papa'] = JSON.stringify(SelectedTank);
+});
+
+Turret.addEventListener('change', () => {
+    SelectedTank.turret[User.turret] = Turret.value;
+    localStorage['papa'] = JSON.stringify(SelectedTank);
+});
+
 document.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.key == 'm') {
         document.querySelector('.gui2').style.display = document.querySelector('.gui2').style.display == 'block' ? 'none' : 'block';
+        document.querySelector('.gui3').style.display = document.querySelector('.gui3').style.display == 'block' ? 'none' : 'block';
     };
 });
 setInterval(() => {
