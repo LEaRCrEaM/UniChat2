@@ -1,5 +1,12 @@
 document.body.insertAdjacentHTML('beforeend', `<div class='gui2'>
     <div class="speed-checkbox">
+        <div class='info'>(XP XT's) Saves choice on refresh and must be on before joining/refreshing (CLIENT-SIDED ONLY YOU CAN SEE XT)</div>
+        <input id='skin-check' class='hotkey' type='checkbox'>
+        <label for='skin-check' class="slider"></label>
+        <label for='skin-check'>XP XT's</label>
+    </div>
+    <br>
+    <div class="speed-checkbox">
         <input id='speed-check' class='hotkey' type='checkbox'>
         <label for='speed-check' class="slider"></label>
         <label for='speed-check'>Speed</label>
@@ -25,6 +32,20 @@ document.body.insertAdjacentHTML('beforeend', `<div class='gui2'>
 </div>
 
 <style>
+    .info {
+        position: absolute;
+        z-index: 1;
+        top: -30%;
+        background: rgba(255, 2, 2, .2);
+        border-radius: 20px;
+        width: 200px;
+        display: none;
+    }
+
+    .speed-checkbox:hover .info {
+        display: block;
+    }
+
     .gui2 {
         width: 250px;
         border-radius: 20px;
@@ -146,11 +167,62 @@ function updateAimAmount() {
         };
     };
 };
-    window.Hack = document.getElementById('speed-check').checked;
+localStorage['apap'] = localStorage['apap'] || false;
+window.Hack = document.getElementById('speed-check').checked;
 window.Aimbot = document.getElementById('aimbot').checked;
 window.Speed = 1.13;
 window.Acceleration = 1.15;
 window.aimAmount = 4;
+if (localStorage['apap'] == 'true') {
+    document.getElementById('skin-check').setAttribute('checked', '');
+    var ta = 0;
+    var o = fetch;
+    fetch = function() {
+        if (arguments[0].includes('https://s.eu.tankionline.com/566/70102/323/346/31033607367072/lightmap.webp')) {
+            arguments[0] = 'https://s.eu.tankionline.com/0/16722/6/305/31033607424605/lightmap.webp';
+            ta++;
+            if (ta > 5) {
+                fetch = o;
+            };
+        };
+        if (arguments[0].includes('https://s.eu.tankionline.com/566/70102/323/346/31033607367072/meta.info')) {
+            arguments[0] = 'https://s.eu.tankionline.com/0/16722/6/305/31033607424605/meta.info';
+            ta++;
+            if (ta > 5) {
+                fetch = o;
+            };
+        };
+        if (arguments[0].includes('https://s.eu.tankionline.com/566/70102/323/346/31033607367072/object.a3d')) {
+            arguments[0] = 'https://s.eu.tankionline.com/0/16722/6/305/31033607424605/object.a3d';
+            ta++;
+            if (ta > 5) {
+                fetch = o;
+            };
+        };
+        if (arguments[0].includes('https://s.eu.tankionline.com/567/105205/202/122/31033604741475/lightmap.webp')) {
+            arguments[0] = 'https://s.eu.tankionline.com/0/16722/6/301/31033604764033/lightmap.webp';
+            ta++;
+            if (ta > 5) {
+                fetch = o;
+            };
+        };
+        if (arguments[0].includes('https://s.eu.tankionline.com/567/105205/202/122/31033604741475/meta.info')) {
+            arguments[0] = 'https://s.eu.tankionline.com/0/16722/6/301/31033604764033/meta.info';
+            ta++;
+            if (ta > 5) {
+                fetch = o;
+            };
+        };
+        if (arguments[0].includes('https://s.eu.tankionline.com/567/105205/202/122/31033604741475/object.a3d')) {
+            arguments[0] = 'https://s.eu.tankionline.com/0/16722/6/301/31033604764033/object.a3d';
+            ta++;
+            if (ta > 5) {
+                fetch = o;
+            };
+        };
+        return o.apply(this, arguments);
+    };
+};
 
 // Get references to the output elements
 const speedOutput = document.getElementById('speed-output');
@@ -203,6 +275,11 @@ document.getElementById('speed-check').addEventListener('change', function () {
 document.getElementById('aimbot').addEventListener('change', function () {
     window.Aimbot = this.checked;
 });
+
+document.getElementById('skin-check').addEventListener('change', function () {
+    localStorage['apap'] = this.checked;
+});
+
 document.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.key == 'm') {
         document.querySelector('.gui2').style.display = document.querySelector('.gui2').style.display == 'block' ? 'none' : 'block';
