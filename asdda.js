@@ -23,7 +23,8 @@ var Skins = {
         gt: {
             meta: "/605/27506/77/216/31033607347661/meta.info",
             lightmap: "/605/27506/77/216/31033607347661/lightmap.webp",
-            object: "/605/27506/77/216/31033607347661/object.a3d"
+            object: "/605/27506/77/216/31033607347661/object.a3d",
+            wheels: "/605/27506/77/216/31033607347661/wheels.webp"
         },
         xt: {
             meta: "/0/16722/6/305/31033607424605/meta.info",
@@ -55,9 +56,9 @@ var Skins = {
             object: "/567/105205/202/122/31033604741475/object.a3d"
         },
         pr: {
-            meta: "/553/1466/317/276/31033607413764/meta.info",
-            lightmap: "/553/1466/317/276/31033607413764/lightmap.webp",
-            object: "/553/1466/317/276/31033607413764/object.a3d"
+            meta: "/553/116715/27/132/31033604752652/meta.info",
+            lightmap: "/553/116715/27/132/31033604752652/lightmap.webp",
+            object: "/553/116715/27/132/31033604752652/object.a3d"
         },
         lc: {
             meta: "/550/121443/145/146/31033604745456/meta.info",
@@ -107,7 +108,8 @@ if (navigator.platform.toLowerCase().includes('mac')) {
             gt: {
                 meta: "/605/27506/77/216/31033607347661/meta.info",
                 lightmap: "/605/27506/77/216/31033607347661/lightmap-astc.ktx",
-                object: "/605/27506/77/216/31033607347661/object.a3d"
+                object: "/605/27506/77/216/31033607347661/object.a3d",
+                wheels: "/605/27506/77/216/31033607347661/wheels.webp"
             },
             xt: {
                 meta: "/0/16722/6/305/31033607424605/meta.info",
@@ -139,9 +141,9 @@ if (navigator.platform.toLowerCase().includes('mac')) {
                 object: "/567/105205/202/122/31033604741475/object.a3d"
             },
             pr: {
-                meta: "/553/1466/317/276/31033607413764/meta.info",
-                lightmap: "/553/1466/317/276/31033607413764/lightmap-astc.ktx",
-                object: "/553/1466/317/276/31033607413764/object.a3d"
+                meta: "/553/116715/27/132/31033604752652/meta.info",
+                lightmap: "/553/116715/27/132/31033604752652/lightmap-astc.ktx",
+                object: "/553/116715/27/132/31033604752652/object.a3d"
             },
             lc: {
                 meta: "/550/121443/145/146/31033604745456/meta.info",
@@ -167,31 +169,17 @@ if (navigator.platform.toLowerCase().includes('mac')) {
     };
 };
 var SelectedTank = {
-    turret: {
-        railgun: 'xt'
-    },
-    hull: {
-        hornet: 'xt'
-    }
+    turret: {},
+    hull: {}
 };
 document.body.insertAdjacentHTML('beforeend', `
 <div class='gui3' style="left:150px">
-    <h1 style="text-align:center">Skins (FOR NOW ONLY XP)</h1>
+    <h1 style="text-align:center">Skins</h1>
     <label for="Turret"></label>
     <select name="Turret" id="Turret">
-        <option value="xt">xt</option>
-        <option value="lc">lc</option>
-        <option value="pr">pr</option>
-        <option value="ut">ut</option>
-        <option value="gt">gt</option>
     </select>
     <label for="Hull"></label>
     <select name="Hull" id="Hull">
-        <option value="xt">xt</option>
-        <option value="lc">lc</option>
-        <option value="pr">pr</option>
-        <option value="ut">ut</option>
-        <option value="gt">gt</option>
     </select>
 </div>
 <div class='gui2'>
@@ -385,8 +373,24 @@ function updateAimAmount() {
 localStorage['apap'] = localStorage['apap'] || false;
 localStorage['papa'] = localStorage['papa'] || JSON.stringify(SelectedTank);
 SelectedTank = JSON.parse(localStorage['papa']);
-Hull.value = SelectedTank.hull.hornet;
-Turret.value = SelectedTank.turret.railgun;
+for (const k in t = Object.entries(Skins?.[Object.entries(SelectedTank.hull)[0][0]])) {
+    if (t[k][0] !== 'or') {
+        var el = document.createElement('option');
+        el.textContent = t[k][0];
+        el.value = t[k][0];
+        Hull.appendChild(el);
+    };
+};
+for (const k in t = Object.entries(Skins?.[Object.entries(SelectedTank.turret)[0][0]])) {
+    if (t[k][0] !== 'or') {
+        var el = document.createElement('option');
+        el.textContent = t[k][0];
+        el.value = t[k][0];
+        Turret.appendChild(el);
+    };
+};
+Hull.value = SelectedTank.hull[Object.entries(SelectedTank.hull)[0][0]];
+Turret.value = SelectedTank.turret[Object.entries(SelectedTank.turret)[0][0]];
 window.Hack = document.getElementById('speed-check').checked;
 window.Aimbot = document.getElementById('aimbot').checked;
 window.Speed = 1.13;
@@ -398,10 +402,10 @@ if (localStorage['apap'] == 'true') {
     var o = fetch;
     var replacements = {};
     for (const k in t = Skins[Object.entries(SelectedTank.turret)[0][0]][SelectedTank.turret[Object.entries(SelectedTank.turret)[0][0]]]) {
-        replacements[Skins.railgun.or[k]] = t[k];
+        replacements[Skins[Object.entries(SelectedTank.turret)[0][0]].or[k]] = t[k];
     };
     for (const k in t = Skins[Object.entries(SelectedTank.hull)[0][0]][SelectedTank.hull[Object.entries(SelectedTank.hull)[0][0]]]) {
-        replacements[Skins.hornet.or[k]] = t[k];
+        replacements[Skins[Object.entries(SelectedTank.hull)[0][0]].or[k]] = t[k];
     };
     fetch = function() {
         for (let key in replacements) {
@@ -479,12 +483,12 @@ Hull.addEventListener('change', () => {
     localStorage['papa'] = JSON.stringify(SelectedTank);
     for (const k in SelectedTank.turret) {
         if (k !== User.turret.name.toLowerCase()) {
-            delete t[k][k2];
+            delete SelectedTank.turret[k];
         };
     };
     for (const k in SelectedTank.hull) {
         if (k !== User.hull.name.toLowerCase()) {
-            delete t[k][k2];
+            delete SelectedTank.hull[k];
         };
     };
 });
@@ -494,12 +498,12 @@ Turret.addEventListener('change', () => {
     localStorage['papa'] = JSON.stringify(SelectedTank);
     for (const k in SelectedTank.turret) {
         if (k !== User.turret.name.toLowerCase()) {
-            delete t[k][k2];
+            delete SelectedTank.turret[k];
         };
     };
     for (const k in SelectedTank.hull) {
         if (k !== User.hull.name.toLowerCase()) {
-            delete t[k][k2];
+            delete SelectedTank.hull[k];
         };
     };
 });
@@ -522,12 +526,33 @@ function a() {
             document.querySelector('label[for="Hull"]').textContent = User.hull.name;
             for (const k in SelectedTank.turret) {
                 if (k !== User.turret.name.toLowerCase()) {
-                    delete t[k][k2];
+                    delete SelectedTank.turret[k];
                 };
             };
             for (const k in SelectedTank.hull) {
                 if (k !== User.hull.name.toLowerCase()) {
-                    delete t[k][k2];
+                    delete SelectedTank.hull[k];
+                };
+            };
+            SelectedTank.hull[User.hull.name.toLowerCase()] = Hull.value;
+            SelectedTank.turret[User.turret.name.toLowerCase()] = Turret.value;
+            localStorage['papa'] = JSON.stringify(SelectedTank);
+            Hull.innerHTML = '';
+            Turret.innerHTML = '';
+            for (const k in t = Object.entries(Skins?.[User.hull.name.toLowerCase()])) {
+                if (t[k][0] !== 'or') {
+                    var el = document.createElement('option');
+                    el.textContent = t[k][0];
+                    el.value = t[k][0];
+                    Hull.appendChild(el);
+                };
+            };
+            for (const k in t = Object.entries(Skins?.[User.turret.name.toLowerCase()])) {
+                if (t[k][0] !== 'or') {
+                    var el = document.createElement('option');
+                    el.textContent = t[k][0];
+                    el.value = t[k][0];
+                    Turret.appendChild(el);
                 };
             };
             localStorage['papa'] = JSON.stringify(SelectedTank);
