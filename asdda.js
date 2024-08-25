@@ -89,32 +89,10 @@ var SelectedTank = {
         hornet: 'xt'
     }
 };
-var ta = 0;
-var o = fetch;
-var replacements = {};
-for (const k in t = Skins[Object.entries(SelectedTank.turret)[0][0]][SelectedTank.turret[Object.entries(SelectedTank.turret)[0][0]]]) {
-    replacements[Skins.railgun.or[k]] = t[k];
-};
-for (const k in t = Skins[Object.entries(SelectedTank.hull)[0][0]][SelectedTank.hull[Object.entries(SelectedTank.hull)[0][0]]]) {
-    replacements[Skins.hornet.or[k]] = t[k];
-};
-fetch = function() {
-    for (let key in replacements) {
-        if (arguments[0].includes(key)) {
-            ta++;
-            arguments[0] = arguments[0].replace(key, replacements[key]);
-            if (ta > 5) {
-                console.log('Restoring original fetch function:', o);
-                fetch = o;
-            };
-        };
-    };
-    return o.apply(this, arguments);
-};
 document.body.insertAdjacentHTML('beforeend', `
 <div class='gui3' style="left:150px">
-    <h1 style="text-align:center">Skins</h1>
-    <label for="Turret">Railgun</label>
+    <h1 style="text-align:center">Skins (FOR NOW ONLY XP)</h1>
+    <label for="Turret"></label>
     <select name="Turret" id="Turret">
         <option value="xt">xt</option>
         <option value="lc">lc</option>
@@ -122,7 +100,7 @@ document.body.insertAdjacentHTML('beforeend', `
         <option value="ut">ut</option>
         <option value="gt">gt</option>
     </select>
-    <label for="Hull">Hull</label>
+    <label for="Hull"></label>
     <select name="Hull" id="Hull">
         <option value="xt">xt</option>
         <option value="lc">lc</option>
@@ -197,7 +175,7 @@ document.body.insertAdjacentHTML('beforeend', `
         left: 50%;
         transform: translate(-50%, -50%);
     }
-    
+
     .gui3 {
         width: 250px;
         border-radius: 20px;
@@ -322,6 +300,8 @@ function updateAimAmount() {
 localStorage['apap'] = localStorage['apap'] || false;
 localStorage['papa'] = localStorage['papa'] || JSON.stringify(SelectedTank);
 SelectedTank = JSON.parse(localStorage['papa']);
+Hull.value = SelectedTank.hull.hornet;
+Turret.value = SelectedTank.turret.railgun;
 window.Hack = document.getElementById('speed-check').checked;
 window.Aimbot = document.getElementById('aimbot').checked;
 window.Speed = 1.13;
@@ -331,47 +311,22 @@ if (localStorage['apap'] == 'true') {
     document.getElementById('skin-check').setAttribute('checked', '');
     var ta = 0;
     var o = fetch;
+    var replacements = {};
+    for (const k in t = Skins[Object.entries(SelectedTank.turret)[0][0]][SelectedTank.turret[Object.entries(SelectedTank.turret)[0][0]]]) {
+        replacements[Skins.railgun.or[k]] = t[k];
+    };
+    for (const k in t = Skins[Object.entries(SelectedTank.hull)[0][0]][SelectedTank.hull[Object.entries(SelectedTank.hull)[0][0]]]) {
+        replacements[Skins.hornet.or[k]] = t[k];
+    };
     fetch = function() {
-        if (arguments[0].includes('https://s.eu.tankionline.com/566/70102/323/346/31033607367072/lightmap.webp')) {
-            arguments[0] = 'https://s.eu.tankionline.com/0/16722/6/305/31033607424605/lightmap.webp';
-            ta++;
-            if (ta > 5) {
-                fetch = o;
-            };
-        };
-        if (arguments[0].includes('https://s.eu.tankionline.com/566/70102/323/346/31033607367072/meta.info')) {
-            arguments[0] = 'https://s.eu.tankionline.com/0/16722/6/305/31033607424605/meta.info';
-            ta++;
-            if (ta > 5) {
-                fetch = o;
-            };
-        };
-        if (arguments[0].includes('https://s.eu.tankionline.com/566/70102/323/346/31033607367072/object.a3d')) {
-            arguments[0] = 'https://s.eu.tankionline.com/0/16722/6/305/31033607424605/object.a3d';
-            ta++;
-            if (ta > 5) {
-                fetch = o;
-            };
-        };
-        if (arguments[0].includes('https://s.eu.tankionline.com/567/105205/202/122/31033604741475/lightmap.webp')) {
-            arguments[0] = 'https://s.eu.tankionline.com/0/16722/6/301/31033604764033/lightmap.webp';
-            ta++;
-            if (ta > 5) {
-                fetch = o;
-            };
-        };
-        if (arguments[0].includes('https://s.eu.tankionline.com/567/105205/202/122/31033604741475/meta.info')) {
-            arguments[0] = 'https://s.eu.tankionline.com/0/16722/6/301/31033604764033/meta.info';
-            ta++;
-            if (ta > 5) {
-                fetch = o;
-            };
-        };
-        if (arguments[0].includes('https://s.eu.tankionline.com/567/105205/202/122/31033604741475/object.a3d')) {
-            arguments[0] = 'https://s.eu.tankionline.com/0/16722/6/301/31033604764033/object.a3d';
-            ta++;
-            if (ta > 5) {
-                fetch = o;
+        for (let key in replacements) {
+            if (arguments[0].includes(key)) {
+                ta++;
+                arguments[0] = arguments[0].replace(key, replacements[key]);
+                if (ta > 5) {
+                    console.log('Restoring original fetch function:', o);
+                    fetch = o;
+                };
             };
         };
         return o.apply(this, arguments);
@@ -435,13 +390,33 @@ document.getElementById('skin-check').addEventListener('change', function () {
 });
 
 Hull.addEventListener('change', () => {
-    SelectedTank.hull[User.hull] = Hull.value;
+    SelectedTank.hull[User.hull.name.toLowerCase()] = Hull.value;
     localStorage['papa'] = JSON.stringify(SelectedTank);
+    for (const k in SelectedTank.turret) {
+        if (k !== User.turret.name.toLowerCase()) {
+            delete t[k][k2];
+        };
+    };
+    for (const k in SelectedTank.hull) {
+        if (k !== User.hull.name.toLowerCase()) {
+            delete t[k][k2];
+        };
+    };
 });
 
 Turret.addEventListener('change', () => {
-    SelectedTank.turret[User.turret] = Turret.value;
+    SelectedTank.turret[User.turret.name.toLowerCase()] = Turret.value;
     localStorage['papa'] = JSON.stringify(SelectedTank);
+    for (const k in SelectedTank.turret) {
+        if (k !== User.turret.name.toLowerCase()) {
+            delete t[k][k2];
+        };
+    };
+    for (const k in SelectedTank.hull) {
+        if (k !== User.hull.name.toLowerCase()) {
+            delete t[k][k2];
+        };
+    };
 });
 
 document.addEventListener('keydown', (e) => {
@@ -453,3 +428,33 @@ document.addEventListener('keydown', (e) => {
 setInterval(() => {
     updateAimAmount();
 }, 2000);
+var f, r = true;
+function a() {
+    if (r) {
+        f = requestAnimationFrame(a);
+        if (User?.turret?.name) {
+            document.querySelector('label[for="Turret"]').textContent = User.turret.name;
+            document.querySelector('label[for="Hull"]').textContent = User.hull.name;
+            for (const k in SelectedTank.turret) {
+                if (k !== User.turret.name.toLowerCase()) {
+                    delete t[k][k2];
+                };
+            };
+            for (const k in SelectedTank.hull) {
+                if (k !== User.hull.name.toLowerCase()) {
+                    delete t[k][k2];
+                };
+            };
+            localStorage['papa'] = JSON.stringify(SelectedTank);
+            cancelAnimationFrame(f);
+            r = false;
+        };
+    };
+};
+try {
+    a();
+} catch (error) {
+    console.log(error);
+    r = false;
+    cancelAnimationFrame(f);
+};
