@@ -191,6 +191,12 @@ document.body.insertAdjacentHTML('beforeend', `
     </div>
     <br>
     <div class="speed-checkbox">
+        <input id='esp-check' class='hotkey' type='checkbox'>
+        <label for='esp-check' class="slider"></label>
+        <label for='esp-check'>ESP</label>
+    </div>
+    <br>
+    <div class="speed-checkbox">
         <input id='speed-check' class='hotkey' type='checkbox'>
         <label for='speed-check' class="slider"></label>
         <label for='speed-check'>Speed</label>
@@ -396,6 +402,7 @@ window.Aimbot = document.getElementById('aimbot').checked;
 window.Speed = 1.13;
 window.Acceleration = 1.15;
 window.aimAmount = 4;
+window.espEnabled = false;
 if (localStorage['apap'] == 'true') {
     document.getElementById('skin-check').setAttribute('checked', '');
     var ta = 0;
@@ -472,6 +479,10 @@ document.getElementById('speed-check').addEventListener('change', function () {
 
 document.getElementById('aimbot').addEventListener('change', function () {
     window.Aimbot = this.checked;
+});
+
+document.getElementById('esp').addEventListener('change', function () {
+    window.espEnabled = this.checked;
 });
 
 document.getElementById('skin-check').addEventListener('change', function () {
