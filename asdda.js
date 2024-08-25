@@ -81,6 +81,91 @@ var Skins = {
         }
     }
 };
+if (navigator.platform.toLowerCase().includes('mac')) {
+    Skins = {
+        hornet: {
+            or: {
+                meta: "/566/70102/323/346/31033607367072/meta.info",
+                lightmap: "/566/70102/323/346/31033607367072/lightmap-astc.ktx",
+                object: "/566/70102/323/346/31033607367072/object.a3d"
+            },
+            pr: {
+                meta: "/553/1466/317/276/31033607413764/meta.info",
+                lightmap: "/553/1466/317/276/31033607413764/lightmap-astc.ktx",
+                object: "/553/1466/317/276/31033607413764/object.a3d"
+            },
+            lc: {
+                meta: "/551/32007/310/225/31033607400400/meta.info",
+                lightmap: "/551/32007/310/225/31033607400400/lightmap-astc.ktx",
+                object: "/551/32007/310/225/31033607400400/object.a3d"
+            },
+            ut: {
+                meta: "/562/165115/303/236/31033610210055/meta.info",
+                lightmap: "/562/165115/303/236/31033610210055/lightmap-astc.ktx",
+                object: "/562/165115/303/236/31033610210055/object.a3d"
+            },
+            gt: {
+                meta: "/605/27506/77/216/31033607347661/meta.info",
+                lightmap: "/605/27506/77/216/31033607347661/lightmap-astc.ktx",
+                object: "/605/27506/77/216/31033607347661/object.a3d"
+            },
+            xt: {
+                meta: "/0/16722/6/305/31033607424605/meta.info",
+                lightmap: "/0/16722/6/305/31033607424605/lightmap-astc.ktx",
+                object: "/0/16722/6/305/31033607424605/object.a3d"
+            }
+        },
+        wasp: {
+            or: {
+                meta: "/574/111243/33/322/31033607311775/meta.info",
+                lightmap: "/574/111243/33/322/31033607311775/lightmap-astc.ktx",
+                object: "/574/111243/33/322/31033607311775/object.a3d"
+            },
+            lc: {
+                meta: "/577/171773/42/62/31033610115062/meta.info",
+                lightmap: "/577/171773/42/62/31033610115062/lightmap-astc.ktx",
+                object: "/577/171773/42/62/31033610115062/object.a3d"
+            },
+            xt: {
+                meta: "/0/16722/167/77/31033610130736/meta.info",
+                lightmap: "/0/16722/167/77/31033610130736/lightmap-astc.ktx",
+                object: "/0/16722/167/77/31033610130736/object.a3d"
+            }
+        },
+        railgun: {
+            or: {
+                meta: "/567/105205/202/122/31033604741475/meta.info",
+                lightmap: "/567/105205/202/122/31033604741475/lightmap-astc.ktx",
+                object: "/567/105205/202/122/31033604741475/object.a3d"
+            },
+            pr: {
+                meta: "/553/1466/317/276/31033607413764/meta.info",
+                lightmap: "/553/1466/317/276/31033607413764/lightmap-astc.ktx",
+                object: "/553/1466/317/276/31033607413764/object.a3d"
+            },
+            lc: {
+                meta: "/550/121443/145/146/31033604745456/meta.info",
+                lightmap: "/550/121443/145/146/31033604745456/lightmap-astc.ktx",
+                object: "/550/121443/145/146/31033604745456/object.a3d"
+            },
+            ut: {
+                meta: "/556/177362/212/346/31033604754562/meta.info",
+                lightmap: "/556/177362/212/346/31033604754562/lightmap-astc.ktx",
+                object: "/556/177362/212/346/31033604754562/object.a3d"
+            },
+            gt: {
+                meta: "/606/155010/245/142/31033604735353/meta.info",
+                lightmap: "/606/155010/245/142/31033604735353/lightmap-astc.ktx",
+                object: "/606/155010/245/142/31033604735353/object.a3d"
+            },
+            xt: {
+                meta: "/0/16722/6/301/31033604764033/meta.info",
+                lightmap: "/0/16722/6/301/31033604764033/lightmap-astc.ktx",
+                object: "/0/16722/6/301/31033604764033/object.a3d"
+            }
+        }
+    };
+};
 var SelectedTank = {
     turret: {
         railgun: 'xt'
