@@ -481,7 +481,7 @@ document.getElementById('aimbot').addEventListener('change', function () {
     window.Aimbot = this.checked;
 });
 
-document.getElementById('esp').addEventListener('change', function () {
+document.getElementById('esp-check').addEventListener('change', function () {
     window.espEnabled = this.checked;
 });
 
