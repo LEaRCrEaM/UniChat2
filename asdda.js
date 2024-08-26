@@ -379,22 +379,24 @@ function updateAimAmount() {
 localStorage['apap'] = localStorage['apap'] || false;
 localStorage['papa'] = localStorage['papa'] || JSON.stringify(SelectedTank);
 SelectedTank = JSON.parse(localStorage['papa']);
-for (const k in t = Object.entries(Skins?.[Object.entries(SelectedTank.hull)[0][0]])) {
-    if (t[k][0] !== 'or') {
-        var el = document.createElement('option');
-        el.textContent = t[k][0];
-        el.value = t[k][0];
-        Hull.appendChild(el);
+try {
+    for (const k in t = Object.entries(Skins?.[Object.entries(SelectedTank.hull)?.[0]?.[0]])) {
+        if (t[k][0] !== 'or') {
+            var el = document.createElement('option');
+            el.textContent = t[k][0];
+            el.value = t[k][0];
+            Hull.appendChild(el);
+        };
     };
-};
-for (const k in t = Object.entries(Skins?.[Object.entries(SelectedTank.turret)[0][0]])) {
-    if (t[k][0] !== 'or') {
-        var el = document.createElement('option');
-        el.textContent = t[k][0];
-        el.value = t[k][0];
-        Turret.appendChild(el);
+    for (const k in t = Object.entries(Skins?.[Object.entries(SelectedTank.turret)?.[0]?.[0]])) {
+        if (t[k][0] !== 'or') {
+            var el = document.createElement('option');
+            el.textContent = t[k][0];
+            el.value = t[k][0];
+            Turret.appendChild(el);
+        };
     };
-};
+} catch (error) {};
 Hull.value = SelectedTank.hull[Object.entries(SelectedTank.hull)[0][0]];
 Turret.value = SelectedTank.turret[Object.entries(SelectedTank.turret)[0][0]];
 window.Hack = document.getElementById('speed-check').checked;
@@ -408,12 +410,14 @@ if (localStorage['apap'] == 'true') {
     var ta = 0;
     var o = fetch;
     var replacements = {};
-    for (const k in t = Skins[Object.entries(SelectedTank.turret)[0][0]][SelectedTank.turret[Object.entries(SelectedTank.turret)[0][0]]]) {
-        replacements[Skins[Object.entries(SelectedTank.turret)[0][0]].or[k]] = t[k];
-    };
-    for (const k in t = Skins[Object.entries(SelectedTank.hull)[0][0]][SelectedTank.hull[Object.entries(SelectedTank.hull)[0][0]]]) {
-        replacements[Skins[Object.entries(SelectedTank.hull)[0][0]].or[k]] = t[k];
-    };
+    try {
+        for (const k in t = Skins[Object.entries(SelectedTank.turret)[0][0]][SelectedTank.turret[Object.entries(SelectedTank.turret)[0][0]]]) {
+            replacements[Skins[Object.entries(SelectedTank.turret)[0][0]].or[k]] = t[k];
+        };
+        for (const k in t = Skins[Object.entries(SelectedTank.hull)[0][0]][SelectedTank.hull[Object.entries(SelectedTank.hull)[0][0]]]) {
+            replacements[Skins[Object.entries(SelectedTank.hull)[0][0]].or[k]] = t[k];
+        };
+    } catch (error) {};
     fetch = function() {
         for (let key in replacements) {
             if (arguments[0].includes(key)) {
@@ -550,22 +554,24 @@ function a() {
             localStorage['papa'] = JSON.stringify(SelectedTank);
             Hull.innerHTML = '';
             Turret.innerHTML = '';
-            for (const k in t = Object.entries(Skins?.[User.hull.name.toLowerCase()])) {
-                if (t[k][0] !== 'or') {
-                    var el = document.createElement('option');
-                    el.textContent = t[k][0];
-                    el.value = t[k][0];
-                    Hull.appendChild(el);
+            try {
+                for (const k in t = Object.entries(Skins?.[User.hull.name.toLowerCase()])) {
+                    if (t[k][0] !== 'or') {
+                        var el = document.createElement('option');
+                        el.textContent = t[k][0];
+                        el.value = t[k][0];
+                        Hull.appendChild(el);
+                    };
                 };
-            };
-            for (const k in t = Object.entries(Skins?.[User.turret.name.toLowerCase()])) {
-                if (t[k][0] !== 'or') {
-                    var el = document.createElement('option');
-                    el.textContent = t[k][0];
-                    el.value = t[k][0];
-                    Turret.appendChild(el);
+                for (const k in t = Object.entries(Skins?.[User.turret.name.toLowerCase()])) {
+                    if (t[k][0] !== 'or') {
+                        var el = document.createElement('option');
+                        el.textContent = t[k][0];
+                        el.value = t[k][0];
+                        Turret.appendChild(el);
+                    };
                 };
-            };
+            } catch (error) {};
             localStorage['papa'] = JSON.stringify(SelectedTank);
             cancelAnimationFrame(f);
             r = false;
