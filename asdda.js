@@ -525,6 +525,7 @@ Turret.addEventListener('change', () => {
 
 document.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.key == 'm') {
+        e.preventDefault();
         document.querySelector('.gui2').style.display = document.querySelector('.gui2').style.display == 'block' ? 'none' : 'block';
         document.querySelector('.gui3').style.display = document.querySelector('.gui3').style.display == 'block' ? 'none' : 'block';
     };
