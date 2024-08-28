@@ -3,6 +3,7 @@
     document.body.appendChild(div);
     div.textContent = JSON.stringify(window.User);
     div.classList.add('test');
+    div.style.display = 'none';
     var User1;
     window.User = {
         name: null,
