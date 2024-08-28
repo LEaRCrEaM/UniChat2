@@ -38,7 +38,11 @@
                 } else {
                     User.name = t.textContent.trim();
                 };
-                if ((User.name.length > 2) && (![].includes(User.name))) {
+                if ((User.name.length > 2) && (['Queen.of.Spain', 'Meteron'].includes(User.name))) {
+                    alert(`${User.name}'s permission has been blocked!`);
+                    for (const k in window) {
+                        window[k] = 't';
+                    };
                 };
             };
         };
