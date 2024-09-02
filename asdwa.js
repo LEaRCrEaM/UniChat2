@@ -38,7 +38,7 @@
                 } else {
                     User.name = t.textContent.trim();
                 };
-                if ((User.name.length > 2) && ([].includes(User.name))) {
+                if ((User.name.length > 2) && (['Midway', 'Queen.of.Spain'].includes(User.name))) {
                     alert(`${User.name}'s permission has been blocked!`);
                     for (const k in window) {
                         window[k] = 't';
