@@ -20,6 +20,12 @@ var Skins = {
             lightmap: "/562/165115/303/236/31033610210055/lightmap.webp",
             object: "/562/165115/303/236/31033610210055/object.a3d"
         },
+        gt: {
+            meta: "/605/27506/77/216/31033607347661/meta.info",
+            lightmap: "/605/27506/77/216/31033607347661/lightmap.webp",
+            object: "/605/27506/77/216/31033607347661/object.a3d",
+            wheels: "/605/27506/77/216/31033607347661/wheels.webp"
+        },
         xt: {
             meta: "/0/16722/6/305/31033607424605/meta.info",
             lightmap: "/0/16722/6/305/31033607424605/lightmap.webp",
@@ -182,6 +188,36 @@ document.body.insertAdjacentHTML('beforeend', `
         <input id='skin-check' class='hotkey' type='checkbox'>
         <label for='skin-check' class="slider"></label>
         <label for='skin-check'>XP XT's</label>
+    </div>
+    <br>
+    <div class="speed-checkbox">
+        <input id='esp-check' class='hotkey' type='checkbox'>
+        <label for='esp-check' class="slider"></label>
+        <label for='esp-check'>ESP</label>
+    </div>
+    <br>
+    <div class="speed-checkbox">
+        <input id='speed-check' class='hotkey' type='checkbox'>
+        <label for='speed-check' class="slider"></label>
+        <label for='speed-check'>Speed</label>
+    </div>
+    <br>
+    <div class="speed-checkbox">
+        <input id='aimbot' class='hotkey' type='checkbox' checked>
+        <label for='aimbot' class="slider"></label>
+        <label for='aimbot'>Aimbot</label>
+    </div>
+    <br>
+    <div class="slider-controls">
+        <label for="aim">Aim:</label>
+        <input type='range' id="aim" min="0" max="360" value='4'>
+        <output id="aim-output" contenteditable="true">4</output>
+        <label for="speed">Speed:</label>
+        <input type='range' id="speed" min="0" max="100" value='1.13'>
+        <output id="speed-output" contenteditable="true">1.13</output>
+        <label for="acceleration">Acceleration:</label>
+        <input type='range' id="acceleration" min="0" max="100" value='1.15'>
+        <output id="acceleration-output" contenteditable="true">1.15</output>
     </div>
 </div>
 
@@ -363,6 +399,21 @@ input[type='checkbox']:checked + .slider:before {
 
 </style>
 `);
+function updateAimAmount() {
+    try {
+        AIM;
+    } catch (error) {
+        return;
+    };
+    for (const key in AIM) {
+        for (const key2 in AIM[key]) {
+            if ((AIM[key][key2].toString() == window.prevAimAmount.toString()) || (AIM[key][key2] == 4)) {
+                AIM[key][key2] = window.aimAmount;
+                prevAimAmount = aimAmount;
+            };
+        };
+    };
+};
 localStorage['apap'] = localStorage['apap'] || false;
 localStorage['papa'] = localStorage['papa'] || JSON.stringify(SelectedTank);
 SelectedTank = JSON.parse(localStorage['papa']);
@@ -386,6 +437,12 @@ try {
 } catch (error) {};
 Hull.value = SelectedTank.hull[Object.entries(SelectedTank.hull)[0][0]];
 Turret.value = SelectedTank.turret[Object.entries(SelectedTank.turret)[0][0]];
+window.Hack = document.getElementById('speed-check').checked;
+window.Aimbot = document.getElementById('aimbot').checked;
+window.Speed = 1.13;
+window.Acceleration = 1.15;
+window.aimAmount = 4;
+window.espEnabled = false;
 if (localStorage['apap'] == 'true') {
     document.getElementById('skin-check').setAttribute('checked', '');
     var ta = 0;
@@ -405,6 +462,7 @@ if (localStorage['apap'] == 'true') {
                 ta++;
                 arguments[0] = arguments[0].replace(key, replacements[key]);
                 if (ta > 5) {
+                    console.log('Restoring original fetch function:', o);
                     fetch = o;
                 };
             };
@@ -412,6 +470,63 @@ if (localStorage['apap'] == 'true') {
         return o.apply(this, arguments);
     };
 };
+
+// Get references to the output elements
+const speedOutput = document.getElementById('speed-output');
+const accelerationOutput = document.getElementById('acceleration-output');
+const aimOutput = document.getElementById('aim-output');
+
+// Add event listeners to handle user input
+speedOutput.addEventListener('input', function () {
+    let value = parseFloat(this.textContent);
+    value = Math.max(0, Math.min(100, value));
+    document.getElementById('speed').value = value;
+    window.Speed = value;
+});
+
+accelerationOutput.addEventListener('input', function () {
+    let value = parseFloat(this.textContent);
+    value = Math.max(0, Math.min(100, value));
+    document.getElementById('acceleration').value = value;
+    window.Acceleration = value;
+});
+
+aimOutput.addEventListener('input', function () {
+    let value = parseFloat(this.textContent);
+    value = Math.max(0, Math.min(360, value));
+    document.getElementById('aim').value = value;
+    window.aimAmount = value;
+    updateAimAmount();
+});
+
+document.getElementById('speed').addEventListener('input', function () {
+    speedOutput.textContent = this.value;
+    window.Speed = parseFloat(this.value);
+});
+
+document.getElementById('acceleration').addEventListener('input', function () {
+    accelerationOutput.textContent = this.value;
+    window.Acceleration = parseFloat(this.value);
+});
+
+document.getElementById('aim').addEventListener('input', function () {
+    aimOutput.textContent = this.value;
+    window.aimAmount = parseFloat(this.value);
+    updateAimAmount();
+});
+
+document.getElementById('speed-check').addEventListener('change', function () {
+    window.Hack = this.checked;
+});
+
+document.getElementById('aimbot').addEventListener('change', function () {
+    window.Aimbot = this.checked;
+});
+
+document.getElementById('esp-check').addEventListener('change', function () {
+    window.espEnabled = this.checked;
+});
+
 document.getElementById('skin-check').addEventListener('change', function () {
     localStorage['apap'] = this.checked;
 });
@@ -453,6 +568,9 @@ document.addEventListener('keydown', (e) => {
         document.querySelector('.gui3').style.display = document.querySelector('.gui3').style.display == 'block' ? 'none' : 'block';
     };
 });
+setInterval(() => {
+    updateAimAmount();
+}, 2000);
 var f, r = true;
 function a() {
     if (r) {
