@@ -222,143 +222,181 @@ document.body.insertAdjacentHTML('beforeend', `
 </div>
 
 <style>
-    .info {
-        position: absolute;
-        z-index: 1;
-        top: -30%;
-        background: rgba(255, 2, 2, .2);
-        border-radius: 20px;
-        width: 200px;
-        display: none;
-    }
+    /* Info Tooltip */
+.info {
+    position: absolute;
+    z-index: 1;
+    top: -30%;
+    background: rgba(255, 2, 2, 0.7);
+    border-radius: 20px;
+    width: 200px;
+    padding: 10px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+}
 
-    .speed-checkbox:hover .info {
-        display: block;
-    }
+.speed-checkbox:hover .info {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
 
-    .gui2 {
-        width: 250px;
-        border-radius: 20px;
-        border: 2px solid #fff;
-        padding: 20px;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        background: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(8px);
-        animation: fadeIn 0.5s ease-out;
-        z-index: 9999999999;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+/* Animated GUIs */
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
     }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
 
-    .gui3 {
-        width: 250px;
-        border-radius: 20px;
-        border: 2px solid #fff;
-        padding: 20px;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        background: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(8px);
-        animation: fadeIn 0.5s ease-out;
-        z-index: 9999999999;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
+.gui2, .gui3 {
+    width: 300px;
+    border-radius: 20px;
+    border: 2px solid #fff;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(12px);
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
+    animation: fadeInScale 0.5s ease-out;
+    z-index: 9999999999;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 
-    .speed-checkbox {
-        display: flex;
-        align-items: center;
-    }
+/* Enhanced Switch Styling */
+.speed-checkbox {
+    display: flex;
+    align-items: center;
+}
 
-    .speed-checkbox input[type='checkbox'] {
-        display: none;
-    }
+.speed-checkbox input[type='checkbox'] {
+    display: none;
+}
 
-    .speed-checkbox .slider {
-        position: relative;
-        width: 40px;
-        height: 20px;
-        background-color: #ccc;
-        border-radius: 20px;
-        cursor: pointer;
-    }
+.speed-checkbox .slider {
+    position: relative;
+    width: 50px;
+    height: 24px;
+    background-color: #ccc;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.4s ease;
+}
 
-    .speed-checkbox .slider:before {
-        position: absolute;
-        content: "";
-        height: 16px;
-        width: 16px;
-        left: 2px;
-        bottom: 2px;
-        background-color: #fff;
-        border-radius: 50%;
-        transition: 0.4s;
-    }
+.speed-checkbox .slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: 0.4s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
 
-    input[type='checkbox']:checked + .slider:before {
-        transform: translateX(20px);
-    }
+input[type='checkbox']:checked + .slider {
+    background-color: #4caf50;
+}
 
-    .speed-checkbox label {
-        margin-left: 10px;
-        color: #fff;
-        font-family: Arial, sans-serif;
-    }
+input[type='checkbox']:checked + .slider:before {
+    transform: translateX(26px);
+}
 
-    .slider-controls {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
+/* Enhanced Label Styling */
+.speed-checkbox label {
+    margin-left: 15px;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+}
 
-    .slider-controls label {
-        color: #fff;
-        font-family: Arial, sans-serif;
-    }
+/* Slider Controls */
+.slider-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 
-    .slider-controls input[type='range'] {
-        width: 100%;
-        -webkit-appearance: none;
-        height: 5px;
-        border-radius: 10px;
-        background: #bbb;
-        outline: none;
-        opacity: 0.7;
-        -webkit-transition: .2s;
-        transition: opacity .2s;
-    }
+.slider-controls label {
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
 
-    .slider-controls input[type='range']::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: #fff;
-        cursor: pointer;
-    }
+.slider-controls input[type='range'] {
+    width: 100%;
+    -webkit-appearance: none;
+    height: 8px;
+    border-radius: 20px;
+    background: #444;
+    outline: none;
+    opacity: 0.9;
+    transition: background 0.3s ease, opacity 0.3s ease;
+}
 
-    .slider-controls input[type='range']::-moz-range-thumb {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: #fff;
-        cursor: pointer;
-    }
+.slider-controls input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
 
-    .slider-controls output {
-        color: #fff;
-        font-family: Arial, sans-serif;
+.slider-controls input[type='range']::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+/* Output Styling */
+.slider-controls output {
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+}
+
+/* Additional Animations */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
     }
+    70% {
+        transform: scale(1.1);
+        box-shadow: 0 0 15px 15px rgba(255, 0, 0, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+    }
+}
+
+.info {
+    animation: pulse 2s infinite;
+}
+
 </style>
 `);
 function updateAimAmount() {
