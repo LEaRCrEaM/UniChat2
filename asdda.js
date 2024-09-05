@@ -173,230 +173,221 @@ var SelectedTank = {
     hull: {}
 };
 document.body.insertAdjacentHTML('beforeend', `
-<div class='gui3' style="left:150px">
-    <h1 style="text-align:center">Skins</h1>
-    <label for="Turret"></label>
-    <select name="Turret" id="Turret">
-    </select>
-    <label for="Hull"></label>
-    <select name="Hull" id="Hull">
-    </select>
-</div>
-<div class='gui2'>
-    <div class="speed-checkbox">
-        <div class='info'>(XP XT's) Saves choice on refresh and must be on before joining/refreshing (CLIENT-SIDED ONLY YOU CAN SEE XT)</div>
-        <input id='skin-check' class='hotkey' type='checkbox'>
-        <label for='skin-check' class="slider"></label>
-        <label for='skin-check'>XP XT's</label>
+<div class="container">
+    <div class="skin-selection">
+        <h1>Choose Your Skin</h1>
+        <label for="Turret">Turret:</label>
+        <select name="Turret" id="Turret"></select>
+        <label for="Hull">Hull:</label>
+        <select name="Hull" id="Hull"></select>
     </div>
-    <br>
-    <div class="speed-checkbox">
-        <input id='esp-check' class='hotkey' type='checkbox'>
-        <label for='esp-check' class="slider"></label>
-        <label for='esp-check'>ESP</label>
+    
+    <div class="options">
+        <div class="checkbox-group">
+            <input id="skin-check" class="hotkey" type="checkbox">
+            <label for="skin-check" class="slider"></label>
+            <label for="skin-check">XP XT's</label>
+            <div class='info'>Saves choice on refresh, client-sided only</div>
+        </div>
+
+        <div class="checkbox-group">
+            <input id="esp-check" class="hotkey" type="checkbox">
+            <label for="esp-check" class="slider"></label>
+            <label for="esp-check">ESP</label>
+        </div>
+
+        <div class="checkbox-group">
+            <input id="speed-check" class="hotkey" type="checkbox">
+            <label for="speed-check" class="slider"></label>
+            <label for="speed-check">Speed</label>
+        </div>
+
+        <div class="checkbox-group">
+            <input id="aimbot" class="hotkey" type="checkbox" checked>
+            <label for="aimbot" class="slider"></label>
+            <label for="aimbot">Aimbot</label>
+        </div>
     </div>
-    <br>
-    <div class="speed-checkbox">
-        <input id='speed-check' class='hotkey' type='checkbox'>
-        <label for='speed-check' class="slider"></label>
-        <label for='speed-check'>Speed</label>
-    </div>
-    <br>
-    <div class="speed-checkbox">
-        <input id='aimbot' class='hotkey' type='checkbox' checked>
-        <label for='aimbot' class="slider"></label>
-        <label for='aimbot'>Aimbot</label>
-    </div>
-    <br>
+
     <div class="slider-controls">
-        <label for="aim">Aim:</label>
-        <input type='range' id="aim" min="0" max="360" value='4'>
-        <output id="aim-output" contenteditable="true">4</output>
-        <label for="speed">Speed:</label>
-        <input type='range' id="speed" min="0" max="100" value='1.13'>
-        <output id="speed-output" contenteditable="true">1.13</output>
-        <label for="acceleration">Acceleration:</label>
-        <input type='range' id="acceleration" min="0" max="100" value='1.15'>
-        <output id="acceleration-output" contenteditable="true">1.15</output>
+        <div class="slider-group">
+            <label for="aim">Aim:</label>
+            <input type="range" id="aim" min="0" max="360" value="4">
+            <output id="aim-output" contenteditable="true">4</output>
+        </div>
+        
+        <div class="slider-group">
+            <label for="speed">Speed:</label>
+            <input type="range" id="speed" min="0" max="100" value="1.13">
+            <output id="speed-output" contenteditable="true">1.13</output>
+        </div>
+        
+        <div class="slider-group">
+            <label for="acceleration">Acceleration:</label>
+            <input type="range" id="acceleration" min="0" max="100" value="1.15">
+            <output id="acceleration-output" contenteditable="true">1.15</output>
+        </div>
     </div>
 </div>
 
 <style>
-    /* Info Tooltip */
-.info {
-    position: absolute;
-    z-index: 1;
-    top: -30%;
-    background: rgba(255, 2, 2, 0.7);
-    border-radius: 20px;
-    width: 200px;
-    padding: 10px;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    pointer-events: none;
-}
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #121212;
+        color: #fff;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
 
-.speed-checkbox:hover .info {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: all;
-}
+    .container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        background: rgba(30, 30, 30, 0.9);
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
+        max-width: 400px;
+        width: 100%;
+    }
 
-/* Animated GUIs */
-@keyframes fadeInScale {
-    0% {
+    .skin-selection, .options, .slider-controls {
+        background: rgba(50, 50, 50, 0.7);
+        padding: 20px;
+        border-radius: 15px;
+    }
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #ff4081;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+
+    select {
+        width: 100%;
+        padding: 8px;
+        border-radius: 8px;
+        border: 1px solid #444;
+        background-color: #222;
+        color: #fff;
+        margin-bottom: 20px;
+    }
+
+    .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .checkbox-group input[type='checkbox'] {
+        display: none;
+    }
+
+    .checkbox-group .slider {
+        width: 50px;
+        height: 24px;
+        background-color: #ccc;
+        border-radius: 50px;
+        position: relative;
+        cursor: pointer;
+        transition: background-color 0.4s ease;
+    }
+
+    .checkbox-group .slider:before {
+        content: "";
+        position: absolute;
+        height: 20px;
+        width: 20px;
+        left: 2px;
+        bottom: 2px;
+        background-color: #fff;
+        border-radius: 50%;
+        transition: 0.4s;
+    }
+
+    input[type='checkbox']:checked + .slider {
+        background-color: #4caf50;
+    }
+
+    input[type='checkbox']:checked + .slider:before {
+        transform: translateX(26px);
+    }
+
+    .checkbox-group label {
+        color: #fff;
+        font-size: 16px;
+    }
+
+    .slider-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .slider-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .slider-group input[type='range'] {
+        flex-grow: 1;
+        -webkit-appearance: none;
+        height: 8px;
+        border-radius: 20px;
+        background: #444;
+        outline: none;
+        opacity: 0.9;
+    }
+
+    .slider-group input[type='range']::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 22px;
+        height: 22px;
+        background: #ff4081;
+        border-radius: 50%;
+    }
+
+    .slider-group input[type='range']::-moz-range-thumb {
+        width: 22px;
+        height: 22px;
+        background: #ff4081;
+        border-radius: 50%;
+    }
+
+    .slider-group output {
+        min-width: 40px;
+        text-align: right;
+        font-size: 16px;
+    }
+
+    .info {
+        background: rgba(255, 64, 129, 0.8);
+        border-radius: 10px;
+        padding: 10px;
+        font-size: 12px;
+        margin-top: 5px;
         opacity: 0;
-        transform: translate(-50%, -50%) scale(0.8);
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        pointer-events: none;
     }
-    100% {
+
+    .checkbox-group:hover .info {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
+        transform: translateY(0);
     }
-}
-
-.gui2, .gui3 {
-    width: 300px;
-    border-radius: 20px;
-    border: 2px solid #fff;
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(12px);
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
-    animation: fadeInScale 0.5s ease-out;
-    z-index: 9999999999;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-/* Enhanced Switch Styling */
-.speed-checkbox {
-    display: flex;
-    align-items: center;
-}
-
-.speed-checkbox input[type='checkbox'] {
-    display: none;
-}
-
-.speed-checkbox .slider {
-    position: relative;
-    width: 50px;
-    height: 24px;
-    background-color: #ccc;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: background-color 0.4s ease;
-}
-
-.speed-checkbox .slider:before {
-    position: absolute;
-    content: "";
-    height: 20px;
-    width: 20px;
-    left: 2px;
-    bottom: 2px;
-    background-color: #fff;
-    border-radius: 50%;
-    transition: 0.4s;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-input[type='checkbox']:checked + .slider {
-    background-color: #4caf50;
-}
-
-input[type='checkbox']:checked + .slider:before {
-    transform: translateX(26px);
-}
-
-/* Enhanced Label Styling */
-.speed-checkbox label {
-    margin-left: 15px;
-    color: #fff;
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-    letter-spacing: 0.5px;
-}
-
-/* Slider Controls */
-.slider-controls {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.slider-controls label {
-    color: #fff;
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-}
-
-.slider-controls input[type='range'] {
-    width: 100%;
-    -webkit-appearance: none;
-    height: 8px;
-    border-radius: 20px;
-    background: #444;
-    outline: none;
-    opacity: 0.9;
-    transition: background 0.3s ease, opacity 0.3s ease;
-}
-
-.slider-controls input[type='range']::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-}
-
-.slider-controls input[type='range']::-moz-range-thumb {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-}
-
-/* Output Styling */
-.slider-controls output {
-    color: #fff;
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-    letter-spacing: 0.5px;
-}
-
-/* Additional Animations */
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
-    }
-    70% {
-        transform: scale(1.1);
-        box-shadow: 0 0 15px 15px rgba(255, 0, 0, 0);
-    }
-    100% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
-    }
-}
-
-.info {
-    animation: pulse 2s infinite;
-}
-
 </style>
 `);
 function updateAimAmount() {
