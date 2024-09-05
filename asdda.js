@@ -243,6 +243,8 @@ document.body.insertAdjacentHTML('beforeend', `
     }
 
     .container {
+        position: absolute;
+        z-index: 999999;
         display: flex;
         flex-direction: column;
         gap: 20px;
