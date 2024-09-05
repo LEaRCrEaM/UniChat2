@@ -173,224 +173,276 @@ var SelectedTank = {
     hull: {}
 };
 document.body.insertAdjacentHTML('beforeend', `
-<div class="container">
-    <div class="skin-selection">
-        <h1>Choose Your Skin</h1>
-        <label for="Turret">Turret:</label>
-        <select name="Turret" id="Turret"></select>
-        <label for="Hull">Hull:</label>
-        <select name="Hull" id="Hull"></select>
+<div class='gui3'>
+    <h1>SKIN SELECTION</h1>
+    <div class="selection-container">
+        <div class="selection-item">
+            <label for="Turret">Turret:</label>
+            <select name="Turret" id="Turret"></select>
+        </div>
+        <div class="selection-item">
+            <label for="Hull">Hull:</label>
+            <select name="Hull" id="Hull"></select>
+        </div>
     </div>
-    
-    <div class="options">
-        <div class="checkbox-group">
-            <input id="skin-check" class="hotkey" type="checkbox">
-            <label for="skin-check" class="slider"></label>
-            <label for="skin-check">XP XT's</label>
-            <div class='info'>Saves choice on refresh, client-sided only</div>
+</div>
+
+<div class='gui2'>
+    <div class="switch-group">
+        <div class="switch-item">
+            <input id='skin-check' class='hotkey' type='checkbox'>
+            <label for='skin-check' class="slider"></label>
+            <label for='skin-check' class="switch-label">XP XT's</label>
+            <div class='info'>(XP XT's) Saves choice on refresh, client-sided only</div>
         </div>
 
-        <div class="checkbox-group">
-            <input id="esp-check" class="hotkey" type="checkbox">
-            <label for="esp-check" class="slider"></label>
-            <label for="esp-check">ESP</label>
+        <div class="switch-item">
+            <input id='esp-check' class='hotkey' type='checkbox'>
+            <label for='esp-check' class="slider"></label>
+            <label for='esp-check' class="switch-label">ESP</label>
         </div>
 
-        <div class="checkbox-group">
-            <input id="speed-check" class="hotkey" type="checkbox">
-            <label for="speed-check" class="slider"></label>
-            <label for="speed-check">Speed</label>
+        <div class="switch-item">
+            <input id='speed-check' class='hotkey' type='checkbox'>
+            <label for='speed-check' class="slider"></label>
+            <label for='speed-check' class="switch-label">Speed</label>
         </div>
 
-        <div class="checkbox-group">
-            <input id="aimbot" class="hotkey" type="checkbox" checked>
-            <label for="aimbot" class="slider"></label>
-            <label for="aimbot">Aimbot</label>
+        <div class="switch-item">
+            <input id='aimbot' class='hotkey' type='checkbox' checked>
+            <label for='aimbot' class="slider"></label>
+            <label for='aimbot' class="switch-label">Aimbot</label>
         </div>
     </div>
 
     <div class="slider-controls">
-        <div class="slider-group">
+        <div class="control-item">
             <label for="aim">Aim:</label>
-            <input type="range" id="aim" min="0" max="360" value="4">
+            <input type='range' id="aim" min="0" max="360" value='4'>
             <output id="aim-output" contenteditable="true">4</output>
         </div>
         
-        <div class="slider-group">
+        <div class="control-item">
             <label for="speed">Speed:</label>
-            <input type="range" id="speed" min="0" max="100" value="1.13">
+            <input type='range' id="speed" min="0" max="100" value='1.13'>
             <output id="speed-output" contenteditable="true">1.13</output>
         </div>
-        
-        <div class="slider-group">
+
+        <div class="control-item">
             <label for="acceleration">Acceleration:</label>
-            <input type="range" id="acceleration" min="0" max="100" value="1.15">
+            <input type='range' id="acceleration" min="0" max="100" value='1.15'>
             <output id="acceleration-output" contenteditable="true">1.15</output>
         </div>
     </div>
 </div>
 
 <style>
-    body {
-        font-family: 'Roboto', sans-serif;
-        background-color: #121212;
-        color: #fff;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
+/* Dramatic Flowing Background */
+.gui2, .gui3 {
+    background: linear-gradient(45deg, #00ffae, #0099ff, #ff00ff, #ff9900);
+    background-size: 300% 300%;
+    animation: backgroundFlow 10s ease infinite;
+    padding: 30px;
+    border-radius: 30px;
+    box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.6);
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+    position: relative;
+}
 
-    .container {
-        position: absolute;
-        z-index: 999999;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        background: rgba(30, 30, 30, 0.9);
-        border-radius: 15px;
-        padding: 30px;
-        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
-        max-width: 400px;
-        width: 100%;
+@keyframes backgroundFlow {
+    0% {
+        background-position: 0% 50%;
     }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
 
-    .skin-selection, .options, .slider-controls {
-        background: rgba(50, 50, 50, 0.7);
-        padding: 20px;
-        border-radius: 15px;
-    }
+/* H1 Styling */
+.gui3 h1 {
+    color: #fff;
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    letter-spacing: 2px;
+    animation: glow 1.5s ease-in-out infinite alternate;
+}
 
-    h1 {
-        font-size: 24px;
-        margin-bottom: 20px;
-        text-align: center;
-        color: #ff4081;
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px #ff0099, 0 0 20px #ff0099, 0 0 30px #ff0099, 0 0 40px #ff0099;
     }
+    to {
+        text-shadow: 0 0 20px #ff00ff, 0 0 30px #ff00ff, 0 0 40px #ff00ff, 0 0 50px #ff00ff;
+    }
+}
 
-    label {
-        display: block;
-        margin-bottom: 10px;
-        font-size: 14px;
-    }
+/* Selection Containers */
+.selection-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
 
-    select {
-        width: 100%;
-        padding: 8px;
-        border-radius: 8px;
-        border: 1px solid #444;
-        background-color: #222;
-        color: #fff;
-        margin-bottom: 20px;
-    }
+.selection-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
 
-    .checkbox-group {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 15px;
-    }
+.selection-item label {
+    color: #fff;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
 
-    .checkbox-group input[type='checkbox'] {
-        display: none;
-    }
+.selection-item select {
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 16px;
+}
 
-    .checkbox-group .slider {
-        width: 50px;
-        height: 24px;
-        background-color: #ccc;
-        border-radius: 50px;
-        position: relative;
-        cursor: pointer;
-        transition: background-color 0.4s ease;
-    }
+/* Switch Group */
+.switch-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
 
-    .checkbox-group .slider:before {
-        content: "";
-        position: absolute;
-        height: 20px;
-        width: 20px;
-        left: 2px;
-        bottom: 2px;
-        background-color: #fff;
-        border-radius: 50%;
-        transition: 0.4s;
-    }
+.switch-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-    input[type='checkbox']:checked + .slider {
-        background-color: #4caf50;
-    }
+.switch-item input[type='checkbox'] {
+    display: none;
+}
 
-    input[type='checkbox']:checked + .slider:before {
-        transform: translateX(26px);
-    }
+.switch-item .slider {
+    position: relative;
+    width: 60px;
+    height: 30px;
+    background-color: #333;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.4s ease;
+}
 
-    .checkbox-group label {
-        color: #fff;
-        font-size: 16px;
-    }
+.switch-item .slider:before {
+    content: "";
+    position: absolute;
+    height: 26px;
+    width: 26px;
+    left: 2px;
+    bottom: 2px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: 0.4s;
+}
 
-    .slider-controls {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
+input[type='checkbox']:checked + .slider {
+    background-color: #ff0099;
+}
 
-    .slider-group {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
+input[type='checkbox']:checked + .slider:before {
+    transform: translateX(30px);
+}
 
-    .slider-group input[type='range'] {
-        flex-grow: 1;
-        -webkit-appearance: none;
-        height: 8px;
-        border-radius: 20px;
-        background: #444;
-        outline: none;
-        opacity: 0.9;
-    }
+.switch-item .switch-label {
+    margin-top: 10px;
+    color: #fff;
+    font-size: 18px;
+    text-align: center;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+}
 
-    .slider-group input[type='range']::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        width: 22px;
-        height: 22px;
-        background: #ff4081;
-        border-radius: 50%;
-    }
+/* Slider Controls */
+.slider-controls {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
 
-    .slider-group input[type='range']::-moz-range-thumb {
-        width: 22px;
-        height: 22px;
-        background: #ff4081;
-        border-radius: 50%;
-    }
+.control-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-    .slider-group output {
-        min-width: 40px;
-        text-align: right;
-        font-size: 16px;
-    }
+.control-item label {
+    margin-bottom: 10px;
+    color: #fff;
+    font-size: 14px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+}
 
-    .info {
-        background: rgba(255, 64, 129, 0.8);
-        border-radius: 10px;
-        padding: 10px;
-        font-size: 12px;
-        margin-top: 5px;
-        opacity: 0;
-        transform: translateY(-10px);
-        transition: opacity 0.3s ease, transform 0.3s ease;
-        pointer-events: none;
-    }
+.control-item input[type='range'] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 20px;
+    background: #fff;
+    outline: none;
+}
 
-    .checkbox-group:hover .info {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.control-item input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    background: #ff0099;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.control-item input[type='range']::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    background: #ff0099;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.control-item output {
+    margin-top: 10px;
+    color: #fff;
+    font-size: 16px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+}
+
+/* Tooltip Styling */
+.info {
+    background: rgba(255, 0, 153, 0.8);
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 12px;
+    margin-top: 5px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+}
+
+.switch-item:hover .info {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 </style>
+
+
 `);
 function updateAimAmount() {
     try {
