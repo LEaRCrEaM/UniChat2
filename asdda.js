@@ -249,8 +249,13 @@ document.body.insertAdjacentHTML('beforeend', `
     display: flex;
     flex-direction: column;
     margin: 30px;
-    position: relative;
+    position: absolute;
+    z-index: 9999;
 }
+
+.gui2 {
+    bottom: 0;
+};
 
 @keyframes backgroundFlow {
     0% {
