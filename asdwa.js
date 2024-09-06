@@ -93,6 +93,7 @@
         };
         if (t = document.querySelector('.UserInfoContainerStyle-progressValue')) {
             if (t.textContent !== User.exp) {
+                var pppppp = User.messages;
                 User1 = User;
                 User = {
                     name: null,
@@ -111,7 +112,7 @@
                     crystals: null,
                     tankoins: null,
                     friends: [],
-                    messages: '',
+                    messages: pppppp,
                     getTank() {
                         return `${this.turret.name} ${this.turret.upgrades} | ${this.hull.name} ${this.hull.upgrades}`;
                     },
