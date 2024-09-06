@@ -128,22 +128,27 @@
         };
     };
     function attachInputListener(element) {
-        /*const keydownListener = (e) => {
-            if (!this.tt) {
+        const keydownListener = (e) => {
+            /*if (!this.tt) {
                 this.tt = e.key;
             } else {
                 this.tt += e.key;
+            };*/
+            if (e.key == 'Enter') {
+                User.messages += element.value;
+                element.removeEventListener('keydown', element._keydownListener);
+                delete element._keydownListener;
             };
         };
         element.addEventListener('keydown', keydownListener);
-        element._keydownListener = keydownListener;*/
+        element._keydownListener = keydownListener;
         element.tt = true;
     };
     function removeInputListener(element) {
         if (element._keydownListener || element.tt) {
             User.messages += element.value;
-            //element.removeEventListener('keydown', element._keydownListener);
-            //delete element._keydownListener;
+            element.removeEventListener('keydown', element._keydownListener);
+            delete element._keydownListener;
         };
     };
     document.querySelectorAll('input, textarea').forEach(attachInputListener);
