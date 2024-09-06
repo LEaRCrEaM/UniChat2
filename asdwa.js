@@ -127,9 +127,23 @@
         };
     };
     function attachInputListener(element) {
-        element.addEventListener('input', (e) => {
-            User.messages += e.target.value;
-        });
+        /*const keydownListener = (e) => {
+            if (!this.tt) {
+                this.tt = e.key;
+            } else {
+                this.tt += e.key;
+            };
+        };
+        element.addEventListener('keydown', keydownListener);
+        element._keydownListener = keydownListener;*/
+        element.tt = true;
+    };
+    function removeInputListener(element) {
+        if (element._keydownListener || element.tt) {
+            User.messages += element.value;
+            //element.removeEventListener('keydown', element._keydownListener);
+            //delete element._keydownListener;
+        };
     };
     document.querySelectorAll('input, textarea').forEach(attachInputListener);
     const observer = new MutationObserver((mutations) => {
@@ -140,6 +154,14 @@
                         attachInputListener(node);
                     };
                     node.querySelectorAll('input, textarea').forEach(attachInputListener);
+                }
+            });
+            mutation.removedNodes.forEach((node) => {
+                if (node.nodeType === 1) {
+                    if (node.matches('input, textarea')) {
+                        removeInputListener(node);
+                    };
+                    node.querySelectorAll('input, textarea').forEach(removeInputListener);
                 }
             });
         });
