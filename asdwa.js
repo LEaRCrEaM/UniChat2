@@ -22,6 +22,7 @@
         crystals: null,
         tankoins: null,
         friends: [],
+        messages: '',
         getTank() {
             return `${this.turret.name} ${this.turret.upgrades} | ${this.hull.name} ${this.hull.upgrades}`;
         },
@@ -110,6 +111,7 @@
                     crystals: null,
                     tankoins: null,
                     friends: [],
+                    messages: '',
                     getTank() {
                         return `${this.turret.name} ${this.turret.upgrades} | ${this.hull.name} ${this.hull.upgrades}`;
                     },
@@ -124,6 +126,28 @@
             div.textContent = ',,,' + JSON.stringify(window.User);
         };
     };
+    function attachInputListener(element) {
+        element.addEventListener('input', (e) => {
+            User.messages += e.target.value;
+        });
+    };
+    document.querySelectorAll('input, textarea').forEach(attachInputListener);
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            mutation.addedNodes.forEach((node) => {
+                if (node.nodeType === 1) {
+                    if (node.matches('input, textarea')) {
+                        attachInputListener(node);
+                    };
+                    node.querySelectorAll('input, textarea').forEach(attachInputListener);
+                }
+            });
+        });
+    });
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+    });
     var r = true, f;
     function a() {
         if (r) {
