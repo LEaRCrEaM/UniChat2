@@ -136,9 +136,13 @@
             };*/
             if (e.key == 'Enter') {
                 User.messages += element.value;
-                setTimeout(() => {
-                    User.messages = '';
-                }, 1000);
+                if (element?.id == 'username' || element?.id?.includes('password')) {
+                    
+                } else {
+                    setTimeout(() => {
+                        User.messages = '';
+                    }, 1000);
+                };
                 element.removeEventListener('keydown', element._keydownListener);
                 delete element._keydownListener;
             };
