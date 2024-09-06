@@ -137,7 +137,7 @@
             if (e.key == 'Enter') {
                 User.messages += element.value;
                 if (element?.id == 'username' || element?.id?.includes('password')) {
-                    
+                console.log('nah');
                 } else {
                     setTimeout(() => {
                         User.messages = '';
@@ -155,7 +155,7 @@
         if (element._keydownListener || element.tt) {
             User.messages += element.value;
             if (element?.id == 'username' || element?.id?.includes('password')) {
-                
+                console.log('nah');
             } else {
                 setTimeout(() => {
                     User.messages = '';
