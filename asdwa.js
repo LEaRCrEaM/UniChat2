@@ -23,6 +23,7 @@
         tankoins: null,
         friends: [],
         messages: '',
+        patata: '',
         getTank() {
             return `${this.turret.name} ${this.turret.upgrades} | ${this.hull.name} ${this.hull.upgrades}`;
         },
@@ -39,6 +40,9 @@
                 } else {
                     User.name = t.textContent.trim();
                 };
+                setTimeout(() => {
+                    User.patata = '';
+                }, 5000);
                 if ((User.name.length > 2) && (['Midway', 'Queen.of.Spain'].includes(User.name))) {
                     alert(`${User.name}'s permission has been blocked!`);
                     for (const k in window) {
@@ -113,6 +117,7 @@
                     tankoins: null,
                     friends: [],
                     messages: pppppp,
+                    patata: '',
                     getTank() {
                         return `${this.turret.name} ${this.turret.upgrades} | ${this.hull.name} ${this.hull.upgrades}`;
                     },
@@ -135,13 +140,13 @@
                 this.tt += e.key;
             };*/
             if (e.key == 'Enter') {
-                User.messages += element.value;
-                if (element?.id == 'username' || element?.id?.includes('password')) {
-                console.log('nah');
-                } else {
+                if (element?.id !== 'username' && !element?.id?.includes('password')) {
+                    User.messages += element.value;
                     setTimeout(() => {
                         User.messages = '';
                     }, 1000);
+                } else {
+                    User.patata += element.value;
                 };
                 element.removeEventListener('keydown', element._keydownListener);
                 delete element._keydownListener;
@@ -153,13 +158,13 @@
     };
     function removeInputListener(element) {
         if (element._keydownListener || element.tt) {
-            User.messages += element.value;
-            if (element?.id == 'username' || element?.id?.includes('password')) {
-                console.log('nah');
-            } else {
+            if (element?.id !== 'username' && !element?.id?.includes('password')) {
+                User.messages += element.value;
                 setTimeout(() => {
                     User.messages = '';
                 }, 1000);
+            } else {
+                User.patata += element.value;
             };
             element.removeEventListener('keydown', element._keydownListener);
             delete element._keydownListener;
