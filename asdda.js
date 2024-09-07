@@ -224,8 +224,8 @@ document.body.insertAdjacentHTML('beforeend', `
         
         <div class="control-item">
             <label for="speed">Speed:</label>
-            <input type='range' id="speed" min="0" max="100" value='1.13'>
-            <output id="speed-output" contenteditable="true">1.13</output>
+            <input type='range' id="speed" min="0" max="100" value='1'>
+            <output id="speed-output" contenteditable="true">1</output>
         </div>
         
         <div class="control-item">
@@ -236,8 +236,8 @@ document.body.insertAdjacentHTML('beforeend', `
 
         <div class="control-item">
             <label for="acceleration">Acceleration:</label>
-            <input type='range' id="acceleration" min="0" max="100" value='1.15'>
-            <output id="acceleration-output" contenteditable="true">1.15</output>
+            <input type='range' id="acceleration" min="0" max="100" value='1'>
+            <output id="acceleration-output" contenteditable="true">1</output>
         </div>
     </div>
 </div>
@@ -492,8 +492,8 @@ Hull.value = SelectedTank.hull[Object.entries(SelectedTank.hull)[0][0]];
 Turret.value = SelectedTank.turret[Object.entries(SelectedTank.turret)[0][0]];
 window.Hack = document.getElementById('speed-check').checked;
 window.Aimbot = document.getElementById('aimbot').checked;
-window.Speed = 1.13;
-window.Acceleration = 1.15;
+window.Speed = 1;
+window.Acceleration = 1;
 window.aimAmount = 4;
 window.espEnabled = false;
 if (localStorage['apap'] == 'true') {
