@@ -244,12 +244,12 @@ document.body.insertAdjacentHTML('beforeend', `
 
 <style>
 .gui2, .gui3 {
-    background: linear-gradient(45deg, #ff0000, #990000, #660000, #330000);
-    background-size: 300% 300%;
-    animation: backgroundFlow 10s ease infinite;
+    background: linear-gradient(135deg, #1e3c72, #2a5298, #162447);
+    background-size: 400% 400%;
+    animation: backgroundFlow 12s ease infinite;
     padding: 30px;
-    border-radius: 30px;
-    box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.8);
+    border-radius: 20px;
+    box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.7);
     width: 400px;
     display: flex;
     flex-direction: column;
@@ -264,33 +264,33 @@ document.body.insertAdjacentHTML('beforeend', `
 
 @keyframes backgroundFlow {
     0% {
-        background-position: 0% 50%;
+        background-position: 0% 0%;
     }
     50% {
-        background-position: 100% 50%;
+        background-position: 100% 100%;
     }
     100% {
-        background-position: 0% 50%;
+        background-position: 0% 0%;
     }
 }
 
 /* H1 Styling */
 .gui3 h1 {
-    color: #ff0000;
+    color: #ffffff;
     text-align: center;
-    font-size: 28px;
-    margin-bottom: 30px;
-    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
-    letter-spacing: 2px;
-    animation: glow 1.5s ease-in-out infinite alternate;
+    font-size: 30px;
+    margin-bottom: 25px;
+    text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.8);
+    letter-spacing: 3px;
+    animation: glow 2s ease-in-out infinite alternate;
 }
 
 @keyframes glow {
     from {
-        text-shadow: 0 0 10px #ff3333, 0 0 20px #ff3333, 0 0 30px #ff3333, 0 0 40px #ff3333;
+        text-shadow: 0 0 10px #1e3c72, 0 0 20px #1e3c72, 0 0 30px #1e3c72, 0 0 40px #1e3c72;
     }
     to {
-        text-shadow: 0 0 20px #ff6666, 0 0 30px #ff6666, 0 0 40px #ff6666, 0 0 50px #ff6666;
+        text-shadow: 0 0 20px #2a5298, 0 0 30px #2a5298, 0 0 40px #2a5298, 0 0 50px #2a5298;
     }
 }
 
@@ -308,18 +308,19 @@ document.body.insertAdjacentHTML('beforeend', `
 }
 
 .selection-item label {
-    color: #ff6666;
+    color: #ffffff;
     margin-bottom: 10px;
     font-size: 16px;
 }
 
 .selection-item select {
     padding: 12px;
-    border-radius: 10px;
+    border-radius: 12px;
     border: none;
-    background-color: rgba(255, 0, 0, 0.1);
-    color: #ff6666;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
     font-size: 16px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
 /* Switch Group */
@@ -344,7 +345,7 @@ document.body.insertAdjacentHTML('beforeend', `
     position: relative;
     width: 60px;
     height: 30px;
-    background-color: #000;
+    background-color: #0d253f;
     border-radius: 50px;
     cursor: pointer;
     transition: background-color 0.4s ease;
@@ -357,13 +358,14 @@ document.body.insertAdjacentHTML('beforeend', `
     width: 26px;
     left: 2px;
     bottom: 2px;
-    background-color: #ff6666;
+    background-color: #ffffff;
     border-radius: 50%;
     transition: 0.4s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 input[type='checkbox']:checked + .slider {
-    background-color: #ff0000;
+    background-color: #1e3c72;
 }
 
 input[type='checkbox']:checked + .slider:before {
@@ -372,10 +374,10 @@ input[type='checkbox']:checked + .slider:before {
 
 .switch-item .switch-label {
     margin-top: 10px;
-    color: #ff6666;
+    color: #ffffff;
     font-size: 18px;
     text-align: center;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
 }
 
 /* Slider Controls */
@@ -394,9 +396,9 @@ input[type='checkbox']:checked + .slider:before {
 
 .control-item label {
     margin-bottom: 10px;
-    color: #ff6666;
+    color: #ffffff;
     font-size: 14px;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
 }
 
 .control-item input[type='range'] {
@@ -404,45 +406,50 @@ input[type='checkbox']:checked + .slider:before {
     width: 100%;
     height: 8px;
     border-radius: 20px;
-    background: #ff6666;
+    background: #1e3c72;
     outline: none;
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .control-item input[type='range']::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 22px;
     height: 22px;
-    background: #ff0000;
+    background: #ffffff;
     border-radius: 50%;
     cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .control-item input[type='range']::-moz-range-thumb {
     width: 22px;
     height: 22px;
-    background: #ff0000;
+    background: #ffffff;
     border-radius: 50%;
     cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .control-item output {
     margin-top: 10px;
-    color: #ff6666;
+    color: #ffffff;
     font-size: 16px;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
 }
 
 /* Tooltip Styling */
 .info {
-    background: rgba(255, 0, 0, 0.8);
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     padding: 10px;
     font-size: 12px;
+    color: #0d253f;
     margin-top: 5px;
     opacity: 0;
     transform: translateY(-10px);
     transition: opacity 0.3s ease, transform 0.3s ease;
     pointer-events: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .switch-item:hover .info {
@@ -450,7 +457,6 @@ input[type='checkbox']:checked + .slider:before {
     transform: translateY(0);
 }
 </style>
-
 `);
 function updateAimAmount() {
     try {
