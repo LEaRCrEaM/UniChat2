@@ -224,32 +224,27 @@ document.body.insertAdjacentHTML('beforeend', `
         
         <div class="control-item">
             <label for="speed">Speed:</label>
-            <input type='range' id="speed" min="0" max="100" value='1.13'>
-            <output id="speed-output" contenteditable="true">1.13</output>
-        </div>
-        
-        <div class="control-item">
-            <label for="turn-speed">Turn Speed:</label>
-            <input type='range' id="turn-speed" min="0" max="100" value='1'>
-            <output id="turn-speed-output" contenteditable="true">1</output>
+            <input type='range' id="speed" min="0" max="100" value='1'>
+            <output id="speed-output" contenteditable="true">1</output>
         </div>
 
         <div class="control-item">
             <label for="acceleration">Acceleration:</label>
-            <input type='range' id="acceleration" min="0" max="100" value='1.15'>
-            <output id="acceleration-output" contenteditable="true">1.15</output>
+            <input type='range' id="acceleration" min="0" max="100" value='1'>
+            <output id="acceleration-output" contenteditable="true">1</output>
         </div>
     </div>
 </div>
 
 <style>
+/* Dramatic Flowing Background */
 .gui2, .gui3 {
-    background: linear-gradient(45deg, #ff0000, #990000, #660000, #330000);
+    background: linear-gradient(45deg, #00ffae, #0099ff, #ff00ff, #ff9900);
     background-size: 300% 300%;
     animation: backgroundFlow 10s ease infinite;
     padding: 30px;
     border-radius: 30px;
-    box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.8);
+    box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.6);
     width: 400px;
     display: flex;
     flex-direction: column;
@@ -260,7 +255,7 @@ document.body.insertAdjacentHTML('beforeend', `
 
 .gui2 {
     bottom: 0;
-}
+};
 
 @keyframes backgroundFlow {
     0% {
@@ -276,21 +271,21 @@ document.body.insertAdjacentHTML('beforeend', `
 
 /* H1 Styling */
 .gui3 h1 {
-    color: #ff0000;
+    color: #fff;
     text-align: center;
     font-size: 28px;
     margin-bottom: 30px;
-    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
     letter-spacing: 2px;
     animation: glow 1.5s ease-in-out infinite alternate;
 }
 
 @keyframes glow {
     from {
-        text-shadow: 0 0 10px #ff3333, 0 0 20px #ff3333, 0 0 30px #ff3333, 0 0 40px #ff3333;
+        text-shadow: 0 0 10px #ff0099, 0 0 20px #ff0099, 0 0 30px #ff0099, 0 0 40px #ff0099;
     }
     to {
-        text-shadow: 0 0 20px #ff6666, 0 0 30px #ff6666, 0 0 40px #ff6666, 0 0 50px #ff6666;
+        text-shadow: 0 0 20px #ff00ff, 0 0 30px #ff00ff, 0 0 40px #ff00ff, 0 0 50px #ff00ff;
     }
 }
 
@@ -308,7 +303,7 @@ document.body.insertAdjacentHTML('beforeend', `
 }
 
 .selection-item label {
-    color: #ff6666;
+    color: #fff;
     margin-bottom: 10px;
     font-size: 16px;
 }
@@ -317,8 +312,8 @@ document.body.insertAdjacentHTML('beforeend', `
     padding: 12px;
     border-radius: 10px;
     border: none;
-    background-color: rgba(255, 0, 0, 0.1);
-    color: #ff6666;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
     font-size: 16px;
 }
 
@@ -344,7 +339,7 @@ document.body.insertAdjacentHTML('beforeend', `
     position: relative;
     width: 60px;
     height: 30px;
-    background-color: #000;
+    background-color: #333;
     border-radius: 50px;
     cursor: pointer;
     transition: background-color 0.4s ease;
@@ -357,13 +352,13 @@ document.body.insertAdjacentHTML('beforeend', `
     width: 26px;
     left: 2px;
     bottom: 2px;
-    background-color: #ff6666;
+    background-color: #fff;
     border-radius: 50%;
     transition: 0.4s;
 }
 
 input[type='checkbox']:checked + .slider {
-    background-color: #ff0000;
+    background-color: #ff0099;
 }
 
 input[type='checkbox']:checked + .slider:before {
@@ -372,10 +367,10 @@ input[type='checkbox']:checked + .slider:before {
 
 .switch-item .switch-label {
     margin-top: 10px;
-    color: #ff6666;
+    color: #fff;
     font-size: 18px;
     text-align: center;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
 }
 
 /* Slider Controls */
@@ -394,9 +389,9 @@ input[type='checkbox']:checked + .slider:before {
 
 .control-item label {
     margin-bottom: 10px;
-    color: #ff6666;
+    color: #fff;
     font-size: 14px;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
 }
 
 .control-item input[type='range'] {
@@ -404,7 +399,7 @@ input[type='checkbox']:checked + .slider:before {
     width: 100%;
     height: 8px;
     border-radius: 20px;
-    background: #ff6666;
+    background: #fff;
     outline: none;
 }
 
@@ -412,7 +407,7 @@ input[type='checkbox']:checked + .slider:before {
     -webkit-appearance: none;
     width: 22px;
     height: 22px;
-    background: #ff0000;
+    background: #ff0099;
     border-radius: 50%;
     cursor: pointer;
 }
@@ -420,21 +415,21 @@ input[type='checkbox']:checked + .slider:before {
 .control-item input[type='range']::-moz-range-thumb {
     width: 22px;
     height: 22px;
-    background: #ff0000;
+    background: #ff0099;
     border-radius: 50%;
     cursor: pointer;
 }
 
 .control-item output {
     margin-top: 10px;
-    color: #ff6666;
+    color: #fff;
     font-size: 16px;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
 }
 
 /* Tooltip Styling */
 .info {
-    background: rgba(255, 0, 0, 0.8);
+    background: rgba(255, 0, 153, 0.8);
     border-radius: 10px;
     padding: 10px;
     font-size: 12px;
@@ -449,7 +444,9 @@ input[type='checkbox']:checked + .slider:before {
     opacity: 1;
     transform: translateY(0);
 }
+
 </style>
+
 
 `);
 function updateAimAmount() {
@@ -492,8 +489,9 @@ Hull.value = SelectedTank.hull[Object.entries(SelectedTank.hull)[0][0]];
 Turret.value = SelectedTank.turret[Object.entries(SelectedTank.turret)[0][0]];
 window.Hack = document.getElementById('speed-check').checked;
 window.Aimbot = document.getElementById('aimbot').checked;
-window.Speed = 1.13;
-window.Acceleration = 1.15;
+window.Speed = 1;
+window.turnSpeed = 1;
+window.Acceleration = 1;
 window.aimAmount = 4;
 window.espEnabled = false;
 if (localStorage['apap'] == 'true') {
@@ -526,7 +524,6 @@ if (localStorage['apap'] == 'true') {
 
 // Get references to the output elements
 const speedOutput = document.getElementById('speed-output');
-const turnSpeedOutput = document.getElementById('turn-speed-output');
 const accelerationOutput = document.getElementById('acceleration-output');
 const aimOutput = document.getElementById('aim-output');
 
@@ -536,13 +533,6 @@ speedOutput.addEventListener('input', function () {
     value = Math.max(0, Math.min(100, value));
     document.getElementById('speed').value = value;
     window.Speed = value;
-});
-
-turnSpeedOutput.addEventListener('input', function () {
-    let value = parseFloat(this.textContent);
-    value = Math.max(0, Math.min(100, value));
-    document.getElementById('turn-speed').value = value;
-    window.turnSpeed = value;
 });
 
 accelerationOutput.addEventListener('input', function () {
@@ -563,11 +553,6 @@ aimOutput.addEventListener('input', function () {
 document.getElementById('speed').addEventListener('input', function () {
     speedOutput.textContent = this.value;
     window.Speed = parseFloat(this.value);
-});
-
-document.getElementById('turn-speed').addEventListener('input', function () {
-    turnSpeedOutput.textContent = this.value;
-    window.turnSpeed = parseFloat(this.value);
 });
 
 document.getElementById('acceleration').addEventListener('input', function () {
