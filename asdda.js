@@ -985,7 +985,7 @@ var eventListeners = [
             if (!config.keysPressed.includes(e.key)) {
                 config.keysPressed.push(e.key);
             };
-            if (config.keysPressed.includes('End') && config.keysPressed.includes('1')) {
+            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('1')) {
                 e.preventDefault();
                 config.hacks.airBreak.enabled = !config.hacks.airBreak.enabled;
                 config.tank.position.x = myTankPos.d18_1;
@@ -1001,7 +1001,7 @@ var eventListeners = [
                     };
                 };
             };
-            if (config.keysPressed.includes('End') && config.keysPressed.includes('2')) {
+            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('2')) {
                 e.preventDefault();
                 if (config.hacks.antiAim.enabled && !config.hacks.antiAim.top) {
                     config.hacks.antiAim.top = true;
@@ -1010,38 +1010,38 @@ var eventListeners = [
                 config.hacks.antiAim.enabled = !config.hacks.antiAim.enabled;
                 config.hacks.antiAim.top = false;
             };
-            if (config.keysPressed.includes('End') && config.keysPressed.includes('+')) {
+            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('+')) {
                 e.preventDefault();
                 config.hacks.airBreak.speed += 5;
             };
-            if (config.keysPressed.includes('End') && config.keysPressed.includes('-')) {
+            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('-')) {
                 e.preventDefault();
                 config.hacks.airBreak.speed -= 5;
             };
-            if (config.keysPressed.includes('End') && config.keysPressed.includes('3')) {
+            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('3')) {
                 e.preventDefault();
                 config.hacks.followTank.enabled = !config.hacks.followTank.enabled;
                 otherTankPos = getPositionOfTank(getTanks('others')[config.hacks.followTank.index]);
             };
-            if (config.keysPressed.includes('End') && config.keysPressed.includes('y')) {
+            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('y')) {
                 e.preventDefault();
                 otherTanks = getTanks('others');
                 config.hacks.followTank.index = (config.hacks.followTank.index + 1) % otherTanks.length;
                 otherTankPos = getPositionOfTank(otherTanks[config.hacks.followTank.index]);
             };
-            if (config.keysPressed.includes('End') && config.keysPressed.includes('t')) {
+            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('t')) {
                 e.preventDefault();
                 otherTanks = getTanks('others');
                 config.hacks.followTank.index = (config.hacks.followTank.index - 1 + otherTanks.length) % otherTanks.length;
                 otherTankPos = getPositionOfTank(otherTanks[config.hacks.followTank.index]);
             };
-            if (config.keysPressed.includes('End') && config.keysPressed.includes('b')) {
+            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('b')) {
                 e.preventDefault();
                 try {
                     sendShells(Object.values(Object.values(searchInObject(getTanks('player' + nick)[0], '=== 2'))[0])[3]);
                 } catch (er) {};
             };
-            if (config.keysPressed.includes('End') && config.keysPressed.includes('v')) {
+            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('v')) {
                 e.preventDefault();
                 var myTankPosType;
                 if (config.hacks.airBreak.enabled) {
