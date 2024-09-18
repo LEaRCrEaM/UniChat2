@@ -1153,6 +1153,8 @@ function aa() {
             if (isGameActive && (t.classList.length > 1)) {
                 isGameActive = false;
                 console.log('left game');
+                window.TEST = [];
+                window.shells = [];
             };
             if (!isGameActive && !(t.classList.length > 1)) {
                 isGameActive = true;
