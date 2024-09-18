@@ -93,7 +93,7 @@
         if (document.querySelector('.BreadcrumbsComponentStyle-exitGameButton') && (!window.getTank || TEST.length > 0)) {
             window.getTank = true;
             window.flagPos1 = null;
-            window.TEST = [];
+            //window.TEST = [];
         };
         if (t = document.querySelector('.UserInfoContainerStyle-progressValue')) {
             if (t.textContent !== User.exp) {
