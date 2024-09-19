@@ -716,48 +716,33 @@ window.Speed = 1;
 window.Acceleration = 1;
 window.aimAmount = 4;
 window.espEnabled = false;
-if (localStorage['apap'] === 'true') {
+if (localStorage['apap'] == 'true') {
     document.getElementById('skin-check').setAttribute('checked', '');
-    
-    let ta = 0;
-    const originalFetch = fetch;
-    const replacements = {};
-
+    var ta = 0;
+    var o = fetch;
+    var replacements = {};
     try {
-        const selectedTurretKey = Object.entries(SelectedTank.turret)[0][0];
-        const selectedHullKey = Object.entries(SelectedTank.hull)[0][0];
-
-        const turretSkins = Skins[selectedTurretKey][SelectedTank.turret[selectedTurretKey]];
-        const hullSkins = Skins[selectedHullKey][SelectedTank.hull[selectedHullKey]];
-
-        for (const k in turretSkins) {
-            replacements[Skins[selectedTurretKey].or[k]] = turretSkins[k];
-        }
-        
-        for (const k in hullSkins) {
-            replacements[Skins[selectedHullKey].or[k]] = hullSkins[k];
-        }
-    } catch (error) {
-        console.error('Error in setting up replacements:', error);
-    }
-
-    fetch = function(...args) {
+        for (const k in t = Skins[Object.entries(SelectedTank.turret)[0][0]][SelectedTank.turret[Object.entries(SelectedTank.turret)[0][0]]]) {
+            replacements[Skins[Object.entries(SelectedTank.turret)[0][0]].or[k]] = t[k];
+        };
+        for (const k in t = Skins[Object.entries(SelectedTank.hull)[0][0]][SelectedTank.hull[Object.entries(SelectedTank.hull)[0][0]]]) {
+            replacements[Skins[Object.entries(SelectedTank.hull)[0][0]].or[k]] = t[k];
+        };
+    } catch (error) {};
+    fetch = function() {
         for (let key in replacements) {
-            if (args[0].includes(key)) {
+            if (arguments[0].includes(key)) {
                 ta++;
-                args[0] = args[0].replace(key, replacements[key]);
-            }
-        }
-        
-        // Restore the original fetch function after 5 replacements
-        if (ta > 5) {
-            console.log('Restoring original fetch function:', originalFetch);
-            fetch = originalFetch;
-        }
-        
-        return originalFetch.apply(this, args);
+                arguments[0] = arguments[0].replace(key, replacements[key]);
+                if (ta > 5) {
+                    console.log('Restoring original fetch function:', o);
+                    fetch = o;
+                };
+            };
+        };
+        return o.apply(this, arguments);
     };
-}
+};
 
 // Get references to the output elements
 const speedOutput = document.getElementById('speed-output');
