@@ -1112,12 +1112,11 @@ function addEventListeners() {
         e.elm.addEventListener(e.type, e.func);
         console.log(`added ${e.type} to ${e.elm}`);
     });
-    /*interval = setInterval(() => {
+    interval = setInterval(() => {
         mines.forEach(mine => {
-            akt(mine);
-            mines = mines.filter(mine2 => mine2 !== mine);
+            mineRemFunc(mine);
         });
-    });*/
+    });
     try {
         aa();
     } catch (error) {
