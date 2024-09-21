@@ -886,22 +886,22 @@ function a() {
             document.querySelector('label[for="Turret"]').textContent = User.turret.name;
             document.querySelector('label[for="Hull"]').textContent = User.hull.name;
             for (const k in SelectedTank.turret) {
-                if (k !== User.turret.name.toLowerCase()) {
+                if (k !== User?.turret?.name?.toLowerCase()) {
                     delete SelectedTank.turret[k];
                 };
             };
             for (const k in SelectedTank.hull) {
-                if (k !== User.hull.name.toLowerCase()) {
+                if (k !== User?.hull?.name?.toLowerCase()) {
                     delete SelectedTank.hull[k];
                 };
             };
-            SelectedTank.hull[User.hull.name.toLowerCase()] = Hull.value;
-            SelectedTank.turret[User.turret.name.toLowerCase()] = Turret.value;
+            SelectedTank.hull[User?.hull?.name?.toLowerCase()] = Hull.value;
+            SelectedTank.turret[User?.turret?.name?.toLowerCase()] = Turret.value;
             localStorage['papa'] = JSON.stringify(SelectedTank);
             Hull.innerHTML = '';
             Turret.innerHTML = '';
             try {
-                for (const k in t = Object.entries(Skins?.[User.hull.name.toLowerCase()])) {
+                for (const k in t = Object.entries(Skins?.[User?.hull?.name?.toLowerCase()])) {
                     if (t[k][0] !== 'or') {
                         var el = document.createElement('option');
                         el.textContent = t[k][0];
@@ -909,7 +909,7 @@ function a() {
                         Hull.appendChild(el);
                     };
                 };
-                for (const k in t = Object.entries(Skins?.[User.turret.name.toLowerCase()])) {
+                for (const k in t = Object.entries(Skins?.[User?.turret?.name?.toLowerCase()])) {
                     if (t[k][0] !== 'or') {
                         var el = document.createElement('option');
                         el.textContent = t[k][0];
