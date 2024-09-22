@@ -1082,6 +1082,14 @@ var eventListeners = [
                     myTankPosType[Object.keys(myTankPosType)[2]] = searchInObject(Object.values(flagPos2).filter(t => t?.__proto__), '=== 41')[1].f18_1;
                 };
             };
+            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('4')) {
+                config.hacks.spectate.enabled = !config.hacks.spectate.enabled;
+                if (config.hacks.spectate.enabled) {
+                    setSpec();
+                } else {
+                    resetSpec();
+                };
+            };
         }
     },
     {
@@ -1102,6 +1110,9 @@ var eventListeners = [
                     nick = e.target.textContent;
                 } else {
                     nick = e.target.textContent.split(' ')[1];
+                };
+                if (config.hacks.spectate.enabled) {
+                    specPlayer(`player${nick}`);
                 };
             };
         }
@@ -1160,6 +1171,9 @@ var config = {
         flagTp: {
             index: true
         },
+        spectate: {
+            enabled: false
+        },
         autoPress: []
     },
     keysPressed: []
@@ -1173,12 +1187,14 @@ function aa() {
             if (isGameActive && (t.classList.length > 1)) {
                 isGameActive = false;
                 console.log('left game');
+                resetSpec();
                 window.TEST = [];
                 window.shells = [];
             };
             if (!isGameActive && !(t.classList.length > 1)) {
                 isGameActive = true;
                 console.log('joined game');
+                updateSpec();
                 function onJoinGame2() {
                     try {
                         onJoinGame();
@@ -1210,7 +1226,7 @@ function aa() {
                     };
                 };
             };
-            if (!isChatOpen()) {
+            if (!isChatOpen() && !config.hacks.spectate.enabled) {
                 if (config.keysPressed.includes('w')) {
                     config.tank.position.y = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], config.tank.position.y + config.hacks.airBreak.speed));
                 };
@@ -1291,4 +1307,138 @@ function sendShells(player) {
         //}, i * 300);
         i++;
     });
+};
+var camera, cameraPos = {x:null,y:null,z:null}, cameraFuncs = {}, r2 = true, f2, f3, r3 = true;
+function b(){};
+function getSpec() {
+    var first = searchInObject(Camera, '== 17');
+    var second = searchInObject(Object.values(first)[0], '== 1');
+    var third = searchInObject(Object.values(second)[3], '== 41');
+    return Object.values(third)[0];
+};
+function saveCameraFuncs() {
+    for (const k in t = camera) {
+        cameraFuncs[k] = t[k];
+    };
+};
+function setSpec() {
+    config.hacks.spectate.enabled = true;
+    for (const k in t = camera) {
+        if (typeof t[k] == 'function') {
+            t[k] = function(){};
+        };
+    };
+    r2 = true;
+    function b() {
+        if (r2) {
+            f2 = requestAnimationFrame(b);
+            if (keysPressed.includes('w')) {
+                cameraPos.x += 100;
+            };
+            if (keysPressed.includes('s')) {
+                cameraPos.x -= 100;
+            };
+            if (keysPressed.includes('a')) {
+                cameraPos.y += 100;
+            };
+            if (keysPressed.includes('d')) {
+                cameraPos.y -= 100;
+            };
+            if (keysPressed.includes('f')) {
+                cameraPos.z += 100;
+            };
+            if (keysPressed.includes('v')) {
+                cameraPos.z -= 100;
+            };
+            camera.d18_1 = cameraPos.x;
+            camera.e18_1 = cameraPos.y;
+            camera.f18_1 = cameraPos.z;
+        };
+    };
+    try {
+        b();
+    } catch (er) {
+        console.log(er);
+        r2 = false;
+        cancelAnimationFrame(f2);
+    };
+    setPointerMovement();
+    config.tank.position.x = myTankPos.d18_1;
+    config.tank.position.y = myTankPos.e18_1;
+    config.tank.position.z = Object.values(mapBounds)[2];
+    config.hacks.airBreak.enabled = true;
+};
+function updateSpec() {
+    camera = getSpec();
+    saveCameraFuncs();
+};
+var keysPressed = [];
+document.addEventListener('keydown', (e) => {
+    if (!keysPressed.includes(e.key)) {
+        keysPressed.push(e.key);
+    };
+});
+document.addEventListener('keyup', (e) => {
+    keysPressed = keysPressed.filter(t => t !== e.key);
+});
+function resetSpec() {
+    config.hacks.spectate.enabled = false;
+    myTankPos.f18_1 = Object.values(mapBounds)[5];
+    for (const k in cameraFuncs) {
+        camera[k] = cameraFuncs[k];
+    };
+    r2 = false;
+    f3 = false;
+    cancelAnimationFrame(f2);
+    cancelAnimationFrame(f3);
+    resetPointerMovement();
+    config.hacks.airBreak.enabled = false;
+};
+function specPlayer(player) {
+    if (f3) {
+        cancelAnimationFrame(f3);
+    };
+    var player = getPositionOfTank(getTanks('player' + player)[0]);
+    f3, r3 = true;
+    function a3() {
+        if (r3) {
+            f3 = requestAnimationFrame(a3);
+            cameraPos.x = player.d18_1;
+            cameraPos.y = player.e18_1;
+            cameraPos.z = player.f18_1;
+        };
+    };
+    try {
+        a3();
+    } catch (er) {
+        console.log(er);
+        r3 = false;
+        cancelAnimationFrame(f3);
+    };
+};
+function stopSpec() {
+    r3 = false;
+    cancelAnimationFrame(f3);
+};
+function pointerMovement(e) {
+    const canvas = document.querySelectorAll('canvas')[1];
+    const movementY = e.movementY;
+    if (document.pointerLockElement === canvas) {
+        if (movementY > 0) {
+            press('KeyQ', true);
+            setTimeout(() => press('KeyQ', false), Math.abs(500 * movementY));
+        } else if (movementY < 0) {
+            press('KeyE', true);
+            setTimeout(() => press('KeyE', false), Math.abs(500 * movementY));
+        } else {
+            press('KeyQ', false);
+            press('KeyE', false);
+        };
+    };
+};
+function resetPointerMovement() {
+    document.querySelectorAll('canvas')[1].removeEventListener('mousemove', pointerMovement);
+};
+function setPointerMovement() {
+    document.querySelectorAll('canvas')[1].addEventListener('mousemove', pointerMovement);
 };
