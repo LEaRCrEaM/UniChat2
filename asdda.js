@@ -757,7 +757,9 @@ if (localStorage['apap'] == 'true') {
                 arguments[0] = arguments[0].replace(key, replacements[key]);
                 if (ta > 5) {
                     console.log('Restoring original fetch function:', o);
-                    fetch = o;
+                    setTimeout(() => {
+                        fetch = o;
+                    }, 5000);
                 };
             };
         };
