@@ -1308,8 +1308,12 @@ function sendShells(player) {
         i++;
     });
 };
-var camera, cameraPos = {x:null,y:null,z:null}, cameraFuncs = {}, r2 = true, f2, f3, r3 = true;
-function b(){};
+var camera, cameraPos = {x:0, y:0, z:0}, cameraVel = {x:0, y:0, z:0}, cameraFuncs = {}, r2 = true, f2, f3, r3 = true;
+const maxSpeed = 100;
+const acceleration = 5;
+const deceleration = 3;
+const followSmoothingFactor = 0.1;
+function b() {}
 function getSpec() {
     var first = searchInObject(Camera, '== 17');
     var second = searchInObject(Object.values(first)[0], '== 1');
@@ -1325,31 +1329,28 @@ function setSpec() {
     config.hacks.spectate.enabled = true;
     for (const k in t = camera) {
         if (typeof t[k] == 'function') {
-            t[k] = function(){};
+            t[k] = function() {};
         };
     };
     r2 = true;
     function b() {
         if (r2) {
             f2 = requestAnimationFrame(b);
-            if (keysPressed.includes('w')) {
-                cameraPos.x += 100;
-            };
-            if (keysPressed.includes('s')) {
-                cameraPos.x -= 100;
-            };
-            if (keysPressed.includes('a')) {
-                cameraPos.y += 100;
-            };
-            if (keysPressed.includes('d')) {
-                cameraPos.y -= 100;
-            };
-            if (keysPressed.includes('f')) {
-                cameraPos.z += 100;
-            };
-            if (keysPressed.includes('v')) {
-                cameraPos.z -= 100;
-            };
+            if (keysPressed.includes('w')) cameraVel.x = Math.min(cameraVel.x + acceleration, maxSpeed);
+            else if (cameraVel.x > 0) cameraVel.x = Math.max(cameraVel.x - deceleration, 0);
+            if (keysPressed.includes('s')) cameraVel.x = Math.max(cameraVel.x - acceleration, -maxSpeed);
+            else if (cameraVel.x < 0) cameraVel.x = Math.min(cameraVel.x + deceleration, 0);
+            if (keysPressed.includes('a')) cameraVel.y = Math.min(cameraVel.y + acceleration, maxSpeed);
+            else if (cameraVel.y > 0) cameraVel.y = Math.max(cameraVel.y - deceleration, 0);
+            if (keysPressed.includes('d')) cameraVel.y = Math.max(cameraVel.y - acceleration, -maxSpeed);
+            else if (cameraVel.y < 0) cameraVel.y = Math.min(cameraVel.y + deceleration, 0);
+            if (keysPressed.includes('f')) cameraVel.z = Math.min(cameraVel.z + acceleration, maxSpeed);
+            else if (cameraVel.z > 0) cameraVel.z = Math.max(cameraVel.z - deceleration, 0);
+            if (keysPressed.includes('v')) cameraVel.z = Math.max(cameraVel.z - acceleration, -maxSpeed);
+            else if (cameraVel.z < 0) cameraVel.z = Math.min(cameraVel.z + deceleration, 0);
+            cameraPos.x += cameraVel.x;
+            cameraPos.y += cameraVel.y;
+            cameraPos.z += cameraVel.z;
             camera.d18_1 = cameraPos.x;
             camera.e18_1 = cameraPos.y;
             camera.f18_1 = cameraPos.z;
@@ -1399,13 +1400,16 @@ function specPlayer(player) {
         cancelAnimationFrame(f3);
     };
     var player = getPositionOfTank(getTanks('player' + player)[0]);
-    f3, r3 = true;
+    r3 = true;
     function a3() {
         if (r3) {
             f3 = requestAnimationFrame(a3);
-            cameraPos.x = player.d18_1;
-            cameraPos.y = player.e18_1;
-            cameraPos.z = player.f18_1;
+            cameraPos.x += (player.d18_1 - cameraPos.x) * followSmoothingFactor;
+            cameraPos.y += (player.e18_1 - cameraPos.y) * followSmoothingFactor;
+            cameraPos.z += (player.f18_1 - cameraPos.z) * followSmoothingFactor;
+            camera.d18_1 = cameraPos.x;
+            camera.e18_1 = cameraPos.y;
+            camera.f18_1 = cameraPos.z;
         };
     };
     try {
