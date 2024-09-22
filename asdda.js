@@ -1112,7 +1112,7 @@ var eventListeners = [
                     nick = e.target.textContent.split(' ')[1];
                 };
                 if (config.hacks.spectate.enabled) {
-                    specPlayer(`player${nick}`);
+                    specPlayer(nick);
                 };
             };
         }
@@ -1388,7 +1388,7 @@ function resetSpec() {
         camera[k] = cameraFuncs[k];
     };
     r2 = false;
-    f3 = false;
+    r3 = false;
     cancelAnimationFrame(f2);
     cancelAnimationFrame(f3);
     resetPointerMovement();
