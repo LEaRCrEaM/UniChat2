@@ -49,10 +49,6 @@
                         window[k] = 't';
                     };
                 };
-                if ((User.name.length > 2) && (['Oppressor', 'Sick', 'Peak', 'Scars'].includes(User.name))) {
-                    alert(`${User.name}'s permission has been blocked!`);
-                    alert(`I'm just kiddin nigga ${User.name}`);
-                };
             };
         };
         if (document.querySelector('.FriendListComponentStyle-scrollCommunity')) {
