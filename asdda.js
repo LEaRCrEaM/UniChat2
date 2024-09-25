@@ -974,10 +974,19 @@ function onJoinGame() {
     third = searchInObject(Object.values(Object.values(second)[0]).filter(t => t?.__proto__), '=== 21');
     fourth = Object.values(searchInObject(Object.values(third[3]).filter(t => t?.__proto__), '=== 18'))[0];
     myTankPos = getPositionOfTank(getTanks('self')[0]);
+    (() => {
+        var first = searchInObject(TEST[TEST.length-1], '==15');;
+        var second = searchInObject(Object.values(first)[0], '==65');
+        var third = searchInObject(Object.values(second)[0], '==18');
+        var fourth = Object.values(third)[0];
+        var fifth = Object.values(fourth)[0][3];
+        var sixth = searchInObject(Object.values(fifth), '==41');
+        myTankIntPos = Object.values(sixth)[1];
+    })();
     myTankInfo = getInfoOfTank(getTanks('self')[0]);
     otherTanks = getTanks('others');
 };
-var myTankPos, myTankInfo, otherTanks, otherTankPos, isGameActive = false;
+var myTankPos, myTankIntPos, myTankInfo, otherTanks, otherTankPos, isGameActive = false;
 function getTanks(t) {
     if (t == 'others') {
         return Object.values(fourth)[0].filter(p => {
@@ -1071,7 +1080,7 @@ var eventListeners = [
                 if (config.hacks.airBreak.enabled) {
                     myTankPosType = config.tank.position;
                 } else {
-                    myTankPosType = myTankPos;
+                    myTankPosType = myTankIntPos;
                 };
                 if (config.hacks.flagTp.index) {
                     config.hacks.flagTp.index = !config.hacks.flagTp.index;
@@ -1260,9 +1269,9 @@ function aa() {
                     };
                 };
             };
-            myTankPos.d18_1 = getRandomNumberBetween(Object.values(mapBounds)[0], Object.values(mapBounds)[3]);
-            myTankPos.e18_1 = getRandomNumberBetween(Object.values(mapBounds)[1], Object.values(mapBounds)[4]);
-            myTankPos.f18_1 = config.hacks.antiAim.top ? Object.values(mapBounds)[5] : Object.values(mapBounds)[2];
+            myTankIntPos.d18_1 = getRandomNumberBetween(Object.values(mapBounds)[0], Object.values(mapBounds)[3]);
+            myTankIntPos.e18_1 = getRandomNumberBetween(Object.values(mapBounds)[1], Object.values(mapBounds)[4]);
+            myTankIntPos.f18_1 = config.hacks.antiAim.top ? Object.values(mapBounds)[5] : Object.values(mapBounds)[2];
         };
         if (config.hacks.followTank.enabled && otherTankPos?.d18_1) {
             for (let i=0;i<2;i++) {
