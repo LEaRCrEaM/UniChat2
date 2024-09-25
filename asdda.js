@@ -951,6 +951,7 @@ function isChatOpen() {
     return document.querySelectorAll('input[type="text"]').length > 0;
 };
 function searchInObject(objectToSearch, comparisonString) {
+    objectToSearch = Object.values(objectToSearch).filter(t => t?.__proto__);
     if (typeof objectToSearch !== 'object' || objectToSearch === null) {
         throw new TypeError('First argument must be a non-null object');
     };
