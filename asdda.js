@@ -1260,15 +1260,6 @@ function aa() {
             };
         };
         if (config.hacks.antiAim.enabled) {
-            for (let i=0;i<2;i++) {
-                var i2 = 0;
-                for (const k in t = myTankInfo[i]) {
-                    if ((i2 < 4) && typeof t[k] == 'number') {
-                        t[k] = 0;
-                        i2++
-                    };
-                };
-            };
             myTankIntPos.d18_1 = getRandomNumberBetween(Object.values(mapBounds)[0], Object.values(mapBounds)[3]);
             myTankIntPos.e18_1 = getRandomNumberBetween(Object.values(mapBounds)[1], Object.values(mapBounds)[4]);
             myTankIntPos.f18_1 = config.hacks.antiAim.top ? Object.values(mapBounds)[5] : Object.values(mapBounds)[2];
