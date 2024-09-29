@@ -969,6 +969,7 @@ function searchInObject(objectToSearch, comparisonString) {
 };
 var first, second, third, fourth;
 function onJoinGame() {
+    updateSpec();
     first = searchInObject(Object.values(TEST[TEST.length - 1]).filter(t => t?.__proto__), '=== 15');
     second = searchInObject(Object.values(Object.values(first)[0]).filter(t => t?.__proto__), '> 18');
     third = searchInObject(Object.values(Object.values(second)[0]).filter(t => t?.__proto__), '=== 21');
