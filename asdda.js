@@ -194,7 +194,7 @@ var SelectedTank = {
     hull: {}
 };
 document.body.insertAdjacentHTML('beforeend', `
-<div class='gui3'>
+<div class='gui3' style="display:none">
     <h1>SKIN SELECTION</h1>
     <div class="selection-container">
         <div class="selection-item">
@@ -208,7 +208,7 @@ document.body.insertAdjacentHTML('beforeend', `
     </div>
 </div>
 
-<div class='gui2'>
+<div class='gui2' style="display:none">
     <div class="switch-group">
         <div class="switch-item">
             <input id='skin-check' class='hotkey' type='checkbox'>
