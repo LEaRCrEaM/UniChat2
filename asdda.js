@@ -695,6 +695,7 @@ input[type='checkbox']:checked + .slider:before {
 `][Math.floor(Math.random()*2)]}
 </style>
 `);
+document.querySelectorAll('.gui2, .gui3').forEach(e => e.style.display = 'none');
 function updateAimAmount() {
     try {
         AIM;
