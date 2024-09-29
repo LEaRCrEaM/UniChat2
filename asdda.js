@@ -992,24 +992,24 @@ function getTanks(t) {
         return Object.values(fourth)[0].filter(p => {
             var first1 = Object.values(searchInObject(Object.values(p).filter(t => t?.__proto__), '=== 15'))[0];
             var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 18');
-            return Object.values(Object.values(second1)[0])[0].some(p => p.v12k_1)
+            return Object.values(Object.values(second1)[0])[0].some(p => p.e12o_1)
         });
     } else if (t == 'self') {
         return Object.values(fourth)[0].filter(p => {
             var first1 = Object.values(searchInObject(Object.values(p).filter(t => t?.__proto__), '=== 15'))[0];
             var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 18');
-            return !Object.values(Object.values(second1)[0])[0].some(p => p.v12k_1)
+            return !Object.values(Object.values(second1)[0])[0].some(p => p.e12o_1)
         });
     } else if (t.includes('player')) {
         return Object.values(fourth)[0].filter(p => {
             var first1 = Object.values(searchInObject(Object.values(p).filter(t => t?.__proto__), '=== 15'))[0];
             var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 18');
-            return Object.values(Object.values(second1)[0])[0].some(p => p?.v12k_1?.includes(t.replace('player', '')))
+            return Object.values(Object.values(second1)[0])[0].some(p => p?.e12o_1?.includes(t.replace('player', '')))
         });
     } else {
         return;
     };
-};
+}
 var eventListeners = [
     {
         elm: document,
