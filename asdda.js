@@ -234,6 +234,11 @@ document.body.insertAdjacentHTML('beforeend', `
             <label for='aimbot' class="slider"></label>
             <label for='aimbot' class="switch-label">Aimbot</label>
         </div>
+        
+        <div class="switch-item">
+            <input type="color" id="colorPicker"/>
+            <label for='colorPicker' class="switch-label">Esp Color</label>
+        </div>
     </div>
 
     <div class="slider-controls">
@@ -695,6 +700,15 @@ input[type='checkbox']:checked + .slider:before {
 `][Math.floor(Math.random()*2)]}
 </style>
 `);
+const colorPicker = document.getElementById("colorPicker");
+colorPicker.addEventListener("input", function() {
+    const hexColor = colorPicker.value;
+    const decimalColor = hexToDecimal(hexColor);
+    window.espColor = decimalColor;
+});
+function hexToDecimal(hex) {
+    return parseInt(hex.slice(1), 16);
+};
 document.querySelectorAll('.gui2, .gui3').forEach(e => e.style.display = 'none');
 function updateAimAmount() {
     try {
