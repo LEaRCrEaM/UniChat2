@@ -266,6 +266,7 @@ document.body.insertAdjacentHTML('beforeend', `
 <style>
 ${[`
 .gui2, .gui3 {
+    display: none;
     background: linear-gradient(135deg, #1e3c72, #2a5298, #162447);
     background-size: 400% 400%;
     animation: backgroundFlow 12s ease infinite;
@@ -478,6 +479,7 @@ input[type='checkbox']:checked + .slider:before {
     opacity: 1;
     transform: translateY(0);
 }`,`.gui2, .gui3 {
+    display: none;
     background: linear-gradient(135deg, #8B0000, #B22222, #4B0000);
     background-size: 400% 400%;
     animation: backgroundFlow 12s ease infinite;
