@@ -290,6 +290,10 @@ ${[`
     bottom: 0;
 }
 
+.gui3 {
+    right: 0;
+}
+
 @keyframes backgroundFlow {
     0% {
         background-position: 0% 0%;
