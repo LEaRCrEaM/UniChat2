@@ -1080,7 +1080,7 @@ var eventListeners = [
                 if (config.hacks.airBreak.enabled) {
                     myTankPosType = config.tank.position;
                 } else {
-                    myTankPosType = myTankIntPos;
+                    myTankPosType = myTankPos;
                 };
                 if (config.hacks.flagTp.index) {
                     config.hacks.flagTp.index = !config.hacks.flagTp.index;
@@ -1260,9 +1260,9 @@ function aa() {
             };
         };
         if (config.hacks.antiAim.enabled) {
-            myTankIntPos.d18_1 = getRandomNumberBetween(Object.values(mapBounds)[0], Object.values(mapBounds)[3]);
-            myTankIntPos.e18_1 = getRandomNumberBetween(Object.values(mapBounds)[1], Object.values(mapBounds)[4]);
-            myTankIntPos.f18_1 = config.hacks.antiAim.top ? Object.values(mapBounds)[5] : Object.values(mapBounds)[2];
+            myTankPos.d18_1 = getRandomNumberBetween(Object.values(mapBounds)[0], Object.values(mapBounds)[3]);
+            myTankPos.e18_1 = getRandomNumberBetween(Object.values(mapBounds)[1], Object.values(mapBounds)[4]);
+            myTankPos.f18_1 = config.hacks.antiAim.top ? Object.values(mapBounds)[5] : Object.values(mapBounds)[2];
         };
         if (config.hacks.followTank.enabled && otherTankPos?.d18_1) {
             for (let i=0;i<2;i++) {
