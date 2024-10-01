@@ -1,3 +1,4 @@
+var window.DEBUG = 5;
 var Skins = {
   "firebird": {
     "or": "573/113511/153/137/31033604622310",
@@ -776,7 +777,7 @@ if (localStorage['apap'] == 'true') {
             if (arguments[0].includes(key)) {
                 ta++;
                 arguments[0] = arguments[0].replace(key, replacements[key]);
-                if (ta > 5) {
+                if (ta > window.DEBUG) {
                     console.log('Restoring original fetch function:', o);
                     setTimeout(() => {
                         fetch = o;
