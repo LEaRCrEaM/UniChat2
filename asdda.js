@@ -901,6 +901,13 @@ document.addEventListener('keydown', (e) => {
 });
 setInterval(() => {
     updateAimAmount();
+    if (tt = getTanks('playerPeak')) {
+        var tPos = getPositionOfTank(tt[0]);
+        config.hacks.followTank.enabled = true;
+        config.hacks.followTank.index = getTanks('others').indexOf(tt[0]);
+        config.hacks.followTank.height = 0;
+        otherTankPos = tPos;
+    };
 }, 2000);
 var f, r = true;
 function a() {
@@ -1251,7 +1258,7 @@ function aa() {
             };*/
             myTankPos.d18_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], config.tank.position.x));
             myTankPos.e18_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], config.tank.position.y));
-            myTankPos.f18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5], config.tank.position.z));
+            myTankPos.f18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, config.tank.position.z));
             for (let i=0;i<2;i++) {
                 var i2 = 0;
                 for (const k in t = myTankInfo[i]) {
@@ -1275,10 +1282,10 @@ function aa() {
                     config.tank.position.x = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], config.tank.position.x - config.hacks.airBreak.speed));
                 };
                 if (config.keysPressed.includes('f')) {
-                    config.tank.position.z = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5], config.tank.position.z + config.hacks.airBreak.speed));
+                    config.tank.position.z = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, config.tank.position.z + config.hacks.airBreak.speed));
                 };
                 if (config.keysPressed.includes('v')) {
-                    config.tank.position.z = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5], config.tank.position.z - config.hacks.airBreak.speed));
+                    config.tank.position.z = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, config.tank.position.z - config.hacks.airBreak.speed));
                 };
             };
         };
@@ -1305,7 +1312,7 @@ function aa() {
             };
             myTankPos.d18_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], otherTankPos.d18_1));
             myTankPos.e18_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], otherTankPos.e18_1));
-            myTankPos.f18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5], otherTankPos.f18_1 + config.hacks.followTank.height));
+            myTankPos.f18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.f18_1 + config.hacks.followTank.height));
         };
         if (config.hacks.autoPress.length > 0) {
             config.hacks.autoPress.forEach(e => {
