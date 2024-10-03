@@ -1,4 +1,4 @@
-window.DEBUGS = 5;
+window.DEBUG = 5;
 var Skins = {
   "firebird": {
     "or": "573/113511/153/137/31033604622310",
