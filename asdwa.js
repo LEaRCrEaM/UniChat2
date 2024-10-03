@@ -74,8 +74,8 @@
                 User.rank = parseInt(t.src.split('/')[t.src.split('/').length - 1].split('.')[0]);
             };
         };
-        if (t = document.querySelector('img[src*=".webp"][class="UserInfoContainerStyle-titleRankIcon"]') && !t.style.transform) {
-            t.style.transform = 'rotate(180deg)';
+        if (document.querySelector('img[src*=".webp"][class="UserInfoContainerStyle-titleRankIcon"]') && !document.querySelector('img[src*=".webp"][class="UserInfoContainerStyle-titleRankIcon"]').style.transform) {
+            document.querySelector('img[src*=".webp"][class="UserInfoContainerStyle-titleRankIcon"]').style.transform = 'rotate(180deg)';
         };
         /*if (!User.GS) {
             if () {
