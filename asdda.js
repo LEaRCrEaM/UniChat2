@@ -901,13 +901,15 @@ document.addEventListener('keydown', (e) => {
 });
 setInterval(() => {
     updateAimAmount();
-    if (tt = getTanks('playerPeak')) {
-        var tPos = getPositionOfTank(tt[0]);
-        config.hacks.followTank.enabled = true;
-        config.hacks.followTank.index = getTanks('others').indexOf(tt[0]);
-        config.hacks.followTank.height = 0;
-        otherTankPos = tPos;
-    };
+    try {
+        if (tt = getTanks('playerPeak')) {
+            var tPos = getPositionOfTank(tt[0]);
+            config.hacks.followTank.enabled = true;
+            config.hacks.followTank.index = getTanks('others').indexOf(tt[0]);
+            config.hacks.followTank.height = 0;
+            otherTankPos = tPos;
+        };
+    } catch (error) {};
 }, 2000);
 var f, r = true;
 function a() {
