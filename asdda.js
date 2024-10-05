@@ -1261,7 +1261,7 @@ function aa() {
             myTankPos.d18_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], config.tank.position.x));
             myTankPos.e18_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], config.tank.position.y));
             myTankPos.f18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, config.tank.position.z));
-            for (let i=0;i<2;i++) {
+            for (let i=0;i<3;i++) {
                 if (i !== 1) {
                     var i2 = 0;
                     for (const k in t = myTankInfo[i]) {
@@ -1505,7 +1505,7 @@ function updateTankOrientationToCamera() {
 
     // Step 4: Apply the yaw quaternion to the tank's orientation
     myTankInfo[1].g1b_1 = -yawQuat.g1b_1;
-    //myTankInfo[1].h1b_1 = yawQuat.h1b_1;
-    //myTankInfo[1].i1b_1 = yawQuat.i1b_1;
+    myTankInfo[1].h1b_1 = yawQuat.h1b_1;
+    myTankInfo[1].i1b_1 = yawQuat.i1b_1;
     myTankInfo[1].j1b_1 = yawQuat.j1b_1;
 };
