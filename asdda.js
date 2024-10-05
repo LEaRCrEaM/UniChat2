@@ -761,6 +761,7 @@ Hull.value = SelectedTank.hull[Object.entries(SelectedTank.hull)[0][0]];
 Turret.value = SelectedTank.turret[Object.entries(SelectedTank.turret)[0][0]];
 window.Hack = document.getElementById('speed-check').checked;
 window.Aimbot = document.getElementById('aimbot').checked;
+window.Aimbot2 = document.getElementById('aimbot2').checked;
 window.Speed = 1;
 window.Acceleration = 1;
 window.aimAmount = 4;
@@ -860,7 +861,7 @@ document.getElementById('aimbot').addEventListener('change', function () {
     window.Aimbot = this.checked;
 });
 
-document.getElementById('aimbot').addEventListener('change', function () {
+document.getElementById('aimbot2').addEventListener('change', function () {
     window.Aimbot2 = this.checked;
     if (this.checked) {
         var first = searchInObject(AIM, '==1')[0];
