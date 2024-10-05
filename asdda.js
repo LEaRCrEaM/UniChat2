@@ -1273,24 +1273,47 @@ function aa() {
                 };
             };
             updateTankOrientationToCamera();
+            // Get the camera's yaw (direction the camera is facing)
+            const cameraYaw = -Camera.c15l_1.bzq_1.xzq_1; // Yaw for left-right
+        
+            // Calculate forward movement vector based on camera yaw
+            const forwardX = Math.sin(cameraYaw); // Movement in the X direction
+            const forwardZ = Math.cos(cameraYaw); // Movement in the Z direction
+        
+            // Move the tank based on key presses
             if (!isChatOpen() && !config.hacks.spectate.enabled) {
                 if (config.keysPressed.includes('w')) {
-                    config.tank.position.y = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], config.tank.position.y + config.hacks.airBreak.speed));
-                };
+                    // Move forward
+                    config.tank.position.x += forwardX * config.hacks.airBreak.speed;
+                    config.tank.position.y += forwardZ * config.hacks.airBreak.speed;
+                }
                 if (config.keysPressed.includes('s')) {
-                    config.tank.position.y = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], config.tank.position.y - config.hacks.airBreak.speed));
-                };
+                    // Move backward
+                    config.tank.position.x -= forwardX * config.hacks.airBreak.speed;
+                    config.tank.position.y -= forwardZ * config.hacks.airBreak.speed;
+                }
+        
+                // Calculate right movement vector, which is perpendicular to forward direction
+                const rightX = Math.cos(cameraYaw); // Movement in the X direction (perpendicular to forward)
+                const rightZ = -Math.sin(cameraYaw); // Movement in the Z direction (perpendicular to forward)
+        
                 if (config.keysPressed.includes('d')) {
-                    config.tank.position.x = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], config.tank.position.x + config.hacks.airBreak.speed));
-                };
+                    // Move right
+                    config.tank.position.x += rightX * config.hacks.airBreak.speed;
+                    config.tank.position.y += rightZ * config.hacks.airBreak.speed;
+                }
                 if (config.keysPressed.includes('a')) {
-                    config.tank.position.x = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], config.tank.position.x - config.hacks.airBreak.speed));
-                };
+                    // Move left
+                    config.tank.position.x -= rightX * config.hacks.airBreak.speed;
+                    config.tank.position.y -= rightZ * config.hacks.airBreak.speed;
+                }
+        
+                // Height adjustment based only on 'f' and 'v'
                 if (config.keysPressed.includes('f')) {
-                    config.tank.position.z = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, config.tank.position.z + config.hacks.airBreak.speed));
-                };
+                    config.tank.position.z += config.hacks.airBreak.speed; // Move up
+                }
                 if (config.keysPressed.includes('v')) {
-                    config.tank.position.z = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, config.tank.position.z - config.hacks.airBreak.speed));
+                    config.tank.position.z -= config.hacks.airBreak.speed; // Move down
                 };
             };
         };
@@ -1326,7 +1349,7 @@ function aa() {
             });
         };
     };
-}
+};
 addEventListeners();
 var nick = '';
 function sendShells(player) {
