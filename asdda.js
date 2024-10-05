@@ -1262,14 +1262,17 @@ function aa() {
             myTankPos.e18_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], config.tank.position.y));
             myTankPos.f18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, config.tank.position.z));
             for (let i=0;i<2;i++) {
-                var i2 = 0;
-                for (const k in t = myTankInfo[i]) {
-                    if ((i2 < 4) && typeof t[k] == 'number') {
-                        t[k] = 0;
-                        i2++
+                if (i !== 1) {
+                    var i2 = 0;
+                    for (const k in t = myTankInfo[i]) {
+                        if ((i2 < 4) && typeof t[k] == 'number') {
+                            t[k] = 0;
+                            i2++
+                        };
                     };
                 };
             };
+            updateTankOrientationToCamera();
             if (!isChatOpen() && !config.hacks.spectate.enabled) {
                 if (config.keysPressed.includes('w')) {
                     config.tank.position.y = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], config.tank.position.y + config.hacks.airBreak.speed));
@@ -1323,7 +1326,7 @@ function aa() {
             });
         };
     };
-};
+}
 addEventListeners();
 var nick = '';
 function sendShells(player) {
@@ -1480,4 +1483,29 @@ function resetPointerMovement() {
 };
 function setPointerMovement() {
     document.querySelectorAll('canvas')[1].addEventListener('mousemove', pointerMovement);
+};
+function updateTankOrientationToCamera() {
+    // Step 1: Get the camera's yaw (direction the camera is facing)
+    const cameraYaw = Camera.c15l_1.bzq_1.xzq_1; // The camera yaw value
+
+    // Step 2: Add 180 degrees (Math.PI radians) to the yaw to face the tank forward
+    const adjustedYaw = cameraYaw + Math.PI;
+
+    // Step 3: Convert the adjusted yaw to a quaternion
+    const halfYaw = adjustedYaw * 0.5;
+    const sinYaw = Math.sin(halfYaw);
+    const cosYaw = Math.cos(halfYaw);
+    
+    const yawQuat = {
+        g1b_1: sinYaw,  // Rotation in X-axis (yaw)
+        h1b_1: 0,       // No rotation in Y-axis (pitch)
+        i1b_1: 0,       // No rotation in Z-axis (roll)
+        j1b_1: cosYaw   // Scalar part of the quaternion
+    };
+
+    // Step 4: Apply the yaw quaternion to the tank's orientation
+    myTankInfo[1].g1b_1 = -yawQuat.g1b_1;
+    //myTankInfo[1].h1b_1 = yawQuat.h1b_1;
+    //myTankInfo[1].i1b_1 = yawQuat.i1b_1;
+    myTankInfo[1].j1b_1 = yawQuat.j1b_1;
 };
