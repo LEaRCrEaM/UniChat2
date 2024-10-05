@@ -237,7 +237,7 @@ document.body.insertAdjacentHTML('beforeend', `
         </div>
         
         <div class="switch-item">
-            <input id='aimbot2' class='hotkey' type='checkbox' checked>
+            <input id='aimbot2' class='hotkey' type='checkbox'>
             <label for='aimbot2' class="slider"></label>
             <label for='aimbot2' class="switch-label">Vertical Aim</label>
         </div>
