@@ -231,9 +231,15 @@ document.body.insertAdjacentHTML('beforeend', `
         </div>
 
         <div class="switch-item">
-            <input id='aimbot' class='hotkey' type='checkbox' checked>
+            <input id='aimbot' class='hotkey' type='checkbox'>
             <label for='aimbot' class="slider"></label>
             <label for='aimbot' class="switch-label">Aimbot</label>
+        </div>
+        
+        <div class="switch-item">
+            <input id='aimbot2' class='hotkey' type='checkbox' checked>
+            <label for='aimbot2' class="slider"></label>
+            <label for='aimbot2' class="switch-label">Vertical Aim</label>
         </div>
         
         <div class="switch-item">
@@ -854,6 +860,35 @@ document.getElementById('aimbot').addEventListener('change', function () {
     window.Aimbot = this.checked;
 });
 
+document.getElementById('aimbot').addEventListener('change', function () {
+    window.Aimbot2 = this.checked;
+    if (this.checked) {
+        var first = searchInObject(AIM, '==1')[0];
+        var second = searchInObject(first, '==1')[0];
+        var third = searchInObject(second, '==1')[0];
+        for (const k in third) {
+            if (third[k] < 0) {
+                third[k] = -2;
+            };
+            if ((third[k] > 0) && third[k] < 2) {
+                third[k] = 2;
+            };
+        };
+    } else {
+        var first = searchInObject(AIM, '==1')[0];
+        var second = searchInObject(first, '==1')[0];
+        var third = searchInObject(second, '==1')[0];
+        for (const k in third) {
+            if (third[k] < 0) {
+                third[k] = -2;
+            };
+            if ((third[k] > 0) && third[k] < 2) {
+                third[k] = 2;
+            };
+        };
+    };
+});
+
 document.getElementById('esp-check').addEventListener('change', function () {
     window.espEnabled = this.checked;
 });
@@ -1017,6 +1052,25 @@ function onJoinGame() {
     })();
     myTankInfo = getInfoOfTank(getTanks('self')[0]);
     otherTanks = getTanks('others');
+    AIM = null;
+    if (Aimbot2) {
+        var tempInt = setInterval(() => {
+            if (AIM) {
+                var first = searchInObject(AIM, '==1')[0];
+                var second = searchInObject(first, '==1')[0];
+                var third = searchInObject(second, '==1')[0];
+                for (const k in third) {
+                    if (third[k] < 0) {
+                        third[k] = -2;
+                    };
+                    if ((third[k] > 0) && third[k] < 2) {
+                        third[k] = 2;
+                    };
+                };
+                console.log('vertical aim done');
+            };
+        }, 1000);
+    };
 };
 var myTankPos, myTankIntPos, myTankInfo, otherTanks, otherTankPos, isGameActive = false;
 function getTanks(t) {
