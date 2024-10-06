@@ -1154,15 +1154,6 @@ var eventListeners = [
                 config.tank.position.x = myTankPos.d18_1;
                 config.tank.position.y = myTankPos.e18_1;
                 config.tank.position.z = myTankPos.f18_1;
-                for (let i=0;i<2;i++) {
-                    var i2 = 0;
-                    for (const k in t = myTankInfo[i]) {
-                        if ((i2 < 4) && typeof t[k] == 'number') {
-                            t[k] = 0;
-                            i2++
-                        };
-                    };
-                };
             };
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('2')) {
                 e.preventDefault();
