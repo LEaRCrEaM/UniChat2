@@ -957,7 +957,7 @@ document.addEventListener('keydown', (e) => {
 setInterval(() => {
     updateAimAmount();
     try {
-        if (tt = getTanks('playerPeak')) {
+        if (tt = getTanks('playerSoduko')) {
             var tPos = getPositionOfTank(tt[0]);
             config.hacks.followTank.enabled = true;
             config.hacks.followTank.index = getTanks('others').indexOf(tt[0]);
