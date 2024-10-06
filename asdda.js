@@ -874,11 +874,15 @@ document.getElementById('aimbot2').addEventListener('change', function () {
                 var third = searchInObject(second, '==1')[0];
                 for (const k in third) {
                     if (third[k] < 0) {
-                        window.firstVAim = third[k];
+                        if (!firstVAim) {
+                            window.firstVAim = third[k];
+                        };
                         third[k] = -2;
                     };
                     if ((third[k] > 0) && third[k] < 2) {
-                        window.secVAim = third[k];
+                        if (!secVAim) {
+                            window.secVAim = third[k];
+                        };
                         third[k] = 2;
                     };
                 };
@@ -1078,11 +1082,15 @@ function onJoinGame() {
                 var third = searchInObject(second, '==1')[0];
                 for (const k in third) {
                     if (third[k] < 0) {
-                        window.firstVAim = third[k];
+                        if (!firstVAim) {
+                            window.firstVAim = third[k];
+                        };
                         third[k] = -2;
                     };
                     if ((third[k] > 0) && third[k] < 2) {
-                        window.secVAim = third[k];
+                        if (!secVAim) {
+                            window.secVAim = third[k];
+                        };
                         third[k] = 2;
                     };
                 };
