@@ -1,4 +1,5 @@
 window.DEBUG = 5;
+var tempInt;
 var Skins = {
   "firebird": {
     "or": "573/113511/153/137/31033604622310",
@@ -863,30 +864,44 @@ document.getElementById('aimbot').addEventListener('change', function () {
 
 document.getElementById('aimbot2').addEventListener('change', function () {
     window.Aimbot2 = this.checked;
-    if (this.checked) {
-        var first = searchInObject(AIM, '==1')[0];
-        var second = searchInObject(first, '==1')[0];
-        var third = searchInObject(second, '==1')[0];
-        for (const k in third) {
-            if (third[k] < 0) {
-                third[k] = -2;
+    AIM = null;
+    clearInterval(tempInt);
+    if (Aimbot2) {
+        var tempInt = setInterval(() => {
+            if (AIM) {
+                var first = searchInObject(AIM, '==1')[0];
+                var second = searchInObject(first, '==1')[0];
+                var third = searchInObject(second, '==1')[0];
+                for (const k in third) {
+                    if (third[k] < 0) {
+                        window.firstVAim = third[k];
+                        third[k] = -2;
+                    };
+                    if ((third[k] > 0) && third[k] < 2) {
+                        window.secVAim = third[k];
+                        third[k] = 2;
+                    };
+                };
+                clearInterval(tempInt);
             };
-            if ((third[k] > 0) && third[k] < 2) {
-                third[k] = 2;
-            };
-        };
+        }, 1000);
     } else {
-        var first = searchInObject(AIM, '==1')[0];
-        var second = searchInObject(first, '==1')[0];
-        var third = searchInObject(second, '==1')[0];
-        for (const k in third) {
-            if (third[k] < 0) {
-                third[k] = -2;
+        var tempInt = setInterval(() => {
+            if (AIM) {
+                var first = searchInObject(AIM, '==1')[0];
+                var second = searchInObject(first, '==1')[0];
+                var third = searchInObject(second, '==1')[0];
+                for (const k in third) {
+                    if (third[k] == -2) {
+                        third[k] = firstVAim;
+                    };
+                    if (third[k] == 2) {
+                        third[k] = secVAim;
+                    };
+                };
+                clearInterval(tempInt);
             };
-            if ((third[k] > 0) && third[k] < 2) {
-                third[k] = 2;
-            };
-        };
+        }, 1000);
     };
 });
 
@@ -1054,21 +1069,41 @@ function onJoinGame() {
     myTankInfo = getInfoOfTank(getTanks('self')[0]);
     otherTanks = getTanks('others');
     AIM = null;
+    clearInterval(tempInt);
     if (Aimbot2) {
-        var tempInt = setInterval(() => {
+        tempInt = setInterval(() => {
             if (AIM) {
                 var first = searchInObject(AIM, '==1')[0];
                 var second = searchInObject(first, '==1')[0];
                 var third = searchInObject(second, '==1')[0];
                 for (const k in third) {
                     if (third[k] < 0) {
+                        window.firstVAim = third[k];
                         third[k] = -2;
                     };
                     if ((third[k] > 0) && third[k] < 2) {
+                        window.secVAim = third[k];
                         third[k] = 2;
                     };
                 };
-                console.log('vertical aim done');
+                clearInterval(tempInt);
+            };
+        }, 1000);
+    } else {
+        tempInt = setInterval(() => {
+            if (AIM) {
+                var first = searchInObject(AIM, '==1')[0];
+                var second = searchInObject(first, '==1')[0];
+                var third = searchInObject(second, '==1')[0];
+                for (const k in third) {
+                    if (third[k] == -2) {
+                        third[k] = firstVAim;
+                    };
+                    if (third[k] == 2) {
+                        third[k] = secVAim;
+                    };
+                };
+                clearInterval(tempInt);
             };
         }, 1000);
     };
