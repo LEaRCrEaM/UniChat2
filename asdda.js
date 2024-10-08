@@ -1294,7 +1294,7 @@ var config = {
         airBreak: {
             enabled: false,
             speed: 100,
-            type: 'airBreak'
+            type: 'tilt'
         },
         followTank: {
             enabled: false,
@@ -1348,8 +1348,10 @@ function aa() {
                 config.tank.position.y = myTankPos.e18_1;
                 config.tank.position.z = myTankPos.f18_1;
             };*/
-            //myTankPos.d18_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], config.tank.position.x));
-            //myTankPos.e18_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], config.tank.position.y));
+            if (config.hacks.airBreak.type == 'tilt') {
+                myTankPos.d18_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], config.tank.position.x));
+                myTankPos.e18_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], config.tank.position.y));
+            };
             myTankPos.f18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, config.tank.position.z));
             for (let i=0;i<3;i++) {
                 if (i !== 1) {
