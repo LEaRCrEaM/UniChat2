@@ -1511,18 +1511,49 @@ function setSpec() {
     function b() {
         if (r2) {
             f2 = requestAnimationFrame(b);
-            if (keysPressed.includes('w')) cameraVel.x = Math.min(cameraVel.x + acceleration, maxSpeed);
-            else if (cameraVel.x > 0) cameraVel.x = Math.max(cameraVel.x - deceleration, 0);
-            if (keysPressed.includes('s')) cameraVel.x = Math.max(cameraVel.x - acceleration, -maxSpeed);
-            else if (cameraVel.x < 0) cameraVel.x = Math.min(cameraVel.x + deceleration, 0);
-            if (keysPressed.includes('a')) cameraVel.y = Math.min(cameraVel.y + acceleration, maxSpeed);
-            else if (cameraVel.y > 0) cameraVel.y = Math.max(cameraVel.y - deceleration, 0);
-            if (keysPressed.includes('d')) cameraVel.y = Math.max(cameraVel.y - acceleration, -maxSpeed);
-            else if (cameraVel.y < 0) cameraVel.y = Math.min(cameraVel.y + deceleration, 0);
-            if (keysPressed.includes('f')) cameraVel.z = Math.min(cameraVel.z + acceleration, maxSpeed);
-            else if (cameraVel.z > 0) cameraVel.z = Math.max(cameraVel.z - deceleration, 0);
-            if (keysPressed.includes('v')) cameraVel.z = Math.max(cameraVel.z - acceleration, -maxSpeed);
-            else if (cameraVel.z < 0) cameraVel.z = Math.min(cameraVel.z + deceleration, 0);
+            const cameraYaw = -Camera.c15l_1.bzq_1.xzq_1;
+            const forwardX = Math.sin(cameraYaw);
+            const forwardZ = Math.cos(cameraYaw);
+            const rightX = Math.cos(cameraYaw);
+            const rightZ = -Math.sin(cameraYaw);
+            if (keysPressed.includes('w')) {
+                cameraVel.x += forwardX * acceleration;
+                cameraVel.z += forwardZ * acceleration;
+            } else if (cameraVel.x > 0 || cameraVel.z > 0) {
+                cameraVel.x = Math.max(cameraVel.x - deceleration, 0);
+                cameraVel.z = Math.max(cameraVel.z - deceleration, 0);
+            };
+            if (keysPressed.includes('s')) {
+                cameraVel.x -= forwardX * acceleration;
+                cameraVel.z -= forwardZ * acceleration;
+            } else if (cameraVel.x < 0 || cameraVel.z < 0) {
+                cameraVel.x = Math.min(cameraVel.x + deceleration, 0);
+                cameraVel.z = Math.min(cameraVel.z + deceleration, 0);
+            };
+            if (keysPressed.includes('a')) {
+                cameraVel.x -= rightX * acceleration;
+                cameraVel.z -= rightZ * acceleration;
+            } else if (cameraVel.x < 0 || cameraVel.z < 0) {
+                cameraVel.x = Math.min(cameraVel.x + deceleration, 0);
+                cameraVel.z = Math.min(cameraVel.z + deceleration, 0);
+            };
+            if (keysPressed.includes('d')) {
+                cameraVel.x += rightX * acceleration;
+                cameraVel.z += rightZ * acceleration;
+            } else if (cameraVel.x > 0 || cameraVel.z > 0) {
+                cameraVel.x = Math.max(cameraVel.x - deceleration, 0);
+                cameraVel.z = Math.max(cameraVel.z - deceleration, 0);
+            };
+            if (keysPressed.includes('f')) {
+                cameraVel.y = Math.min(cameraVel.y + acceleration, maxSpeed);
+            } else if (cameraVel.y > 0) {
+                cameraVel.y = Math.max(cameraVel.y - deceleration, 0);
+            };
+            if (keysPressed.includes('v')) {
+                cameraVel.y = Math.max(cameraVel.y - acceleration, -maxSpeed);
+            } else if (cameraVel.y < 0) {
+                cameraVel.y = Math.min(cameraVel.y + deceleration, 0);
+            };
             cameraPos.x += cameraVel.x;
             cameraPos.y += cameraVel.y;
             cameraPos.z += cameraVel.z;
