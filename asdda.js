@@ -1324,6 +1324,8 @@ function aa() {
                 resetSpec();
                 window.TEST = [];
                 window.shells = [];
+                flagPos1 = null;
+                flagPos2 = null;
             };
             if (!isGameActive && !(t.classList.length > 1)) {
                 isGameActive = true;
