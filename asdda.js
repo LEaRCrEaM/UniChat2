@@ -1477,7 +1477,7 @@ function sendShells(player) {
             shellPos.a18_1 = player.a18_1;
             shellPos.b18_1 = player.b18_1;
             shellPos.c18_1 = player.c18_1;
-            shell.w19q_1 = 9999;
+            shell.y19q_1 = 9999;
             shell.number = i;
             //shells = shells.filter(shell2 => shell2 !== shell);
         } catch (er) {};
