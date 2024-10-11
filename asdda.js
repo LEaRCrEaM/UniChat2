@@ -1037,21 +1037,23 @@ function isChatOpen() {
     return document.querySelectorAll('input[type="text"]').length > 0;
 };
 function searchInObject(objectToSearch, comparisonString) {
-    objectToSearch = Object.values(objectToSearch).filter(t => t?.__proto__);
-    if (typeof objectToSearch !== 'object' || objectToSearch === null) {
-        throw new TypeError('First argument must be a non-null object');
-    };
-    let comparisonFunction;
     try {
-        comparisonFunction = new Function('value', `return Object.values(value?.__proto__)?.length ${comparisonString};`);
-    } catch (e) {
-        throw new Error('Invalid comparison string');
-    };
-    return Object.fromEntries(
-        Object.entries(objectToSearch).filter(([key, value]) => 
-                                              comparisonFunction(value)
-                                             )
-    );
+        objectToSearch = Object.values(objectToSearch).filter(t => t?.__proto__);
+        if (typeof objectToSearch !== 'object' || objectToSearch === null) {
+            throw new TypeError('First argument must be a non-null object');
+        };
+        let comparisonFunction;
+        try {
+            comparisonFunction = new Function('value', `return Object.values(value?.__proto__)?.length ${comparisonString};`);
+        } catch (e) {
+            throw new Error('Invalid comparison string');
+        };
+        return Object.fromEntries(
+            Object.entries(objectToSearch).filter(([key, value]) => 
+                                                  comparisonFunction(value)
+                                                 )
+        );
+    } catch (e){}
 };
 var first, second, third, fourth;
 function onJoinGame() {
@@ -1122,19 +1124,19 @@ function getTanks(t) {
         return Object.values(fourth)[0].filter(p => {
             var first1 = Object.values(searchInObject(Object.values(p).filter(t => t?.__proto__), '=== 15'))[0];
             var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 18');
-            return Object.values(Object.values(second1)[0])[0].some(p => p.i12q_1)
+            return Object.values(Object.values(second1)[0])[0].some(p => p.p12q_1)
         });
     } else if (t == 'self') {
         return Object.values(fourth)[0].filter(p => {
             var first1 = Object.values(searchInObject(Object.values(p).filter(t => t?.__proto__), '=== 15'))[0];
             var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 18');
-            return !Object.values(Object.values(second1)[0])[0].some(p => p.i12q_1)
+            return !Object.values(Object.values(second1)[0])[0].some(p => p.p12q_1)
         });
     } else if (t.includes('player')) {
         return Object.values(fourth)[0].filter(p => {
             var first1 = Object.values(searchInObject(Object.values(p).filter(t => t?.__proto__), '=== 15'))[0];
             var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 18');
-            return Object.values(Object.values(second1)[0])[0].some(p => p?.i12q_1?.includes(t.replace('player', '')))
+            return Object.values(Object.values(second1)[0])[0].some(p => p?.p12q_1?.includes(t.replace('player', '')))
         });
     } else {
         return;
@@ -1151,9 +1153,9 @@ var eventListeners = [
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('1')) {
                 e.preventDefault();
                 config.hacks.airBreak.enabled = !config.hacks.airBreak.enabled;
-                config.tank.position.x = myTankPos.d18_1;
-                config.tank.position.y = myTankPos.e18_1;
-                config.tank.position.z = myTankPos.f18_1;
+                config.tank.position.x = myTankPos.a18_1;
+                config.tank.position.y = myTankPos.b18_1;
+                config.tank.position.z = myTankPos.c18_1;
             };
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('2')) {
                 e.preventDefault();
@@ -1205,14 +1207,14 @@ var eventListeners = [
                 };
                 if (config.hacks.flagTp.index) {
                     config.hacks.flagTp.index = !config.hacks.flagTp.index;
-                    myTankPosType[Object.keys(myTankPosType)[0]] = searchInObject(Object.values(flagPos1).filter(t => t?.__proto__), '=== 41')[1].d18_1;
-                    myTankPosType[Object.keys(myTankPosType)[1]] = searchInObject(Object.values(flagPos1).filter(t => t?.__proto__), '=== 41')[1].e18_1;
-                    myTankPosType[Object.keys(myTankPosType)[2]] = searchInObject(Object.values(flagPos1).filter(t => t?.__proto__), '=== 41')[1].f18_1;
+                    myTankPosType[Object.keys(myTankPosType)[0]] = searchInObject(Object.values(flagPos1).filter(t => t?.__proto__), '=== 41')[1].a18_1;
+                    myTankPosType[Object.keys(myTankPosType)[1]] = searchInObject(Object.values(flagPos1).filter(t => t?.__proto__), '=== 41')[1].b18_1;
+                    myTankPosType[Object.keys(myTankPosType)[2]] = searchInObject(Object.values(flagPos1).filter(t => t?.__proto__), '=== 41')[1].c18_1;
                 } else {
                     config.hacks.flagTp.index = !config.hacks.flagTp.index;
-                    myTankPosType[Object.keys(myTankPosType)[0]] = searchInObject(Object.values(flagPos2).filter(t => t?.__proto__), '=== 41')[1].d18_1;
-                    myTankPosType[Object.keys(myTankPosType)[1]] = searchInObject(Object.values(flagPos2).filter(t => t?.__proto__), '=== 41')[1].e18_1;
-                    myTankPosType[Object.keys(myTankPosType)[2]] = searchInObject(Object.values(flagPos2).filter(t => t?.__proto__), '=== 41')[1].f18_1;
+                    myTankPosType[Object.keys(myTankPosType)[0]] = searchInObject(Object.values(flagPos2).filter(t => t?.__proto__), '=== 41')[1].a18_1;
+                    myTankPosType[Object.keys(myTankPosType)[1]] = searchInObject(Object.values(flagPos2).filter(t => t?.__proto__), '=== 41')[1].b18_1;
+                    myTankPosType[Object.keys(myTankPosType)[2]] = searchInObject(Object.values(flagPos2).filter(t => t?.__proto__), '=== 41')[1].c18_1;
                 };
             };
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('4')) {
@@ -1346,15 +1348,15 @@ function aa() {
         };
         if (config.hacks.airBreak.enabled) {
             /*if (!config.tank.position.x) {
-                config.tank.position.x = myTankPos.d18_1;
-                config.tank.position.y = myTankPos.e18_1;
-                config.tank.position.z = myTankPos.f18_1;
+                config.tank.position.x = myTankPos.a18_1;
+                config.tank.position.y = myTankPos.b18_1;
+                config.tank.position.z = myTankPos.c18_1;
             };*/
             if (config.hacks.airBreak.type == 'tilt') {
-                myTankPos.d18_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], config.tank.position.x));
-                myTankPos.e18_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], config.tank.position.y));
+                myTankPos.a18_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], config.tank.position.x));
+                myTankPos.b18_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], config.tank.position.y));
             };
-            myTankPos.f18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, config.tank.position.z));
+            myTankPos.c18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, config.tank.position.z));
             for (let i=0;i<3;i++) {
                 if (i !== 1) {
                     var i2 = 0;
@@ -1382,8 +1384,8 @@ function aa() {
                         config.tank.position.x += forwardX * config.hacks.airBreak.speed;
                         config.tank.position.y += forwardZ * config.hacks.airBreak.speed;
                     } else if (config.hacks.airBreak.type == 'airWalk') {
-                        myTankInfo[0].d18_1 += forwardX * 1000;
-                        myTankInfo[0].e18_1 += forwardZ * 1000;
+                        myTankInfo[0].a18_1 += forwardX * 1000;
+                        myTankInfo[0].b18_1 += forwardZ * 1000;
                     };
                 }
                 if (config.keysPressed.includes('s')) {
@@ -1392,8 +1394,8 @@ function aa() {
                         config.tank.position.x -= forwardX * config.hacks.airBreak.speed;
                         config.tank.position.y -= forwardZ * config.hacks.airBreak.speed;
                     } else if (config.hacks.airBreak.type == 'airWalk') {
-                        myTankInfo[0].d18_1 -= forwardX * 1000;
-                        myTankInfo[0].e18_1 -= forwardZ * 1000;
+                        myTankInfo[0].a18_1 -= forwardX * 1000;
+                        myTankInfo[0].b18_1 -= forwardZ * 1000;
                     };
                 }
 
@@ -1407,8 +1409,8 @@ function aa() {
                         config.tank.position.x += rightX * config.hacks.airBreak.speed;
                         config.tank.position.y += rightZ * config.hacks.airBreak.speed;
                     } else if (config.hacks.airBreak.type == 'airWalk') {
-                        myTankInfo[0].d18_1 += rightX * 1000;
-                        myTankInfo[0].e18_1 += rightZ * 1000;
+                        myTankInfo[0].a18_1 += rightX * 1000;
+                        myTankInfo[0].b18_1 += rightZ * 1000;
                     };
                 }
                 if (config.keysPressed.includes('a')) {
@@ -1417,8 +1419,8 @@ function aa() {
                         config.tank.position.x -= rightX * config.hacks.airBreak.speed;
                         config.tank.position.y -= rightZ * config.hacks.airBreak.speed;
                     } else if (config.hacks.airBreak.type == 'airWalk') {
-                        myTankInfo[0].d18_1 -= rightX * 1000;
-                        myTankInfo[0].e18_1 -= rightZ * 1000;
+                        myTankInfo[0].a18_1 -= rightX * 1000;
+                        myTankInfo[0].b18_1 -= rightZ * 1000;
                     };
                 }
 
@@ -1432,11 +1434,11 @@ function aa() {
             };
         };
         if (config.hacks.antiAim.enabled) {
-            myTankPos.d18_1 = getRandomNumberBetween(Object.values(mapBounds)[0], Object.values(mapBounds)[3]);
-            myTankPos.e18_1 = getRandomNumberBetween(Object.values(mapBounds)[1], Object.values(mapBounds)[4]);
-            myTankPos.f18_1 = config.hacks.antiAim.top ? Object.values(mapBounds)[5] : Object.values(mapBounds)[2];
+            myTankPos.a18_1 = getRandomNumberBetween(Object.values(mapBounds)[0], Object.values(mapBounds)[3]);
+            myTankPos.b18_1 = getRandomNumberBetween(Object.values(mapBounds)[1], Object.values(mapBounds)[4]);
+            myTankPos.c18_1 = config.hacks.antiAim.top ? Object.values(mapBounds)[5] : Object.values(mapBounds)[2];
         };
-        if (config.hacks.followTank.enabled && otherTankPos?.d18_1) {
+        if (config.hacks.followTank.enabled && otherTankPos?.a18_1) {
             for (let i=0;i<2;i++) {
                 var i2 = 0;
                 for (const k in t = myTankInfo[i]) {
@@ -1452,9 +1454,9 @@ function aa() {
             if (config.keysPressed.includes('v')) {
                 config.hacks.followTank.height -= config.hacks.airBreak.speed;
             };
-            myTankPos.d18_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], otherTankPos.d18_1));
-            myTankPos.e18_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], otherTankPos.e18_1));
-            myTankPos.f18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.f18_1 + config.hacks.followTank.height));
+            myTankPos.a18_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], otherTankPos.a18_1));
+            myTankPos.b18_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], otherTankPos.b18_1));
+            myTankPos.c18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.c18_1 + config.hacks.followTank.height));
         };
         if (config.hacks.autoPress.length > 0) {
             config.hacks.autoPress.forEach(e => {
@@ -1472,9 +1474,9 @@ function sendShells(player) {
         //setTimeout(() => {
         try {
             var shellPos = Object.values(searchInObject(shell, '=== 41'))[0];
-            shellPos.d18_1 = player.d18_1;
-            shellPos.e18_1 = player.e18_1;
-            shellPos.f18_1 = player.f18_1;
+            shellPos.a18_1 = player.a18_1;
+            shellPos.b18_1 = player.b18_1;
+            shellPos.c18_1 = player.c18_1;
             shell.b19r_1 = 9999;
             shell.number = i;
             //shells = shells.filter(shell2 => shell2 !== shell);
@@ -1557,9 +1559,9 @@ function setSpec() {
             cameraPos.x += cameraVel.x;
             cameraPos.y += cameraVel.y;
             cameraPos.z += cameraVel.z;
-            camera.d18_1 = cameraPos.x;
-            camera.e18_1 = cameraPos.y;
-            camera.f18_1 = cameraPos.z;
+            camera.a18_1 = cameraPos.x;
+            camera.b18_1 = cameraPos.y;
+            camera.c18_1 = cameraPos.z;
         };
     };
     try {
@@ -1570,8 +1572,8 @@ function setSpec() {
         cancelAnimationFrame(f2);
     };
     setPointerMovement();
-    config.tank.position.x = myTankPos.d18_1;
-    config.tank.position.y = myTankPos.e18_1;
+    config.tank.position.x = myTankPos.a18_1;
+    config.tank.position.y = myTankPos.b18_1;
     config.tank.position.z = Object.values(mapBounds)[2];
     config.hacks.airBreak.enabled = true;
 };
@@ -1590,7 +1592,7 @@ document.addEventListener('keyup', (e) => {
 });
 function resetSpec() {
     config.hacks.spectate.enabled = false;
-    myTankPos.f18_1 = Object.values(mapBounds)[5];
+    myTankPos.c18_1 = Object.values(mapBounds)[5];
     for (const k in cameraFuncs) {
         camera[k] = cameraFuncs[k];
     };
@@ -1610,12 +1612,12 @@ function specPlayer(player) {
     function a3() {
         if (r3) {
             f3 = requestAnimationFrame(a3);
-            cameraPos.x += (player.d18_1 - cameraPos.x) * followSmoothingFactor;
-            cameraPos.y += (player.e18_1 - cameraPos.y) * followSmoothingFactor;
-            cameraPos.z += (player.f18_1 - cameraPos.z) * followSmoothingFactor;
-            camera.d18_1 = cameraPos.x;
-            camera.e18_1 = cameraPos.y;
-            camera.f18_1 = cameraPos.z;
+            cameraPos.x += (player.a18_1 - cameraPos.x) * followSmoothingFactor;
+            cameraPos.y += (player.b18_1 - cameraPos.y) * followSmoothingFactor;
+            cameraPos.z += (player.c18_1 - cameraPos.z) * followSmoothingFactor;
+            camera.a18_1 = cameraPos.x;
+            camera.b18_1 = cameraPos.y;
+            camera.c18_1 = cameraPos.z;
         };
     };
     try {
