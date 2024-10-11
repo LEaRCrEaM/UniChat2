@@ -1360,6 +1360,37 @@ Element.prototype.appendChild = function() {
             };
         };
     };
+    if (arguments[0]?.tagName?.toLowerCase() == 'div') {
+        if (Array.from(arguments[0]?.classList).some(t => t.includes('GarageCommonStyle-animatedBlurredLeftBlock'))) {
+            if (isGameActive) {
+                isGameActive = false;
+                console.log('opened garage');
+                resetSpec();
+                window.TEST = [];
+                window.shells = [];
+                flagPos1 = null;
+                flagPos2 = null;
+            };
+        };
+        if (Array.from(arguments[0]?.classList).some(t => t.includes('BattleMessagesComponentStyle-messageRow'))) {
+            if (!isGameActive) {
+                isGameActive = true;
+                console.log('closed garage');
+                updateSpec();
+                function onJoinGame2() {
+                    try {
+                        onJoinGame();
+                    } catch (error) {
+                        console.log(error);
+                        setTimeout(() => {
+                            onJoinGame2();
+                        }, 1000);
+                    };
+                };
+                onJoinGame2();
+            };
+        };
+    };
     return originalAppendChild.apply(this, arguments);
 };
 var ff, rr = true;
