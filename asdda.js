@@ -1370,7 +1370,7 @@ function aa() {
             };
             updateTankOrientationToCamera();
             // Get the camera's yaw (direction the camera is facing)
-            const cameraYaw = -Camera.c15l_1.bzq_1.xzq_1; // Yaw for left-right
+            const cameraYaw = -getCamYaw(); // Yaw for left-right
 
             // Calculate forward movement vector based on camera yaw
             const forwardX = Math.sin(cameraYaw); // Movement in the X direction
@@ -1477,7 +1477,7 @@ function sendShells(player) {
             shellPos.a18_1 = player.a18_1;
             shellPos.b18_1 = player.b18_1;
             shellPos.c18_1 = player.c18_1;
-            shell.b19r_1 = 9999;
+            shell.w19q_1 = 9999;
             shell.number = i;
             //shells = shells.filter(shell2 => shell2 !== shell);
         } catch (er) {};
@@ -1492,9 +1492,15 @@ const deceleration = 3;
 const followSmoothingFactor = 0.1;
 function b() {}
 function getSpec() {
-    var first = searchInObject(Camera, '== 17');
+    var first = searchInObject(Camera, '== 14');
     var second = searchInObject(Object.values(first)[0], '== 1');
     var third = searchInObject(Object.values(second)[3], '== 41');
+    return Object.values(third)[0];
+};
+function getCamYaw() {
+    var first = searchInObject(Camera, '== 14');
+    var second = searchInObject(Object.values(first)[0], '== 1');
+    var third = searchInObject(Object.values(second)[3], '== 0');
     return Object.values(third)[0];
 };
 function saveCameraFuncs() {
@@ -1513,7 +1519,7 @@ function setSpec() {
     function b() {
         if (r2) {
             f2 = requestAnimationFrame(b);
-            const cameraYaw = -Camera.c15l_1.bzq_1.xzq_1;
+            const cameraYaw = -getCamYaw();
             const forwardX = Math.sin(cameraYaw);
             const forwardZ = Math.cos(cameraYaw);
             const rightX = Math.cos(cameraYaw);
@@ -1656,7 +1662,7 @@ function setPointerMovement() {
 };
 function updateTankOrientationToCamera() {
     // Step 1: Get the camera's yaw (direction the camera is facing)
-    const cameraYaw = Camera.c15l_1.bzq_1.xzq_1; // The camera yaw value
+    const cameraYaw = getCamYaw(); // The camera yaw value
 
     // Step 2: Add 180 degrees (Math.PI radians) to the yaw to face the tank forward
     const adjustedYaw = cameraYaw + Math.PI;
