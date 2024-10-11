@@ -244,6 +244,12 @@ document.body.insertAdjacentHTML('beforeend', `
         </div>
 
         <div class="switch-item">
+            <input id='neverFlip' class='hotkey' type='checkbox'>
+            <label for='neverFlip' class="slider"></label>
+            <label for='neverFlip' class="switch-label">Never Flip</label>
+        </div>
+
+        <div class="switch-item">
             <input type="color" id="colorPicker"/>
             <label for='colorPicker' class="switch-label">Esp Color</label>
         </div>
@@ -862,6 +868,10 @@ document.getElementById('aimbot').addEventListener('change', function () {
     window.Aimbot = this.checked;
 });
 
+document.getElementById('neverFlip').addEventListener('change', function () {
+    config.hacks.neverFlip.enabled = this.checked;
+});
+
 document.getElementById('aimbot2').addEventListener('change', function () {
     window.Aimbot2 = this.checked;
     AIM = null;
@@ -1310,6 +1320,10 @@ var config = {
         spectate: {
             enabled: false
         },
+        neverFlip: {
+            enabled: false,
+            amount: .4
+        },
         autoPress: []
     },
     keysPressed: []
@@ -1491,6 +1505,11 @@ function aa() {
             myTankPos.a18_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], otherTankPos.a18_1));
             myTankPos.b18_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], otherTankPos.b18_1));
             myTankPos.c18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.c18_1 + config.hacks.followTank.height));
+        };
+        if (config.hacks.neverFlip.enabled) {
+            if ((Math.abs(myTankInfo[1].e1b_1) > config.hacks.neverFlip.amount && (myTankInfo[1].e1b_1 = Math.sign(myTankInfo[1].e1b_1) * config.hacks.neverFlip.amount), Math.abs(myTankInfo[1].f1b_1) > config.hacks.neverFlip.amount)) {
+                myTankInfo[1].f1b_1 = Math.sign(myTankInfo[1].f1b_1) * config.hacks.neverFlip.amount;
+            };
         };
         if (config.hacks.autoPress.length > 0) {
             config.hacks.autoPress.forEach(e => {
