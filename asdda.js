@@ -1314,11 +1314,46 @@ var config = {
     },
     keysPressed: []
 };
+var originalAppendChild = Element.prototype.appendChild;
+Element.prototype.appendChild = function() {
+    if (arguments[0]?.tagName?.toLowerCase() === 'canvas') {
+        if (this?.id == 'root') {
+            if (isGameActive) {
+                isGameActive = false;
+                console.log('left game');
+                resetSpec();
+                window.TEST = [];
+                window.shells = [];
+                flagPos1 = null;
+                flagPos2 = null;
+            };
+        } else if (Array.from(this.classList).length == 0) {
+            if (!isGameActive) {
+                isGameActive = true;
+                console.log('joined game');
+                updateSpec();
+                function onJoinGame2() {
+                    try {
+                        onJoinGame();
+                    } catch (error) {
+                        console.log(error);
+                        setTimeout(() => {
+                            onJoinGame2();
+                        }, 1000);
+                    };
+                };
+                onJoinGame2();
+            };
+        };
+        console.log(Array.from(this.classList));
+    };
+    return originalAppendChild.apply(this, arguments);
+};
 var ff, rr = true;
 function aa() {
     if (rr) {
         ff = requestAnimationFrame(aa);
-        if (document.querySelectorAll('canvas').length > 1) {
+        /*if (document.querySelectorAll('canvas').length > 1) {
             var t = document.querySelectorAll('canvas')[1];
             if (isGameActive && (t.classList.length > 1)) {
                 isGameActive = false;
@@ -1345,7 +1380,7 @@ function aa() {
                 };
                 onJoinGame2();
             };
-        };
+        };*/
         if (config.hacks.airBreak.enabled) {
             /*if (!config.tank.position.x) {
                 config.tank.position.x = myTankPos.a18_1;
