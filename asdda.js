@@ -1640,7 +1640,9 @@ function resetSpec() {
     r3 = false;
     cancelAnimationFrame(f2);
     cancelAnimationFrame(f3);
-    resetPointerMovement();
+    try {
+        resetPointerMovement();
+    } catch (er){};
     config.hacks.airBreak.enabled = false;
 };
 function specPlayer(player) {
