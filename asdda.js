@@ -1345,7 +1345,6 @@ Element.prototype.appendChild = function() {
                 onJoinGame2();
             };
         };
-        console.log(Array.from(this.classList));
     };
     return originalAppendChild.apply(this, arguments);
 };
