@@ -1673,15 +1673,15 @@ function updateTankOrientationToCamera() {
     const cosYaw = Math.cos(halfYaw);
 
     const yawQuat = {
-        g1b_1: sinYaw,  // Rotation in X-axis (yaw)
-        h1b_1: 0,       // No rotation in Y-axis (pitch)
-        i1b_1: 0,       // No rotation in Z-axis (roll)
-        j1b_1: cosYaw   // Scalar part of the quaternion
+        d1b_1: sinYaw,  // Rotation in X-axis (yaw)
+        e1b_1: 0,       // No rotation in Y-axis (pitch)
+        f1b_1: 0,       // No rotation in Z-axis (roll)
+        g1b_1: cosYaw   // Scalar part of the quaternion
     };
 
     // Step 4: Apply the yaw quaternion to the tank's orientation
-    myTankInfo[1].g1b_1 = -yawQuat.g1b_1;
-    myTankInfo[1].h1b_1 = yawQuat.h1b_1;
-    myTankInfo[1].i1b_1 = yawQuat.i1b_1;
-    myTankInfo[1].j1b_1 = yawQuat.j1b_1;
+    myTankInfo[1].d1b_1 = -yawQuat.d1b_1;
+    myTankInfo[1].e1b_1 = yawQuat.e1b_1;
+    myTankInfo[1].f1b_1 = yawQuat.f1b_1;
+    myTankInfo[1].g1b_1 = yawQuat.g1b_1;
 };
