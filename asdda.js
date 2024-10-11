@@ -1065,7 +1065,7 @@ function searchInObject(objectToSearch, comparisonString) {
         );
     } catch (e){}
 };
-var first, second, third, fourth;
+var first, second, third, fourth, firsta, key;
 function onJoinGame() {
     updateSpec();
     first = searchInObject(Object.values(TEST[TEST.length - 1]).filter(t => t?.__proto__), '=== 15');
@@ -1073,6 +1073,8 @@ function onJoinGame() {
     third = searchInObject(Object.values(Object.values(second)[0]).filter(t => t?.__proto__), '=== 21');
     fourth = Object.values(searchInObject(Object.values(third[3]).filter(t => t?.__proto__), '=== 18'))[0];
     myTankPos = getPositionOfTank(getTanks('self')[0]);
+    firsta = searchInObject(Camera, '== 14');
+    key = Object.entries(Object.values(firsta)[0]).filter(t => typeof t[1] === 'number')[0][0];
     (() => {
         var first = searchInObject(TEST[TEST.length-1], '==15');;
         var second = searchInObject(Object.values(first)[0], '==65');
@@ -1324,6 +1326,9 @@ var config = {
             enabled: false,
             amount: .4
         },
+        turretAim: {
+            enabled: false
+        },
         autoPress: []
     },
     keysPressed: []
@@ -1541,6 +1546,11 @@ function aa() {
             if ((Math.abs(myTankInfo[1].e1b_1) > config.hacks.neverFlip.amount && (myTankInfo[1].e1b_1 = Math.sign(myTankInfo[1].e1b_1) * config.hacks.neverFlip.amount), Math.abs(myTankInfo[1].f1b_1) > config.hacks.neverFlip.amount)) {
                 myTankInfo[1].f1b_1 = Math.sign(myTankInfo[1].f1b_1) * config.hacks.neverFlip.amount;
             };
+        };
+        if (config.hacks.turretAim.enabled && otherTankPos?.a18_1) {
+            var dirX = otherTankPos.a18_1 - myTankPos.a18_1;
+            var dirZ = otherTankPos.b18_1 - myTankPos.b18_1;
+            Object.values(firsta)[0][key] = Math.atan2(dirZ, dirX) - Math.PI/2;
         };
         if (config.hacks.autoPress.length > 0) {
             config.hacks.autoPress.forEach(e => {
