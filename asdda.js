@@ -1213,9 +1213,9 @@ var eventListeners = [
                 e.preventDefault();
                 var myTankPosType;
                 if (config.hacks.airBreak.enabled) {
-                    myTankPosType = config.tank.position;
+                    myTankPosType = myTankIntPos/*config.tank.position*/;
                 } else {
-                    myTankPosType = myTankPos;
+                    myTankPosType = myTankIntPos;
                 };
                 if (config.hacks.flagTp.index) {
                     config.hacks.flagTp.index = !config.hacks.flagTp.index;
@@ -1357,8 +1357,10 @@ Element.prototype.appendChild = function() {
                 function onJoinGame2() {
                     try {
                         onJoinGame();
-                        window.tankPhysicsComponent = searchInLargeObject(root, 'n13w_1');
-                        myTankIntPos = Object.values(searchInObject(tankPhysicsComponent.value, '==41'))[1];
+                        setTimeout(() => {
+                            window.tankPhysicsComponent = searchInLargeObject(root, 'n13w_1');
+                            myTankIntPos = Object.values(searchInObject(tankPhysicsComponent.value, '==41'))[1];
+                        }, 2000);
                     } catch (error) {
                         console.log(error);
                         setTimeout(() => {
@@ -1543,9 +1545,9 @@ function aa() {
             if (config.keysPressed.includes('v')) {
                 config.hacks.followTank.height -= config.hacks.airBreak.speed;
             };
-            myTankIntPos.a18_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], otherTankPos.a18_1));
-            myTankIntPos.b18_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], otherTankPos.b18_1));
-            myTankIntPos.c18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.c18_1 + config.hacks.followTank.height));
+            myTankPos.a18_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], otherTankPos.a18_1));
+            myTankPos.b18_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], otherTankPos.b18_1));
+            myTankPos.c18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.c18_1 + config.hacks.followTank.height));
         };
         if (config.hacks.neverFlip.enabled) {
             if ((Math.abs(myTankInfo[1].e1b_1) > config.hacks.neverFlip.amount && (myTankInfo[1].e1b_1 = Math.sign(myTankInfo[1].e1b_1) * config.hacks.neverFlip.amount), Math.abs(myTankInfo[1].f1b_1) > config.hacks.neverFlip.amount)) {
