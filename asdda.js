@@ -1075,7 +1075,7 @@ function onJoinGame() {
     myTankPos = getPositionOfTank(getTanks('self')[0]);
     firsta = searchInObject(Camera, '== 14');
     key = Object.entries(Object.values(firsta)[0]).filter(t => typeof t[1] === 'number')[0][0];
-    (() => {
+    /*(() => {
         var first = searchInObject(TEST[TEST.length-1], '==15');;
         var second = searchInObject(Object.values(first)[0], '==65');
         var third = searchInObject(Object.values(second)[0], '==18');
@@ -1083,7 +1083,7 @@ function onJoinGame() {
         var fifth = Object.values(fourth)[0][3];
         var sixth = searchInObject(Object.values(fifth), '==41');
         myTankIntPos = Object.values(sixth)[1];
-    })();
+    })();*/
     myTankInfo = getInfoOfTank(getTanks('self')[0]);
     otherTanks = getTanks('others');
     AIM = null;
@@ -1357,6 +1357,8 @@ Element.prototype.appendChild = function() {
                 function onJoinGame2() {
                     try {
                         onJoinGame();
+                        window.tankPhysicsComponent = searchInLargeObject(root, 'n13w_1');
+                        myTankIntPos = Object.values(searchInObject(tankPhysicsComponent.value, '==41'))[1];
                     } catch (error) {
                         console.log(error);
                         setTimeout(() => {
@@ -1521,9 +1523,9 @@ function aa() {
             };
         };
         if (config.hacks.antiAim.enabled) {
-            myTankPos.a18_1 = getRandomNumberBetween(Object.values(mapBounds)[0], Object.values(mapBounds)[3]);
-            myTankPos.b18_1 = getRandomNumberBetween(Object.values(mapBounds)[1], Object.values(mapBounds)[4]);
-            myTankPos.c18_1 = config.hacks.antiAim.top ? Object.values(mapBounds)[5] : Object.values(mapBounds)[2];
+            myTankIntPos.a18_1 = getRandomNumberBetween(Object.values(mapBounds)[0], Object.values(mapBounds)[3]);
+            myTankIntPos.b18_1 = getRandomNumberBetween(Object.values(mapBounds)[1], Object.values(mapBounds)[4]);
+            myTankIntPos.c18_1 = config.hacks.antiAim.top ? Object.values(mapBounds)[5] : Object.values(mapBounds)[2];
         };
         if (config.hacks.followTank.enabled && otherTankPos?.a18_1) {
             for (let i=0;i<2;i++) {
@@ -1541,9 +1543,9 @@ function aa() {
             if (config.keysPressed.includes('v')) {
                 config.hacks.followTank.height -= config.hacks.airBreak.speed;
             };
-            myTankPos.a18_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], otherTankPos.a18_1));
-            myTankPos.b18_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], otherTankPos.b18_1));
-            myTankPos.c18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.c18_1 + config.hacks.followTank.height));
+            myTankIntPos.a18_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], otherTankPos.a18_1));
+            myTankIntPos.b18_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], otherTankPos.b18_1));
+            myTankIntPos.c18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.c18_1 + config.hacks.followTank.height));
         };
         if (config.hacks.neverFlip.enabled) {
             if ((Math.abs(myTankInfo[1].e1b_1) > config.hacks.neverFlip.amount && (myTankInfo[1].e1b_1 = Math.sign(myTankInfo[1].e1b_1) * config.hacks.neverFlip.amount), Math.abs(myTankInfo[1].f1b_1) > config.hacks.neverFlip.amount)) {
@@ -1783,4 +1785,28 @@ function updateTankOrientationToCamera() {
     myTankInfo[1].e1b_1 = yawQuat.e1b_1;
     myTankInfo[1].f1b_1 = yawQuat.f1b_1;
     myTankInfo[1].g1b_1 = yawQuat.g1b_1;
+};
+function searchInLargeObject(obj, target, byValue = false, trackPath = false) {
+    const stack = [{ current: obj, path: [] }];
+    const visited = new Set();
+    while (stack.length > 0) {
+        const { current, path } = stack.pop();
+        if (visited.has(current)) continue;
+        visited.add(current);
+        for (const key in current) {
+            if (Object.prototype.hasOwnProperty.call(current, key)) {
+                const value = current[key];
+                const newPath = trackPath ? path.concat(key) : [];
+                if (byValue) {
+                    if (value === target) return { key, value, object: current, path: trackPath ? newPath : undefined };
+                } else {
+                    if (key === target) return { key, value, object: current, path: trackPath ? newPath : undefined };
+                };
+                if (typeof value === 'object' && value !== null) {
+                    stack.push({ current: value, path: newPath });
+                };
+            };
+        };
+    };
+    return null;
 };
