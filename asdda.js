@@ -1067,6 +1067,7 @@ function searchInObject(objectToSearch, comparisonString) {
 };
 var first, second, third, fourth, firsta, key;
 function onJoinGame() {
+    Utils = getVars();
     updateSpec();
     first = searchInObject(Object.values(TEST[TEST.length - 1]).filter(t => t?.__proto__), '=== 15');
     second = searchInObject(Object.values(Object.values(first)[0]).filter(t => t?.__proto__), '> 18');
@@ -1130,7 +1131,7 @@ function onJoinGame() {
         }, 1000);
     };
 };
-var myTankPos, myTankIntPos, myTankInfo, otherTanks, otherTankPos, isGameActive = false;
+var Utils, myTankPos, myTankIntPos, myTankInfo, otherTanks, otherTankPos, isGameActive = false;
 function getTanks(t) {
     if (t == 'others') {
         return Object.values(fourth)[0].filter(p => {
@@ -1227,14 +1228,14 @@ var eventListeners = [
                 };
                 if (config.hacks.flagTp.index) {
                     config.hacks.flagTp.index = !config.hacks.flagTp.index;
-                    myTankPosType[Object.keys(myTankPosType)[0]] = searchInObject(Object.values(flagPos1).filter(t => t?.__proto__), '=== 41')[1].a18_1;
-                    myTankPosType[Object.keys(myTankPosType)[1]] = searchInObject(Object.values(flagPos1).filter(t => t?.__proto__), '=== 41')[1].b18_1;
-                    myTankPosType[Object.keys(myTankPosType)[2]] = searchInObject(Object.values(flagPos1).filter(t => t?.__proto__), '=== 41')[1].c18_1;
+                    myTankPosType[Object.keys(myTankPosType)[0]] = Utils.teamFlagPosition.a18_1;
+                    myTankPosType[Object.keys(myTankPosType)[1]] = Utils.teamFlagPosition.b18_1;
+                    myTankPosType[Object.keys(myTankPosType)[2]] = Utils.teamFlagPosition.c18_1;
                 } else {
                     config.hacks.flagTp.index = !config.hacks.flagTp.index;
-                    myTankPosType[Object.keys(myTankPosType)[0]] = searchInObject(Object.values(flagPos2).filter(t => t?.__proto__), '=== 41')[1].a18_1;
-                    myTankPosType[Object.keys(myTankPosType)[1]] = searchInObject(Object.values(flagPos2).filter(t => t?.__proto__), '=== 41')[1].b18_1;
-                    myTankPosType[Object.keys(myTankPosType)[2]] = searchInObject(Object.values(flagPos2).filter(t => t?.__proto__), '=== 41')[1].c18_1;
+                    myTankPosType[Object.keys(myTankPosType)[0]] = Utils.enemyFlagPosition.a18_1;
+                    myTankPosType[Object.keys(myTankPosType)[1]] = Utils.enemyFlagPosition.b18_1;
+                    myTankPosType[Object.keys(myTankPosType)[2]] = Utils.enemyFlagPosition.c18_1;
                 };
             };
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('4')) {
@@ -1351,6 +1352,7 @@ Element.prototype.appendChild = function() {
             if (isGameActive) {
                 isGameActive = false;
                 console.log('left game');
+                Utils = null;
                 resetSpec();
                 window.TEST = [];
                 window.shells = [];
@@ -1382,6 +1384,7 @@ Element.prototype.appendChild = function() {
             if (isGameActive) {
                 isGameActive = false;
                 console.log('opened garage');
+                Utils = null;
                 resetSpec();
                 window.TEST = [];
                 window.shells = [];
@@ -1817,4 +1820,18 @@ function searchInLargeObject(obj, target, byValue = false, trackPath = false) {
         };
     };
     return null;
+};
+function getVars() {
+    var tankPhysicsComponent = searchInLargeObject(root, 'n13w_1');
+    var tankPosition = tankPhysicsComponent.value.izn_1.djv_1.pjv_1;
+    var tankInterpolatedPosition = tankPhysicsComponent.value.ozn_1;
+    var tankPositionVelocity = tankPhysicsComponent.value.izn_1.djv_1.mjv_1;
+    var tankQuaternions = tankPhysicsComponent.value.izn_1.djv_1.njv_1;
+    var tankOrientationVelocity = tankPhysicsComponent.value.izn_1.djv_1.ojv_1;
+    var camera = searchInLargeObject(root, 'a15l_1');
+    var cameraDirection = camera.value.ozo_1;
+    var cameraPosition = camera.value.azp_1.vzp_1;
+    var teamFlagPosition = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(tankPhysicsComponent.object, '==0'))[5][0], '==3'))[0], '==41'))[0];
+    var enemyFlagPosition = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(tankPhysicsComponent.object, '==0'))[5][1], '==3'))[0], '==41'))[0];
+    return {tankPhysicsComponent, tankPosition, tankInterpolatedPosition, tankPositionVelocity, tankQuaternions, tankOrientationVelocity, camera, cameraDirection, cameraPosition, teamFlagPosition, enemyFlagPosition};
 };
