@@ -1171,6 +1171,10 @@ var eventListeners = [
             };
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('2')) {
                 e.preventDefault();
+                if (!myTankIntPos) {
+                    window.tankPhysicsComponent = searchInLargeObject(root, 'n13w_1');
+                    myTankIntPos = Object.values(searchInObject(tankPhysicsComponent.value, '==41'))[1];
+                };
                 if (config.hacks.antiAim.enabled && !config.hacks.antiAim.top) {
                     config.hacks.antiAim.top = true;
                     return;
@@ -1212,6 +1216,10 @@ var eventListeners = [
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('v')) {
                 e.preventDefault();
                 var myTankPosType;
+                if (!myTankIntPos) {
+                    window.tankPhysicsComponent = searchInLargeObject(root, 'n13w_1');
+                    myTankIntPos = Object.values(searchInObject(tankPhysicsComponent.value, '==41'))[1];
+                };
                 if (config.hacks.airBreak.enabled) {
                     myTankPosType = myTankIntPos/*config.tank.position*/;
                 } else {
@@ -1348,6 +1356,7 @@ Element.prototype.appendChild = function() {
                 window.shells = [];
                 flagPos1 = null;
                 flagPos2 = null;
+                myTankIntPos = null;
             };
         } else if (Array.from(this.classList).length == 0) {
             if (!isGameActive) {
@@ -1357,10 +1366,6 @@ Element.prototype.appendChild = function() {
                 function onJoinGame2() {
                     try {
                         onJoinGame();
-                        setTimeout(() => {
-                            window.tankPhysicsComponent = searchInLargeObject(root, 'n13w_1');
-                            myTankIntPos = Object.values(searchInObject(tankPhysicsComponent.value, '==41'))[1];
-                        }, 2000);
                     } catch (error) {
                         console.log(error);
                         setTimeout(() => {
@@ -1382,6 +1387,7 @@ Element.prototype.appendChild = function() {
                 window.shells = [];
                 flagPos1 = null;
                 flagPos2 = null;
+                myTankIntPos = null;
             };
         };
         if (Array.from(arguments[0]?.classList).some(t => t.includes('BattleMessagesComponentStyle-messageRow'))) {
