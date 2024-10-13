@@ -1067,7 +1067,7 @@ function searchInObject(objectToSearch, comparisonString) {
 };
 var first, second, third, fourth, firsta, key;
 function onJoinGame() {
-    /*Utils = getVars();
+    Utils = getVars();
     Object.defineProperty(Utils, 'cameraDirection', {
         set(t) {
             Utils.camera.value[Utils.cameraDirectionName] = t;
@@ -1075,7 +1075,7 @@ function onJoinGame() {
         get() {
             return Utils.camera.value[Utils.cameraDirectionName];
         }
-    });*/
+    });
     updateSpec();
     first = searchInObject(Object.values(TEST[TEST.length - 1]).filter(t => t?.__proto__), '=== 15');
     second = searchInObject(Object.values(Object.values(first)[0]).filter(t => t?.__proto__), '> 18');
@@ -1837,9 +1837,9 @@ function getVars() {
     var tankQuaternions = Object.values(Object.values(searchInObject(Object.values(searchInObject(tankPhysicsComponent.value, '==21'))[0], '==2'))[0])[1];
     var tankOrientationVelocity = Object.values(Object.values(searchInObject(Object.values(searchInObject(tankPhysicsComponent.value, '==21'))[0], '==2'))[0])[2];
     var camera = searchInLargeObject(root, 'a15l_1');
-    var cameraDirectionName = Object.entries(Utils.camera.value).filter(t => typeof t[1] == 'number')[0][0];
+    var cameraDirectionName = Object.entries(camera.value).filter(t => typeof t[1] == 'number')[0][0];
     var cameraDirection = camera.value[cameraDirectionName];
-    var cameraPosition = Object.values(searchInObject(Object.values(searchInObject(Utils.camera.value, '==1'))[3], '==41'))[0];
+    var cameraPosition = Object.values(searchInObject(Object.values(searchInObject(camera.value, '==1'))[3], '==41'))[0];
     var teamFlagPosition = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(tankPhysicsComponent.object, '==0'))[5][0], '==3'))[0], '==41'))[0];
     var enemyFlagPosition = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(tankPhysicsComponent.object, '==0'))[5][1], '==3'))[0], '==41'))[0];
     return {tankPhysicsComponent, tankPosition, tankInterpolatedPosition, tankPositionVelocity, tankQuaternions, tankOrientationVelocity, camera, cameraDirection, cameraPosition, teamFlagPosition, enemyFlagPosition, cameraDirectionName};
