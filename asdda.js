@@ -1067,15 +1067,6 @@ function searchInObject(objectToSearch, comparisonString) {
 };
 var first, second, third, fourth, firsta, key;
 function onJoinGame() {
-    Utils = getVars();
-    Object.defineProperty(Utils, 'cameraDirection', {
-        set(t) {
-            Utils.camera.value[Utils.cameraDirectionName] = t;
-        },
-        get() {
-            return Utils.camera.value[Utils.cameraDirectionName];
-        }
-    });
     updateSpec();
     first = searchInObject(Object.values(TEST[TEST.length - 1]).filter(t => t?.__proto__), '=== 15');
     second = searchInObject(Object.values(Object.values(first)[0]).filter(t => t?.__proto__), '> 18');
@@ -1256,6 +1247,9 @@ var eventListeners = [
             };
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('5')) {
                 config.hacks.turretAim.enabled = !config.hacks.turretAim.enabled;
+            };
+            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('6')) {
+                setVars();
             };
         }
     },
@@ -1847,4 +1841,15 @@ function getVars() {
         enemyFlagPosition = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(tankPhysicsComponent.object, '==0'))[5][1], '==3'))[0], '==41'))[0];
     } catch (er){};
     return {allTanks, tankPhysicsComponent, tankPosition, tankInterpolatedPosition, tankPositionVelocity, tankQuaternions, tankOrientationVelocity, camera, cameraDirection, cameraPosition, teamFlagPosition, enemyFlagPosition, cameraDirectionName};
+};
+function setVars() {
+    Utils = getVars();
+    Object.defineProperty(Utils, 'cameraDirection', {
+        set(t) {
+            Utils.camera.value[Utils.cameraDirectionName] = t;
+        },
+        get() {
+            return Utils.camera.value[Utils.cameraDirectionName];
+        }
+    });
 };
