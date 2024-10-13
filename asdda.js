@@ -966,7 +966,7 @@ document.addEventListener('keydown', (e) => {
 });
 setInterval(() => {
     updateAimAmount();
-    try {
+    /*try {
         if (tt = getTanks('playerSoduko')) {
             var tPos = getPositionOfTank(tt[0]);
             config.hacks.followTank.enabled = true;
@@ -974,7 +974,7 @@ setInterval(() => {
             config.hacks.followTank.height = 0;
             otherTankPos = tPos;
         };
-    } catch (error) {};
+    } catch (error) {};*/
 }, 2000);
 var f, r = true;
 function a() {
