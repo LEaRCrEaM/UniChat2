@@ -1129,6 +1129,7 @@ function onJoinGame() {
             };
         }, 1000);
     };
+    setUpShellDisplay();
 };
 var Utils, myTankPos, myTankIntPos, myTankInfo, otherTanks, otherTankPos, isGameActive = false;
 function getTanks(t) {
@@ -1354,6 +1355,7 @@ Element.prototype.appendChild = function() {
             if (isGameActive) {
                 isGameActive = false;
                 console.log('left game');
+                isShellDisplayActive = false;
                 Utils = null;
                 resetSpec();
                 window.TEST = [];
@@ -1386,6 +1388,7 @@ Element.prototype.appendChild = function() {
             if (isGameActive) {
                 isGameActive = false;
                 console.log('opened garage');
+                isShellDisplayActive = false;
                 Utils = null;
                 resetSpec();
                 window.TEST = [];
@@ -1570,6 +1573,9 @@ function aa() {
             var dirZ = otherTankPos.b18_1 - myTankPos.b18_1;
             Object.values(firsta)[0][key] = Math.atan2(dirZ, dirX) - Math.PI/2;
         };
+        if (isShellDisplayActive && shellDisplayElm && (parseInt(shellDisplayElm.textContent) !== Utils?.shells?.length)) {
+            shellDisplayElm.textContent = Utils?.shells?.length;
+        };
         if (config.hacks.autoPress.length > 0) {
             config.hacks.autoPress.forEach(e => {
                 press(e, true);
@@ -1580,7 +1586,7 @@ function aa() {
 };
 addEventListeners();
 var nick = '';
-function sendShells(player) {
+/*function sendShells(player) {
     var i = 0;
     shells.forEach(shell => {
         //setTimeout(() => {
@@ -1591,6 +1597,26 @@ function sendShells(player) {
             shellPos.c18_1 = player.c18_1;
             shell.y19q_1 = 9999;
             shell.number = i;
+            //shells = shells.filter(shell2 => shell2 !== shell);
+        } catch (er) {};
+        //}, i * 300);
+        i++;
+    });
+};*/
+function sendShells(player) {
+    var i = 0;
+    Utils.shells.forEach(shell => {
+        if (!Utils.shellSpeedName) {
+            Utils.shellSpeedName = Object.entries(Object.values(searchInObject(Object.values(Object.values(searchInObject(shell, '==18'))[0])[0], '==6'))[0]).filter(t => typeof t[1] == 'number')[2][0];
+        };
+        //setTimeout(() => {
+        try {
+            var shellPos = Object.values(searchInObject(Object.values(searchInObject(Object.values(Object.values(searchInObject(shell, '==18'))[0])[0], '==6'))[0], '==41'))[0];
+            shellPos.a18_1 = player.a18_1;
+            shellPos.b18_1 = player.b18_1;
+            shellPos.c18_1 = player.c18_1;
+            Object.values(searchInObject(Object.values(Object.values(searchInObject(shell, '==18'))[0])[0], '==6'))[0][Utils.shellSpeedName] = 9999;
+            Object.values(searchInObject(Object.values(Object.values(searchInObject(shell, '==18'))[0])[0], '==6'))[0].number = i;
             //shells = shells.filter(shell2 => shell2 !== shell);
         } catch (er) {};
         //}, i * 300);
@@ -1835,13 +1861,15 @@ function getVars() {
     var cameraDirectionName = Object.entries(camera.value).filter(t => typeof t[1] == 'number')[0][0];
     var cameraDirection = camera.value[cameraDirectionName];
     var cameraPosition = Object.values(searchInObject(Object.values(searchInObject(camera.value, '==1'))[3], '==41'))[0];
+    var shells = searchInLargeObject(root, 'h1g4_1');
+    shells = Object.entries(shells.value).filter(t => typeof t[1] == 'object')[0][1];
     var flags, teamFlagPosition, enemyFlagPosition;
     try {
         flags = searchInLargeObject(root, 'l13w_1');
         teamFlagPosition = Object.values(searchInObject(Object.values(searchInObject(flags.value[0], '==3'))[0], '==41'))[0];
         enemyFlagPosition = Object.values(searchInObject(Object.values(searchInObject(flags.value[1], '==3'))[1], '==41'))[0];
     } catch (er){};
-    return {allTanks, tankPhysicsComponent, tankPosition, tankInterpolatedPosition, tankPositionVelocity, tankQuaternions, tankOrientationVelocity, camera, cameraDirection, cameraPosition, teamFlagPosition, enemyFlagPosition, cameraDirectionName};
+    return {allTanks, tankPhysicsComponent, tankPosition, tankInterpolatedPosition, tankPositionVelocity, tankQuaternions, tankOrientationVelocity, camera, cameraDirection, cameraPosition, teamFlagPosition, enemyFlagPosition, cameraDirectionName, shells};
 };
 function setVars() {
     Utils = getVars();
@@ -1853,4 +1881,11 @@ function setVars() {
             return Utils.camera.value[Utils.cameraDirectionName];
         }
     });
+};
+function setUpShellDisplay() {
+    window.isShellDisplayActive = true;
+    var shellDisplay = document.querySelectorAll('.BattleHudFpsComponentStyle-row')[1].cloneNode(true);
+    document.querySelectorAll('.BattleHudFpsComponentStyle-row')[0].parentElement.appendChild(shellDisplay);
+    shellDisplay.children[0].textContent = 'Shells: ';
+    shellDisplay.children[1].id = 'shellDisplayElm';
 };
