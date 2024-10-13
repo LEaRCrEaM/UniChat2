@@ -1067,7 +1067,7 @@ function searchInObject(objectToSearch, comparisonString) {
 };
 var first, second, third, fourth, firsta, key;
 function onJoinGame() {
-    Utils = getVars();
+    /*Utils = getVars();
     Object.defineProperty(Utils, 'cameraDirection', {
         set(t) {
             Utils.camera.value[Utils.cameraDirectionName] = t;
@@ -1075,7 +1075,7 @@ function onJoinGame() {
         get() {
             return Utils.camera.value[Utils.cameraDirectionName];
         }
-    });
+    });*/
     updateSpec();
     first = searchInObject(Object.values(TEST[TEST.length - 1]).filter(t => t?.__proto__), '=== 15');
     second = searchInObject(Object.values(Object.values(first)[0]).filter(t => t?.__proto__), '> 18');
