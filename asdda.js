@@ -1830,6 +1830,7 @@ function searchInLargeObject(obj, target, byValue = false, trackPath = false) {
     return null;
 };
 function getVars() {
+    var allTanks = Object.values(searchInLargeObject(root, 'xjy_1').value)[0];
     var tankPhysicsComponent = searchInLargeObject(root, 'p152_1');
     var tankPosition = Object.values(Object.values(searchInObject(Object.values(searchInObject(tankPhysicsComponent.value, '==21'))[0], '==2'))[0])[3];
     var tankInterpolatedPosition = Object.values(searchInObject(tankPhysicsComponent.value, '==41'))[1];
@@ -1844,5 +1845,5 @@ function getVars() {
         var teamFlagPosition = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(tankPhysicsComponent.object, '==0'))[5][0], '==3'))[0], '==41'))[0];
         var enemyFlagPosition = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(tankPhysicsComponent.object, '==0'))[5][1], '==3'))[0], '==41'))[0];
     } catch (er){};
-    return {tankPhysicsComponent, tankPosition, tankInterpolatedPosition, tankPositionVelocity, tankQuaternions, tankOrientationVelocity, camera, cameraDirection, cameraPosition, teamFlagPosition, enemyFlagPosition, cameraDirectionName};
+    return {allTanks, tankPhysicsComponent, tankPosition, tankInterpolatedPosition, tankPositionVelocity, tankQuaternions, tankOrientationVelocity, camera, cameraDirection, cameraPosition, teamFlagPosition, enemyFlagPosition, cameraDirectionName};
 };
