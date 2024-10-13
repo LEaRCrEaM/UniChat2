@@ -1839,7 +1839,7 @@ function getVars() {
     try {
         flags = searchInLargeObject(root, 'l13w_1');
         teamFlagPosition = Object.values(searchInObject(Object.values(searchInObject(flags.value[0], '==3'))[0], '==41'))[0];
-        enemyFlagPosition = Object.values(searchInObject(Object.values(searchInObject(flags.value[0], '==3'))[1], '==41'))[0];
+        enemyFlagPosition = Object.values(searchInObject(Object.values(searchInObject(flags.value[1], '==3'))[1], '==41'))[0];
     } catch (er){};
     return {allTanks, tankPhysicsComponent, tankPosition, tankInterpolatedPosition, tankPositionVelocity, tankQuaternions, tankOrientationVelocity, camera, cameraDirection, cameraPosition, teamFlagPosition, enemyFlagPosition, cameraDirectionName};
 };
