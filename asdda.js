@@ -1181,7 +1181,7 @@ var eventListeners = [
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('2')) {
                 e.preventDefault();
                 if (!myTankIntPos) {
-                    window.tankPhysicsComponent = searchInLargeObject(root, 'n13w_1');
+                    window.tankPhysicsComponent = searchInLargeObject(root, 'p152_1');
                     myTankIntPos = Object.values(searchInObject(tankPhysicsComponent.value, '==41'))[1];
                 };
                 if (config.hacks.antiAim.enabled && !config.hacks.antiAim.top) {
@@ -1226,7 +1226,7 @@ var eventListeners = [
                 e.preventDefault();
                 var myTankPosType;
                 if (!myTankIntPos) {
-                    window.tankPhysicsComponent = searchInLargeObject(root, 'n13w_1');
+                    window.tankPhysicsComponent = searchInLargeObject(root, 'p152_1');
                     myTankIntPos = Object.values(searchInObject(tankPhysicsComponent.value, '==41'))[1];
                 };
                 if (config.hacks.airBreak.enabled) {
@@ -1830,7 +1830,7 @@ function searchInLargeObject(obj, target, byValue = false, trackPath = false) {
     return null;
 };
 function getVars() {
-    var tankPhysicsComponent = searchInLargeObject(root, 'n13w_1');
+    var tankPhysicsComponent = searchInLargeObject(root, 'p152_1');
     var tankPosition = Object.values(Object.values(searchInObject(Object.values(searchInObject(tankPhysicsComponent.value, '==21'))[0], '==2'))[0])[3];
     var tankInterpolatedPosition = Object.values(searchInObject(tankPhysicsComponent.value, '==41'))[1];
     var tankPositionVelocity = Object.values(Object.values(searchInObject(Object.values(searchInObject(tankPhysicsComponent.value, '==21'))[0], '==2'))[0])[0];
