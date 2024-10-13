@@ -1248,7 +1248,7 @@ var eventListeners = [
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('5')) {
                 config.hacks.turretAim.enabled = !config.hacks.turretAim.enabled;
             };
-            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('6')) {
+            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('7')) {
                 setVars();
             };
         }
