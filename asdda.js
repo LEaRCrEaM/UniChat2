@@ -1171,10 +1171,10 @@ var eventListeners = [
             };
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('2')) {
                 e.preventDefault();
-                if (!myTankIntPos) {
+                /*if (!myTankIntPos) {
                     window.tankPhysicsComponent = searchInLargeObject(root, 'p152_1');
                     myTankIntPos = Object.values(searchInObject(tankPhysicsComponent.value, '==41'))[1];
-                };
+                };*/
                 if (config.hacks.antiAim.enabled && !config.hacks.antiAim.top) {
                     config.hacks.antiAim.top = true;
                     return;
@@ -1216,14 +1216,14 @@ var eventListeners = [
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('v')) {
                 e.preventDefault();
                 var myTankPosType;
-                if (!myTankIntPos) {
+                /*if (!myTankIntPos) {
                     window.tankPhysicsComponent = searchInLargeObject(root, 'p152_1');
                     myTankIntPos = Object.values(searchInObject(tankPhysicsComponent.value, '==41'))[1];
-                };
+                };*/
                 if (config.hacks.airBreak.enabled) {
-                    myTankPosType = myTankIntPos/*config.tank.position*/;
+                    myTankPosType = Utils.tankInterpolatedPosition/*config.tank.position*/;
                 } else {
-                    myTankPosType = myTankIntPos;
+                    myTankPosType = Utils.tankInterpolatedPosition;
                 };
                 if (config.hacks.flagTp.index) {
                     config.hacks.flagTp.index = !config.hacks.flagTp.index;
@@ -1536,9 +1536,9 @@ function aa() {
             };
         };
         if (config.hacks.antiAim.enabled) {
-            myTankIntPos.a18_1 = getRandomNumberBetween(Object.values(mapBounds)[0], Object.values(mapBounds)[3]);
-            myTankIntPos.b18_1 = getRandomNumberBetween(Object.values(mapBounds)[1], Object.values(mapBounds)[4]);
-            myTankIntPos.c18_1 = config.hacks.antiAim.top ? Object.values(mapBounds)[5] : Object.values(mapBounds)[2];
+            Utils.tankInterpolatedPosition.a18_1 = getRandomNumberBetween(Object.values(mapBounds)[0], Object.values(mapBounds)[3]);
+            Utils.tankInterpolatedPosition.b18_1 = getRandomNumberBetween(Object.values(mapBounds)[1], Object.values(mapBounds)[4]);
+            Utils.tankInterpolatedPosition.c18_1 = config.hacks.antiAim.top ? Object.values(mapBounds)[5] : Object.values(mapBounds)[2];
         };
         if (config.hacks.followTank.enabled && otherTankPos?.a18_1) {
             for (let i=0;i<2;i++) {
