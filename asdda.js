@@ -1835,10 +1835,11 @@ function getVars() {
     var cameraDirectionName = Object.entries(camera.value).filter(t => typeof t[1] == 'number')[0][0];
     var cameraDirection = camera.value[cameraDirectionName];
     var cameraPosition = Object.values(searchInObject(Object.values(searchInObject(camera.value, '==1'))[3], '==41'))[0];
-    var teamFlagPosition, enemyFlagPosition;
+    var flags, teamFlagPosition, enemyFlagPosition;
     try {
-        teamFlagPosition = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(tankPhysicsComponent.object, '==0'))[5][0], '==3'))[0], '==41'))[0];
-        enemyFlagPosition = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(tankPhysicsComponent.object, '==0'))[5][1], '==3'))[0], '==41'))[0];
+        flags = searchInLargeObject(root, 'l13w_1');
+        teamFlagPosition = Object.values(searchInObject(Object.values(searchInObject(flags.value[0], '==3'))[0], '==41'))[0];
+        enemyFlagPosition = Object.values(searchInObject(Object.values(searchInObject(flags.value[0], '==3'))[1], '==41'))[0];
     } catch (er){};
     return {allTanks, tankPhysicsComponent, tankPosition, tankInterpolatedPosition, tankPositionVelocity, tankQuaternions, tankOrientationVelocity, camera, cameraDirection, cameraPosition, teamFlagPosition, enemyFlagPosition, cameraDirectionName};
 };
