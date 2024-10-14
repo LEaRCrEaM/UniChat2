@@ -1354,7 +1354,7 @@ Element.prototype.appendChild = function() {
             if (isGameActive) {
                 isGameActive = false;
                 console.log('left game');
-                Utils = null;
+                //utils = null;
                 resetSpec();
                 window.TEST = [];
                 window.shells = [];
@@ -1386,7 +1386,7 @@ Element.prototype.appendChild = function() {
             if (isGameActive) {
                 isGameActive = false;
                 console.log('opened garage');
-                Utils = null;
+                //utils = null;
                 resetSpec();
                 window.TEST = [];
                 window.shells = [];
