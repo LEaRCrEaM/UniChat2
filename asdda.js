@@ -1072,7 +1072,7 @@ function onJoinGame() {
     second = searchInObject(Object.values(Object.values(first)[0]).filter(t => t?.__proto__), '> 18');
     third = searchInObject(Object.values(Object.values(second)[0]).filter(t => t?.__proto__), '=== 21');
     fourth = Object.values(searchInObject(Object.values(third[3]).filter(t => t?.__proto__), '=== 18'))[0];
-    myTankPos = getPositionOfTank(getTanks('self')[0]);
+    Tanki.tankPosition = getPositionOfTank(getTanks('self')[0]);
     firsta = searchInObject(Camera, '== 14');
     key = Object.entries(Object.values(firsta)[0]).filter(t => typeof t[1] === 'number')[0][0];
     /*(() => {
@@ -1130,7 +1130,7 @@ function onJoinGame() {
         }, 1000);
     };
 };
-var Utils, myTankPos, myTankIntPos, myTankInfo, otherTanks, otherTankPos, isGameActive = false;
+var Utils, Tanki.tankPosition, myTankIntPos, myTankInfo, otherTanks, otherTankPos, isGameActive = false;
 function getTanks(t) {
     if (t == 'others') {
         return Object.values(fourth)[0].filter(p => {
@@ -1165,9 +1165,9 @@ var eventListeners = [
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('1')) {
                 e.preventDefault();
                 config.hacks.airBreak.enabled = !config.hacks.airBreak.enabled;
-                config.tank.position.x = myTankPos.a18_1;
-                config.tank.position.y = myTankPos.b18_1;
-                config.tank.position.z = myTankPos.c18_1;
+                config.tank.position.x = Tanki.tankPosition.a18_1;
+                config.tank.position.y = Tanki.tankPosition.b18_1;
+                config.tank.position.z = Tanki.tankPosition.c18_1;
             };
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('2')) {
                 e.preventDefault();
@@ -1215,26 +1215,26 @@ var eventListeners = [
             };
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('v')) {
                 e.preventDefault();
-                var myTankPosType;
+                var Tanki.tankPositionType;
                 /*if (!myTankIntPos) {
                     window.tankPhysicsComponent = searchInLargeObject(root, 'p152_1');
                     myTankIntPos = Object.values(searchInObject(tankPhysicsComponent.value, '==41'))[1];
                 };*/
                 if (config.hacks.airBreak.enabled) {
-                    myTankPosType = Utils.tankInterpolatedPosition/*config.tank.position*/;
+                    Tanki.tankPositionType = Utils.tankInterpolatedPosition/*config.tank.position*/;
                 } else {
-                    myTankPosType = Utils.tankInterpolatedPosition;
+                    Tanki.tankPositionType = Utils.tankInterpolatedPosition;
                 };
                 if (config.hacks.flagTp.index) {
                     config.hacks.flagTp.index = !config.hacks.flagTp.index;
-                    myTankPosType[Object.keys(myTankPosType)[0]] = Utils.teamFlagPosition.a18_1;
-                    myTankPosType[Object.keys(myTankPosType)[1]] = Utils.teamFlagPosition.b18_1;
-                    myTankPosType[Object.keys(myTankPosType)[2]] = Utils.teamFlagPosition.c18_1;
+                    Tanki.tankPositionType[Object.keys(Tanki.tankPositionType)[0]] = Tanki.teamFlagPosition.a18_1;
+                    Tanki.tankPositionType[Object.keys(Tanki.tankPositionType)[1]] = Tanki.teamFlagPosition.b18_1;
+                    Tanki.tankPositionType[Object.keys(Tanki.tankPositionType)[2]] = Tanki.teamFlagPosition.c18_1;
                 } else {
                     config.hacks.flagTp.index = !config.hacks.flagTp.index;
-                    myTankPosType[Object.keys(myTankPosType)[0]] = Utils.enemyFlagPosition.a18_1;
-                    myTankPosType[Object.keys(myTankPosType)[1]] = Utils.enemyFlagPosition.b18_1;
-                    myTankPosType[Object.keys(myTankPosType)[2]] = Utils.enemyFlagPosition.c18_1;
+                    Tanki.tankPositionType[Object.keys(Tanki.tankPositionType)[0]] = Tanki.enemyFlagPosition.a18_1;
+                    Tanki.tankPositionType[Object.keys(Tanki.tankPositionType)[1]] = Tanki.enemyFlagPosition.b18_1;
+                    Tanki.tankPositionType[Object.keys(Tanki.tankPositionType)[2]] = Tanki.enemyFlagPosition.c18_1;
                 };
             };
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('4')) {
@@ -1450,15 +1450,15 @@ function aa() {
         };*/
         if (config.hacks.airBreak.enabled) {
             /*if (!config.tank.position.x) {
-                config.tank.position.x = myTankPos.a18_1;
-                config.tank.position.y = myTankPos.b18_1;
-                config.tank.position.z = myTankPos.c18_1;
+                config.tank.position.x = Tanki.tankPosition.a18_1;
+                config.tank.position.y = Tanki.tankPosition.b18_1;
+                config.tank.position.z = Tanki.tankPosition.c18_1;
             };*/
             if (config.hacks.airBreak.type == 'tilt') {
-                myTankPos.a18_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], config.tank.position.x));
-                myTankPos.b18_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], config.tank.position.y));
+                Tanki.tankPosition.a18_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], config.tank.position.x));
+                Tanki.tankPosition.b18_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], config.tank.position.y));
             };
-            myTankPos.c18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, config.tank.position.z));
+            Tanki.tankPosition.c18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, config.tank.position.z));
             for (let i=0;i<3;i++) {
                 if (i !== 1) {
                     var i2 = 0;
@@ -1472,7 +1472,7 @@ function aa() {
             };
             updateTankOrientationToCamera();
             // Get the camera's yaw (direction the camera is facing)
-            const cameraYaw = -getCamYaw(); // Yaw for left-right
+            const cameraYaw = -Tanki.cameraDirection // Yaw for left-right
 
             // Calculate forward movement vector based on camera yaw
             const forwardX = Math.sin(cameraYaw); // Movement in the X direction
@@ -1486,8 +1486,8 @@ function aa() {
                         config.tank.position.x += forwardX * config.hacks.airBreak.speed;
                         config.tank.position.y += forwardZ * config.hacks.airBreak.speed;
                     } else if (config.hacks.airBreak.type == 'airWalk') {
-                        myTankInfo[0].a18_1 += forwardX * 1000;
-                        myTankInfo[0].b18_1 += forwardZ * 1000;
+                        Tanki.tankPositionVelocity.a18_1 += forwardX * 1000;
+                        Tanki.tankPositionVelocity.b18_1 += forwardZ * 1000;
                     };
                 }
                 if (config.keysPressed.includes('s')) {
@@ -1496,8 +1496,8 @@ function aa() {
                         config.tank.position.x -= forwardX * config.hacks.airBreak.speed;
                         config.tank.position.y -= forwardZ * config.hacks.airBreak.speed;
                     } else if (config.hacks.airBreak.type == 'airWalk') {
-                        myTankInfo[0].a18_1 -= forwardX * 1000;
-                        myTankInfo[0].b18_1 -= forwardZ * 1000;
+                        Tanki.tankPositionVelocity.a18_1 -= forwardX * 1000;
+                        Tanki.tankPositionVelocity.b18_1 -= forwardZ * 1000;
                     };
                 }
 
@@ -1511,8 +1511,8 @@ function aa() {
                         config.tank.position.x += rightX * config.hacks.airBreak.speed;
                         config.tank.position.y += rightZ * config.hacks.airBreak.speed;
                     } else if (config.hacks.airBreak.type == 'airWalk') {
-                        myTankInfo[0].a18_1 += rightX * 1000;
-                        myTankInfo[0].b18_1 += rightZ * 1000;
+                        Tanki.tankPositionVelocity.a18_1 += rightX * 1000;
+                        Tanki.tankPositionVelocity.b18_1 += rightZ * 1000;
                     };
                 }
                 if (config.keysPressed.includes('a')) {
@@ -1521,8 +1521,8 @@ function aa() {
                         config.tank.position.x -= rightX * config.hacks.airBreak.speed;
                         config.tank.position.y -= rightZ * config.hacks.airBreak.speed;
                     } else if (config.hacks.airBreak.type == 'airWalk') {
-                        myTankInfo[0].a18_1 -= rightX * 1000;
-                        myTankInfo[0].b18_1 -= rightZ * 1000;
+                        Tanki.tankPositionVelocity.a18_1 -= rightX * 1000;
+                        Tanki.tankPositionVelocity.b18_1 -= rightZ * 1000;
                     };
                 }
 
@@ -1556,18 +1556,18 @@ function aa() {
             if (config.keysPressed.includes('v')) {
                 config.hacks.followTank.height -= config.hacks.airBreak.speed;
             };
-            myTankPos.a18_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], otherTankPos.a18_1));
-            myTankPos.b18_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], otherTankPos.b18_1));
-            myTankPos.c18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.c18_1 + config.hacks.followTank.height));
+            Tanki.tankPosition.a18_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], otherTankPos.a18_1));
+            Tanki.tankPosition.b18_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], otherTankPos.b18_1));
+            Tanki.tankPosition.c18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.c18_1 + config.hacks.followTank.height));
         };
         if (config.hacks.neverFlip.enabled) {
-            if ((Math.abs(myTankInfo[1].e1b_1) > config.hacks.neverFlip.amount && (myTankInfo[1].e1b_1 = Math.sign(myTankInfo[1].e1b_1) * config.hacks.neverFlip.amount), Math.abs(myTankInfo[1].f1b_1) > config.hacks.neverFlip.amount)) {
-                myTankInfo[1].f1b_1 = Math.sign(myTankInfo[1].f1b_1) * config.hacks.neverFlip.amount;
+            if ((Math.abs(Tanki.tankQuaternions.e1b_1) > config.hacks.neverFlip.amount && (Tanki.tankQuaternions.e1b_1 = Math.sign(Tanki.tankQuaternions.e1b_1) * config.hacks.neverFlip.amount), Math.abs(Tanki.tankQuaternions.f1b_1) > config.hacks.neverFlip.amount)) {
+                Tanki.tankQuaternions.f1b_1 = Math.sign(Tanki.tankQuaternions.f1b_1) * config.hacks.neverFlip.amount;
             };
         };
         if (config.hacks.turretAim.enabled && otherTankPos?.a18_1) {
-            var dirX = otherTankPos.a18_1 - myTankPos.a18_1;
-            var dirZ = otherTankPos.b18_1 - myTankPos.b18_1;
+            var dirX = otherTankPos.a18_1 - Tanki.tankPosition.a18_1;
+            var dirZ = otherTankPos.b18_1 - Tanki.tankPosition.b18_1;
             Object.values(firsta)[0][key] = Math.atan2(dirZ, dirX) - Math.PI/2;
         };
         if (config.hacks.autoPress.length > 0) {
@@ -1631,7 +1631,7 @@ function setSpec() {
     function b() {
         if (r2) {
             f2 = requestAnimationFrame(b);
-            const cameraYaw = -getCamYaw();
+            const cameraYaw = -Tanki.cameraDirection
             const forwardX = Math.sin(cameraYaw);
             const forwardZ = Math.cos(cameraYaw);
             const rightX = Math.cos(cameraYaw);
@@ -1690,8 +1690,8 @@ function setSpec() {
         cancelAnimationFrame(f2);
     };
     setPointerMovement();
-    config.tank.position.x = myTankPos.a18_1;
-    config.tank.position.y = myTankPos.b18_1;
+    config.tank.position.x = Tanki.tankPosition.a18_1;
+    config.tank.position.y = Tanki.tankPosition.b18_1;
     config.tank.position.z = Object.values(mapBounds)[2];
     config.hacks.airBreak.enabled = true;
 };
@@ -1710,7 +1710,7 @@ document.addEventListener('keyup', (e) => {
 });
 function resetSpec() {
     config.hacks.spectate.enabled = false;
-    myTankPos.c18_1 = Object.values(mapBounds)[5];
+    Tanki.tankPosition.c18_1 = Object.values(mapBounds)[5];
     for (const k in cameraFuncs) {
         camera[k] = cameraFuncs[k];
     };
@@ -1776,7 +1776,7 @@ function setPointerMovement() {
 };
 function updateTankOrientationToCamera() {
     // Step 1: Get the camera's yaw (direction the camera is facing)
-    const cameraYaw = getCamYaw(); // The camera yaw value
+    const cameraYaw = Tanki.cameraDirection // The camera yaw value
 
     // Step 2: Add 180 degrees (Math.PI radians) to the yaw to face the tank forward
     const adjustedYaw = cameraYaw + Math.PI;
@@ -1794,10 +1794,10 @@ function updateTankOrientationToCamera() {
     };
 
     // Step 4: Apply the yaw quaternion to the tank's orientation
-    myTankInfo[1].d1b_1 = -yawQuat.d1b_1;
-    myTankInfo[1].e1b_1 = yawQuat.e1b_1;
-    myTankInfo[1].f1b_1 = yawQuat.f1b_1;
-    myTankInfo[1].g1b_1 = yawQuat.g1b_1;
+    Tanki.tankQuaternions.d1b_1 = -yawQuat.d1b_1;
+    Tanki.tankQuaternions.e1b_1 = yawQuat.e1b_1;
+    Tanki.tankQuaternions.f1b_1 = yawQuat.f1b_1;
+    Tanki.tankQuaternions.g1b_1 = yawQuat.g1b_1;
 };
 function searchInLargeObject(obj, target, byValue = false, trackPath = false) {
     const stack = [{ current: obj, path: [] }];
@@ -1824,7 +1824,7 @@ function searchInLargeObject(obj, target, byValue = false, trackPath = false) {
     return null;
 };
 function getVars() {
-    var allTanks = Object.values(searchInLargeObject(root, 'xjy_1').value)[0];
+    var allTanks = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(Utils.cameraComponent, '==15'))[0], '==65'))[0], '==21'))[0], '==18'))[0];
     var tankPhysicsComponent = searchInLargeObject(root, 'p152_1');
     var tankPosition = Object.values(Object.values(searchInObject(Object.values(searchInObject(tankPhysicsComponent.value, '==21'))[0], '==2'))[0])[3];
     var tankInterpolatedPosition = Object.values(searchInObject(tankPhysicsComponent.value, '==41'))[1];
@@ -1853,4 +1853,55 @@ function setVars() {
             return Utils.camera.value[Utils.cameraDirectionName];
         }
     });
+};
+var Tanki = {
+    get allTanks() {
+        var t = Object.values(Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(Utils.cameraComponent, '==15'))[0], '==65'))[0], '==21'))[0], '==18'))[0])[0];
+        for (let i=0;i<t.length;i++) {
+            t[i].espInfo = Object.values(searchInObject(Object.values(Object.values(searchInObject(Object.values(searchInObject(t[i], '==15'))[0], '==18'))[0])[0], '==2'))[0]
+        };
+        return t;
+    },
+    get tankPhysicsComponent() {
+        return Utils.tankPhysicsComponent;
+    },
+    get tankPosition() {
+        return getPositionOfTank(getTanks('self')[0]);
+    },
+    get interpolatedTankPosition() {
+        return Object.values(searchInObject(Utils.tankPhysicsComponent, '==41'))[1];
+    },
+    get tankPositionVelocity() {
+        return getInfoOfTank(getTanks('self')[0])[0];
+    },
+    get tankQuaternions() {
+        return getInfoOfTank(getTanks('self')[0])[1];
+    },
+    get tankOrientationVelocity() {
+        return getInfoOfTank(getTanks('self')[0])[2];
+    },
+    get camera() {
+        return Utils.followCamera;
+    },
+    get cameraDirectionName() {
+        return Object.entries(Utils.followCamera).filter(t => typeof t[1] == 'number')[0][0];
+    },
+    get cameraDirection() {
+        return Utils.followCamera[Tanki.cameraDirectionName];
+    },
+    get cameraPosition() {
+        return Object.values(searchInObject(Object.values(searchInObject(Utils.followCamera, '==1'))[3], '==41'))[0];
+    },
+    get flags() {
+        return Utils.flags;
+    },
+    get teamFlagPosition() {
+        return Object.values(searchInObject(Object.values(searchInObject(Utils.flags[0], '==3'))[0], '==41'))[0];
+    },
+    get enemyFlagPosition() {
+        return Object.values(searchInObject(Object.values(searchInObject(Utils.flags[1], '==3'))[0], '==41'))[0];
+    },
+    set cameraDirection(t) {
+        return Utils.followCamera[Tanki.cameraDirectionName] = t;
+    }
 };
