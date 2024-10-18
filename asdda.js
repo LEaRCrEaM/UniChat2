@@ -1221,9 +1221,9 @@ var eventListeners = [
                     myTankIntPos = Object.values(searchInObject(tankPhysicsComponent.value, '==41'))[1];
                 };*/
                 if (config.hacks.airBreak.enabled) {
-                    myTankPosType = Utils.tankInterpolatedPosition/*config.tank.position*/;
+                    myTankPosType = myTankPos;/*config.tank.position*/;
                 } else {
-                    myTankPosType = Utils.tankInterpolatedPosition;
+                    myTankPosType = myTankPos;
                 };
                 if (config.hacks.flagTp.index) {
                     config.hacks.flagTp.index = !config.hacks.flagTp.index;
