@@ -1536,9 +1536,9 @@ function aa() {
             };
         };
         if (config.hacks.antiAim.enabled) {
-            Utils.tankInterpolatedPosition.e18_1 = getRandomNumberBetween(Object.values(mapBounds)[0], Object.values(mapBounds)[3]);
-            Utils.tankInterpolatedPosition.f18_1 = getRandomNumberBetween(Object.values(mapBounds)[1], Object.values(mapBounds)[4]);
-            Utils.tankInterpolatedPosition.g18_1 = config.hacks.antiAim.top ? Object.values(mapBounds)[5] : Object.values(mapBounds)[2];
+            myTankPos.e18_1 = getRandomNumberBetween(Object.values(mapBounds)[0], Object.values(mapBounds)[3]);
+            myTankPos.f18_1 = getRandomNumberBetween(Object.values(mapBounds)[1], Object.values(mapBounds)[4]);
+            myTankPos.g18_1 = config.hacks.antiAim.top ? Object.values(mapBounds)[5] : Object.values(mapBounds)[2];
         };
         if (config.hacks.followTank.enabled && otherTankPos?.e18_1) {
             for (let i=0;i<2;i++) {
@@ -1787,17 +1787,17 @@ function updateTankOrientationToCamera() {
     const cosYaw = Math.cos(halfYaw);
 
     const yawQuat = {
-        i18_1: sinYaw,  // Rotation in X-axis (yaw)
-        j18_1: 0,       // No rotation in Y-axis (pitch)
-        k18_1: 0,       // No rotation in Z-axis (roll)
-        l18_1: cosYaw   // Scalar part of the quaternion
+        i1b_1: sinYaw,  // Rotation in X-axis (yaw)
+        j1b_1: 0,       // No rotation in Y-axis (pitch)
+        k1b_1: 0,       // No rotation in Z-axis (roll)
+        l1b_1: cosYaw   // Scalar part of the quaternion
     };
 
     // Step 4: Apply the yaw quaternion to the tank's orientation
-    myTankInfo[1].i18_1 = -yawQuat.i18_1;
-    myTankInfo[1].j18_1 = yawQuat.j18_1;
-    myTankInfo[1].k18_1 = yawQuat.k18_1;
-    myTankInfo[1].l18_1 = yawQuat.l18_1;
+    myTankInfo[1].i1b_1 = -yawQuat.i1b_1;
+    myTankInfo[1].j1b_1 = yawQuat.j1b_1;
+    myTankInfo[1].k1b_1 = yawQuat.k1b_1;
+    myTankInfo[1].l1b_1 = yawQuat.l1b_1;
 };
 function searchInLargeObject(obj, target, byValue = false, trackPath = false) {
     const stack = [{ current: obj, path: [] }];
