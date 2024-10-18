@@ -1227,14 +1227,14 @@ var eventListeners = [
                 };
                 if (config.hacks.flagTp.index) {
                     config.hacks.flagTp.index = !config.hacks.flagTp.index;
-                    myTankPosType[Object.keys(myTankPosType)[0]] = Utils.teamFlagPosition.e18_1;
-                    myTankPosType[Object.keys(myTankPosType)[1]] = Utils.teamFlagPosition.f18_1;
-                    myTankPosType[Object.keys(myTankPosType)[2]] = Utils.teamFlagPosition.g18_1;
+                    myTankPosType[Object.keys(myTankPosType)[0]] = Tanki.teamFlagPosition.e18_1;
+                    myTankPosType[Object.keys(myTankPosType)[1]] = Tanki.teamFlagPosition.f18_1;
+                    myTankPosType[Object.keys(myTankPosType)[2]] = Tanki.teamFlagPosition.g18_1;
                 } else {
                     config.hacks.flagTp.index = !config.hacks.flagTp.index;
-                    myTankPosType[Object.keys(myTankPosType)[0]] = Utils.enemyFlagPosition.e18_1;
-                    myTankPosType[Object.keys(myTankPosType)[1]] = Utils.enemyFlagPosition.f18_1;
-                    myTankPosType[Object.keys(myTankPosType)[2]] = Utils.enemyFlagPosition.g18_1;
+                    myTankPosType[Object.keys(myTankPosType)[0]] = Tanki.enemyFlagPosition.e18_1;
+                    myTankPosType[Object.keys(myTankPosType)[1]] = Tanki.enemyFlagPosition.f18_1;
+                    myTankPosType[Object.keys(myTankPosType)[2]] = Tanki.enemyFlagPosition.g18_1;
                 };
             };
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('4')) {
