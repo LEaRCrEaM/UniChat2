@@ -1561,8 +1561,8 @@ function aa() {
             myTankPos.g18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.g18_1 + config.hacks.followTank.height));
         };
         if (config.hacks.neverFlip.enabled) {
-            if ((Math.abs(myTankInfo[1].j18_1) > config.hacks.neverFlip.amount && (myTankInfo[1].j18_1 = Math.sign(myTankInfo[1].j18_1) * config.hacks.neverFlip.amount), Math.abs(myTankInfo[1].k18_1) > config.hacks.neverFlip.amount)) {
-                myTankInfo[1].k18_1 = Math.sign(myTankInfo[1].k18_1) * config.hacks.neverFlip.amount;
+            if ((Math.abs(myTankInfo[1].j1b_1) > config.hacks.neverFlip.amount && (myTankInfo[1].j1b_1 = Math.sign(myTankInfo[1].j1b_1) * config.hacks.neverFlip.amount), Math.abs(myTankInfo[1].k1b_1) > config.hacks.neverFlip.amount)) {
+                myTankInfo[1].k1b_1 = Math.sign(myTankInfo[1].k1b_1) * config.hacks.neverFlip.amount;
             };
         };
         if (config.hacks.turretAim.enabled && otherTankPos?.e18_1) {
