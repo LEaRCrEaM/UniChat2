@@ -1210,7 +1210,8 @@ var eventListeners = [
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('b')) {
                 e.preventDefault();
                 try {
-                    sendShells(Object.values(Object.values(searchInObject(getTanks('player' + nick)[0], '=== 2'))[0])[3]);
+                    //sendShells(Object.values(Object.values(searchInObject(getTanks('player' + nick)[0], '=== 2'))[0])[3]);
+                    sendShells(getClosestPlayer(myTankPos, otherTanks));
                 } catch (er) {};
             };
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('v')) {
@@ -1581,6 +1582,7 @@ function aa() {
 addEventListeners();
 var nick = '';
 function sendShells(player) {
+    otherTanks = getTanks('others');
     var i = 0;
     shells.forEach(shell => {
         //setTimeout(() => {
@@ -1904,4 +1906,21 @@ var Tanki = {
     set cameraDirection(t) {
         return Utils.followCamera[Tanki.cameraDirectionName] = t;
     }
+};
+function getClosestPlayer(myTankPos, otherTanks) {
+    let closestTank = null;
+    let closestDistance = Infinity;
+    otherTanks.forEach(tank => {
+        tank = getPositionOfTank(tank);
+        const distance = Math.sqrt(
+            Math.pow(tank.e18_1 - myTankPos.e18_1, 2) +
+            Math.pow(tank.f18_1 - myTankPos.f18_1, 2) +
+            Math.pow(tank.g18_1 - myTankPos.g18_1, 2)
+        );
+        if (distance < closestDistance) {
+            closestDistance = distance;
+            closestTank = tank;
+        };
+    });
+    return closestTank;
 };
