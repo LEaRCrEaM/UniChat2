@@ -1150,6 +1150,12 @@ function getTanks(t) {
             var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 18');
             return Object.values(Object.values(second1)[0])[0].some(p => p?.a12q_1?.includes(t.replace('player', '')))
         });
+    } else if (t.includes('enemies')) {
+        return Object.values(fourth)[0].filter(p => {
+            var first1 = Object.values(searchInObject(Object.values(p).filter(t => t?.__proto__), '=== 15'))[0];
+            var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 18');
+            return Object.values(Object.values(second1)[0])[0].some(p => p?.e12q_1?.o9_1 == 'ENEMY')
+        });
     } else {
         return;
     };
@@ -1582,7 +1588,7 @@ function aa() {
 addEventListeners();
 var nick = '';
 function sendShells(player) {
-    otherTanks = getTanks('others');
+    otherTanks = getTanks('enemies');
     var i = 0;
     shells.forEach(shell => {
         //setTimeout(() => {
