@@ -1329,7 +1329,8 @@ var config = {
         airBreak: {
             enabled: false,
             speed: 100,
-            type: 'tilt'
+            type: 'tilt',
+            faceTarget: false
         },
         followTank: {
             enabled: false,
@@ -1466,13 +1467,17 @@ function aa() {
                 myTankPos.f18_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], config.tank.position.y));
             };
             myTankPos.g18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, config.tank.position.z));
-            for (let i=0;i<3;i++) {
-                if (i !== 1) {
-                    var i2 = 0;
-                    for (const k in t = myTankInfo[i]) {
-                        if ((i2 < 4) && typeof t[k] == 'number') {
-                            t[k] = 0;
-                            i2++
+            if (config.hacks.airBreak.faceTarget) {
+                faceTargetQuaternion(myTankPos, otherTankPos, myTankInfo);
+            } else {
+                for (let i=0;i<3;i++) {
+                    if (i !== 1) {
+                        var i2 = 0;
+                        for (const k in t = myTankInfo[i]) {
+                            if ((i2 < 4) && typeof t[k] == 'number') {
+                                t[k] = 0;
+                                i2++
+                            };
                         };
                     };
                 };
@@ -1929,4 +1934,36 @@ function getClosestPlayer(myTankPos, otherTanks) {
         };
     });
     return closestTank;
+};
+function faceTargetQuaternion(myTankPos, otherTankPos, myTankInfo) {
+    let direction = {
+        x: otherTankPos.e18_1 - myTankPos.e18_1,
+        y: otherTankPos.f18_1 - myTankPos.f18_1,
+        z: otherTankPos.g18_1 - myTankPos.g18_1
+    };
+    let magnitude = Math.sqrt(direction.x ** 2 + direction.y ** 2 + direction.z ** 2);
+    if (magnitude < 1e-6) {
+        console.warn("Positions are too close or identical. No rotation needed.");
+        return;
+    };
+    direction.x /= magnitude;
+    direction.y /= magnitude;
+    direction.z /= magnitude;
+    let yaw = Math.atan2(-direction.x, -direction.y);
+    let pitch = Math.asin(-direction.z);
+    let cy = Math.cos(yaw * 0.5);
+    let sy = Math.sin(yaw * 0.5);
+    let cp = Math.cos(pitch * 0.5);
+    let sp = Math.sin(pitch * 0.5);
+    let quaternion = {
+        w: cy * cp,
+        x: sp * cy,
+        y: sy * cp,
+        z: -sy * sp
+    };
+    myTankInfo[1].i1b_1 = quaternion.y;
+    myTankInfo[1].j1b_1 = quaternion.z;
+    myTankInfo[1].k1b_1 = -quaternion.x;
+    myTankInfo[1].l1b_1 = quaternion.w;
+    return quaternion;
 };
