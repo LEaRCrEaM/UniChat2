@@ -1481,8 +1481,8 @@ function aa() {
                         };
                     };
                 };
+                updateTankOrientationToCamera();
             };
-            updateTankOrientationToCamera();
             // Get the camera's yaw (direction the camera is facing)
             const cameraYaw = -getCamYaw(); // Yaw for left-right
 
