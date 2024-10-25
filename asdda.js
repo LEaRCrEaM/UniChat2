@@ -1136,25 +1136,25 @@ function getTanks(t) {
         return Object.values(fourth)[0].filter(p => {
             var first1 = Object.values(searchInObject(Object.values(p).filter(t => t?.__proto__), '=== 15'))[0];
             var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 18');
-            return Object.values(Object.values(second1)[0])[0].some(p => p.a12q_1)
+            return Object.values(Object.values(second1)[0])[0].some(p => p.j12s_1)
         });
     } else if (t == 'self') {
         return Object.values(fourth)[0].filter(p => {
             var first1 = Object.values(searchInObject(Object.values(p).filter(t => t?.__proto__), '=== 15'))[0];
             var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 18');
-            return !Object.values(Object.values(second1)[0])[0].some(p => p.a12q_1)
+            return !Object.values(Object.values(second1)[0])[0].some(p => p.j12s_1)
         });
     } else if (t.includes('player')) {
         return Object.values(fourth)[0].filter(p => {
             var first1 = Object.values(searchInObject(Object.values(p).filter(t => t?.__proto__), '=== 15'))[0];
             var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 18');
-            return Object.values(Object.values(second1)[0])[0].some(p => p?.a12q_1?.includes(t.replace('player', '')))
+            return Object.values(Object.values(second1)[0])[0].some(p => p?.j12s_1?.includes(t.replace('player', '')))
         });
     } else if (t.includes('enemies')) {
         return Object.values(fourth)[0].filter(p => {
             var first1 = Object.values(searchInObject(Object.values(p).filter(t => t?.__proto__), '=== 15'))[0];
             var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 18');
-            return Object.values(Object.values(second1)[0])[0].some(p => p?.e12q_1?.o9_1 == 'ENEMY')
+            return Object.values(Object.values(second1)[0])[0].some(p => p?.n12s_1?.o9_1 == 'ENEMY')
         });
     } else {
         return;
@@ -1602,7 +1602,7 @@ function sendShells(player) {
             shellPos.e18_1 = player.e18_1;
             shellPos.f18_1 = player.f18_1;
             shellPos.g18_1 = player.g18_1;
-            shell.g19t_1 = 9999;
+            shell.u19v_1 = 9999;
             shell.number = i;
             //shells = shells.filter(shell2 => shell2 !== shell);
         } catch (er) {};
