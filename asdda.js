@@ -1916,6 +1916,15 @@ var Tanki = {
     },
     set cameraDirection(t) {
         return Utils.followCamera[Tanki.cameraDirectionName] = t;
+    },
+    get turretDirectionName() {
+        return Object.entries(Utils.turret, '==0').filter(t => typeof t[1] == 'number')[0][0];
+    },
+    get turretDirection() {
+        return Utils.turret[Tanki.turretDirectionName];
+    },
+    set turretDirection(t) {
+        return Utils.turret[Tanki.turretDirectionName] = t;
     }
 };
 function getClosestPlayer(myTankPos, otherTanks) {
@@ -1966,4 +1975,10 @@ function faceTargetQuaternion(myTankPos, otherTankPos, myTankInfo) {
     myTankInfo[1].k1b_1 = -quaternion.x;
     myTankInfo[1].l1b_1 = quaternion.w;
     return quaternion;
+};
+function getTankYaw() {
+    const { i1b_1, j1b_1, k1b_1, l1b_1 } = myTankInfo[1];
+    const sinY = 2 * (l1b_1 * i1b_1 + j1b_1 * k1b_1);
+    const cosY = 1 - 2 * (i1b_1 * i1b_1 + j1b_1 * j1b_1);
+    return Math.atan2(sinY, cosY);
 };
