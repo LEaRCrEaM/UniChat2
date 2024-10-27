@@ -1349,7 +1349,8 @@ var config = {
             amount: .4
         },
         turretAim: {
-            enabled: false
+            enabled: false,
+            type: 'turret'
         },
         autoPress: []
     },
@@ -1578,9 +1579,19 @@ function aa() {
             };
         };
         if (config.hacks.turretAim.enabled && otherTankPos?.e18_1) {
-            var dirX = otherTankPos.e18_1 - myTankPos.e18_1;
-            var dirZ = otherTankPos.f18_1 - myTankPos.f18_1;
-            Object.values(firsta)[0][key] = Math.atan2(dirZ, dirX) - Math.PI/2;
+            switch (config.hacks.turretAim.type) {
+                case 'camera':
+                    var dirX = otherTankPos.e18_1 - myTankPos.e18_1;
+                    var dirZ = otherTankPos.f18_1 - myTankPos.f18_1;
+                    Object.values(firsta)[0][key] = Math.atan2(dirZ, dirX) - Math.PI/2;
+                    break;
+                case 'turret':
+                    var deltaX = otherTankPos.e18_1 - myTankPos.e18_1;
+                    var deltaY = otherTankPos.f18_1 - myTankPos.f18_1;
+                    var dirYaw = Math.atan2(deltaY, deltaX);
+                    Tanki.turretDirection = (dirYaw + getTankYaw()) + Math.PI/2;
+                    break;
+            };
         };
         if (config.hacks.autoPress.length > 0) {
             config.hacks.autoPress.forEach(e => {
