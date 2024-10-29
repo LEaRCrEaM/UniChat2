@@ -1602,8 +1602,8 @@ function aa() {
             myTankPos[keys[2]] = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos[keys[2]] + config.hacks.followTank.height));
         };
         if (config.hacks.neverFlip.enabled) {
-            if ((Math.abs(myTankInfo[1].[keys[4]]) > config.hacks.neverFlip.amount && (myTankInfo[1].[keys[4]] = Math.sign(myTankInfo[1].[keys[4]]) * config.hacks.neverFlip.amount), Math.abs(myTankInfo[1].[keys[5]]) > config.hacks.neverFlip.amount)) {
-                myTankInfo[1].[keys[5]] = Math.sign(myTankInfo[1].[keys[5]]) * config.hacks.neverFlip.amount;
+            if ((Math.abs(myTankInfo[1][keys[4]]) > config.hacks.neverFlip.amount && (myTankInfo[1][keys[4]] = Math.sign(myTankInfo[1][keys[4]]) * config.hacks.neverFlip.amount), Math.abs(myTankInfo[1][keys[5]]) > config.hacks.neverFlip.amount)) {
+                myTankInfo[1][keys[5]] = Math.sign(myTankInfo[1][keys[5]]) * config.hacks.neverFlip.amount;
             };
         };
         if (config.hacks.turretAim.enabled && otherTankPos?[keys[0]]) {
@@ -1846,10 +1846,10 @@ function updateTankOrientationToCamera() {
     };
 
     // Step 4: Apply the yaw quaternion to the tank's orientation
-    myTankInfo[1].[keys[3]] = -yawQuat.[keys[3]];
-    myTankInfo[1].[keys[4]] = yawQuat.[keys[4]];
-    myTankInfo[1].[keys[5]] = yawQuat.[keys[5]];
-    myTankInfo[1].[keys[6]] = yawQuat.[keys[6]];
+    myTankInfo[1][keys[3]] = -yawQuat[keys[3]];
+    myTankInfo[1][keys[4]] = yawQuat[keys[4]];
+    myTankInfo[1][keys[5]] = yawQuat[keys[5]];
+    myTankInfo[1][keys[6]] = yawQuat[keys[6]];
 };
 function searchInLargeObject(obj, target, byValue = false, trackPath = false) {
     const stack = [{ current: obj, path: [] }];
@@ -2009,10 +2009,10 @@ function faceTargetQuaternion(myTankPos, otherTankPos, myTankInfo) {
         y: sy * cp,
         z: -sy * sp
     };
-    myTankInfo[1].[keys[3]] = quaternion.y;
-    myTankInfo[1].[keys[4]] = quaternion.z;
-    myTankInfo[1].[keys[5]] = -quaternion.x;
-    myTankInfo[1].[keys[6]] = quaternion.w;
+    myTankInfo[1][keys[3]] = quaternion.y;
+    myTankInfo[1][keys[4]] = quaternion.z;
+    myTankInfo[1][keys[5]] = -quaternion.x;
+    myTankInfo[1][keys[6]] = quaternion.w;
     return quaternion;
 };
 function getTankYaw() {
