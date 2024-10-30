@@ -1,4 +1,4 @@
-if (!window.location.includes('test')) {
+if (!window.location.href.includes('test')) {
 console.log('main tanki');
 window.DEBUG = 5;
 var tempInt;
