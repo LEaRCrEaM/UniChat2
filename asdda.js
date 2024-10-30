@@ -1,4 +1,5 @@
-if (true) {
+if (!window.location.includes('test')) {
+console.log('main tanki');
 window.DEBUG = 5;
 var tempInt;
 var Skins = {
@@ -1995,6 +1996,7 @@ function getTankYaw() {
     return Math.atan2(sinY, cosY);
 };
 } else {
+console.log('test server');
 var keys = [
     'v17_1',
     'w17_1',
