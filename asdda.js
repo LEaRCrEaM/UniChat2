@@ -1,4 +1,35 @@
 if (!window.location.href.includes('test')) {
+var Sounds = [];
+class CustomAudioBuffer {
+    constructor(audioBuffer) {
+        !Sounds.includes(this) && Sounds.push(this);
+        this.audioBuffer = audioBuffer;
+        this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    play() {
+        const source = this.audioContext.createBufferSource();
+        source.buffer = this.audioBuffer;
+        source.connect(this.audioContext.destination);
+        source.start(0);
+        source.onended = () => {
+            console.log("Audio playback finished.");
+        };
+    }
+};
+async function fetchAndDecodeAudio(url) {
+    const response = await fetch(url);
+    const arrayBuffer = await response.arrayBuffer();
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+    return audioBuffer;
+};
+async function fetchAndDecodeAudio(url) {
+    const response = await fetch(url);
+    const arrayBuffer = await response.arrayBuffer();
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+    return audioBuffer;
+};
 console.log('main tanki');
 window.DEBUG = 5;
 var tempInt;
