@@ -23,13 +23,6 @@ async function fetchAndDecodeAudio(url) {
     const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
     return audioBuffer;
 };
-async function fetchAndDecodeAudio(url) {
-    const response = await fetch(url);
-    const arrayBuffer = await response.arrayBuffer();
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-    return audioBuffer;
-};
 console.log('main tanki');
 window.DEBUG = 5;
 var tempInt;
