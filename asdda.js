@@ -1331,8 +1331,8 @@ var eventListeners = [
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('b')) {
                 e.preventDefault();
                 try {
-                    //sendShells(Object.values(Object.values(searchInObject(getTanks('player' + nick)[0], '=== 2'))[0])[3]);
-                    sendShells(getClosestPlayer(myTankPos, otherTanks));
+                    sendShells(Object.values(Object.values(searchInObject(getTanks('player' + nick)[0], '=== 2'))[0])[3]);
+                    //sendShells(getClosestPlayer(myTankPos, otherTanks));
                 } catch (er) {};
             };
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('v')) {
