@@ -276,7 +276,22 @@ document.body.insertAdjacentHTML('beforeend', `
 
         <div class="switch-item">
             <input type="color" id="colorPicker"/>
-            <label for='colorPicker' class="switch-label">Esp Color</label>
+            <label for='colorPicker' class="switch-label">Enemy Esp Color</label>
+        </div>
+        
+        <div class="switch-item">
+            <input type="color" id="colorPicker2"/>
+            <label for='colorPicker2' class="switch-label">Team Esp Color</label>
+        </div>
+        
+        <div class="switch-item">
+            <input type="color" id="colorPicker3"/>
+            <label for='colorPicker3' class="switch-label">Target Esp Color</label>
+        </div>
+        
+        <div class="switch-item">
+            <input type="color" id="colorPicker4"/>
+            <label for='colorPicker4' class="switch-label">Self Esp Color</label>
         </div>
     </div>
 
@@ -749,6 +764,24 @@ colorPicker.addEventListener("input", function() {
     const decimalColor = hexToDecimal(hexColor);
     window.espColor = decimalColor;
 });
+const colorPicker2 = document.getElementById("colorPicker2");
+colorPicker2.addEventListener("input", function() {
+    const hexColor = colorPicker2.value;
+    const decimalColor = hexToDecimal(hexColor);
+    window.espColor2 = decimalColor;
+});
+const colorPicker3 = document.getElementById("colorPicker3");
+colorPicker3.addEventListener("input", function() {
+    const hexColor = colorPicker3.value;
+    const decimalColor = hexToDecimal(hexColor);
+    window.espColor3 = decimalColor;
+});
+const colorPicker4 = document.getElementById("colorPicker4");
+colorPicker4.addEventListener("input", function() {
+    const hexColor = colorPicker4.value;
+    const decimalColor = hexToDecimal(hexColor);
+    window.espColor4 = decimalColor;
+});
 function hexToDecimal(hex) {
     return parseInt(hex.slice(1), 16);
 };
@@ -1092,10 +1125,11 @@ function searchInObject(objectToSearch, comparisonString) {
 };
 var first, second, third, fourth, firsta, key;
 function onJoinGame() {
-    first = searchInObject(Object.values(TEST[TEST.length - 1]).filter(t => t?.__proto__), '=== 15');
+    /*first = searchInObject(Object.values(TEST[TEST.length - 1]).filter(t => t?.__proto__), '=== 15');
     second = searchInObject(Object.values(Object.values(first)[0]).filter(t => t?.__proto__), '> 18');
     third = searchInObject(Object.values(Object.values(second)[0]).filter(t => t?.__proto__), '=== 21');
-    fourth = Object.values(searchInObject(Object.values(third[3]).filter(t => t?.__proto__), '=== 18'))[0];
+    fourth = Object.values(searchInObject(Object.values(third[3]).filter(t => t?.__proto__), '=== 18'))[0];*/
+    fourth = Tanki.allTanks;
     myTankPos = getPositionOfTank(getTanks('self')[0]);
     firsta = Utils.followCamera;
     key = Object.entries(Utils.followCamera).filter(t => typeof t[1] === 'number')[0][0];
@@ -1153,7 +1187,9 @@ function onJoinGame() {
             };
         }, 1000);
     };
-    updateSpec();
+    try {
+        updateSpec();
+    } catch (e){};
 };
 var Utils, myTankPos, myTankIntPos, myTankInfo, otherTanks, otherTankPos, isGameActive = false;
 /*function getTanks(t) {
@@ -1653,8 +1689,8 @@ function aa() {
             myTankPos.x17_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.x17_1 + config.hacks.followTank.height));
         };
         if (config.hacks.neverFlip.enabled) {
-            if ((Math.abs(myTankInfo[1].b1b_1) > config.hacks.neverFlip.amount && (myTankInfo[1].b1b_1 = Math.sign(myTankInfo[1].b1b_1) * config.hacks.neverFlip.amount), Math.abs(myTankInfo[1].c1b_1) > config.hacks.neverFlip.amount)) {
-                myTankInfo[1].c1b_1 = Math.sign(myTankInfo[1].c1b_1) * config.hacks.neverFlip.amount;
+            if ((Math.abs(myTankInfo[1].b1b_1) > config.hacks.neverFlip.amount && (myTankInfo[1].b1b_1 = Math.sign(myTankInfo[1].b1b_1) * config.hacks.neverFlip.amount), Math.abs(myTankInfo[1].a1b_1) > config.hacks.neverFlip.amount)) {
+                myTankInfo[1].a1b_1 = Math.sign(myTankInfo[1].a1b_1) * config.hacks.neverFlip.amount;
             };
         };
         if (config.hacks.turretAim.enabled && otherTankPos?.v17_1) {
