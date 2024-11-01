@@ -1097,8 +1097,8 @@ function onJoinGame() {
     third = searchInObject(Object.values(Object.values(second)[0]).filter(t => t?.__proto__), '=== 21');
     fourth = Object.values(searchInObject(Object.values(third[3]).filter(t => t?.__proto__), '=== 18'))[0];
     myTankPos = getPositionOfTank(getTanks('self')[0]);
-    firsta = searchInObject(Camera, '== 14');
-    key = Object.entries(Object.values(firsta)[0]).filter(t => typeof t[1] === 'number')[0][0];
+    firsta = Utils.followCamera;
+    key = Object.entries(Utils.followCamera).filter(t => typeof t[1] === 'number')[0][0];
     /*(() => {
         var first = searchInObject(TEST[TEST.length-1], '==15');;
         var second = searchInObject(Object.values(first)[0], '==65');
@@ -1614,7 +1614,7 @@ function aa() {
                 case 'camera':
                     var dirX = otherTankPos.v17_1 - myTankPos.v17_1;
                     var dirZ = otherTankPos.w17_1 - myTankPos.w17_1;
-                    Object.values(firsta)[0][key] = Math.atan2(dirZ, dirX) - Math.PI/2;
+                    Tanki.cameraDirection = Math.atan2(dirZ, dirX) - Math.PI/2;
                     break;
                 case 'turret':
                     var deltaX = otherTankPos.v17_1 - myTankPos.v17_1;
@@ -1831,7 +1831,7 @@ function updateTankOrientationToCamera() {
     const cameraYaw = getCamYaw(); // The camera yaw value
 
     // Step 2: Add 180 degrees (Math.PI radians) to the yaw to face the tank forward
-    const adjustedYaw = cameraYaw + Math.PI;
+    const adjustedYaw = cameraYaw;
 
     // Step 3: Convert the adjusted yaw to a quaternion
     const halfYaw = adjustedYaw * 0.5;
@@ -1839,14 +1839,14 @@ function updateTankOrientationToCamera() {
     const cosYaw = Math.cos(halfYaw);
 
     const yawQuat = {
-        a1b_1: sinYaw,  // Rotation in X-axis (yaw)
+        a1b_1: 0,  // Rotation in X-axis (yaw)
         b1b_1: 0,       // No rotation in Y-axis (pitch)
-        c1b_1: 0,       // No rotation in Z-axis (roll)
+        c1b_1: sinYaw,       // No rotation in Z-axis (roll)
         z1a_1: cosYaw   // Scalar part of the quaternion
     };
 
     // Step 4: Apply the yaw quaternion to the tank's orientation
-    myTankInfo[1].a1b_1 = -yawQuat.a1b_1;
+    myTankInfo[1].a1b_1 = yawQuat.a1b_1;
     myTankInfo[1].b1b_1 = yawQuat.b1b_1;
     myTankInfo[1].c1b_1 = yawQuat.c1b_1;
     myTankInfo[1].z1a_1 = yawQuat.z1a_1;
