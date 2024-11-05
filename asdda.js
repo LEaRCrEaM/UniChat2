@@ -1752,6 +1752,7 @@ function saveCameraFuncs() {
 var camSpeed = 100;
 function setSpec() {
     config.hacks.spectate.enabled = true;
+    myTank[tankMovable] = false;
     for (const k in t = camera) {
         if (typeof t[k] == 'function') {
             t[k] = function() {};
@@ -1820,6 +1821,7 @@ document.addEventListener('keyup', (e) => {
 });
 function resetSpec() {
     config.hacks.spectate.enabled = false;
+    myTank[tankMovable] = true;
     for (const k in cameraFuncs) {
         camera[k] = cameraFuncs[k];
     };
