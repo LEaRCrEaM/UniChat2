@@ -1743,10 +1743,10 @@ const deceleration = 3;
 const followSmoothingFactor = 0.1;
 function b() {}
 function getSpec() {
-    var first = searchInObject(Camera, '== 14');
-    var second = searchInObject(Object.values(first)[0], '== 1');
-    var third = searchInObject(Object.values(second)[3], '== 41');
-    return Object.values(third)[0];
+    var first2 = searchInObject(Utils.followCamera, '== 14');
+    var second2 = searchInObject(Object.values(first2)[0], '== 3');
+    var third2 = searchInObject(Object.values(second2)[0], '== 41');
+    return Object.values(third2)[0];
 };
 function getCamYaw() {
     return Tanki.cameraDirection;
