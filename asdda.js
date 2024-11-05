@@ -1868,14 +1868,9 @@ function pointerMovement(e) {
     const movementY = e.movementY;
     if (document.pointerLockElement === canvas) {
         if (movementY > 0) {
-            press('KeyQ', true);
-            setTimeout(() => press('KeyQ', false), Math.abs(500 * movementY));
+            Tanki.cameraElavation += .001 * movementY;
         } else if (movementY < 0) {
-            press('KeyE', true);
-            setTimeout(() => press('KeyE', false), Math.abs(500 * movementY));
-        } else {
-            press('KeyQ', false);
-            press('KeyE', false);
+            Tanki.cameraElavation -= .001 * Math.abs(movementY);
         };
     };
 };
@@ -1997,8 +1992,14 @@ var Tanki = {
     get cameraDirectionName() {
         return Object.entries(Utils.followCamera).filter(t => typeof t[1] == 'number')[0][0];
     },
+    get cameraElavationName() {
+        return Object.entries(Utils.followCamera).filter(t => typeof t[1] == 'number')[2][0];
+    },
     get cameraDirection() {
         return Utils.followCamera[Tanki.cameraDirectionName];
+    },
+    get cameraElavation() {
+        return Utils.followCamera[Tanki.cameraElavationName];
     },
     get cameraPosition() {
         return Object.values(searchInObject(Object.values(searchInObject(Utils.followCamera, '==1'))[3], '==41'))[0];
@@ -2014,6 +2015,9 @@ var Tanki = {
     },
     set cameraDirection(t) {
         return Utils.followCamera[Tanki.cameraDirectionName] = t;
+    },
+    set cameraElavation(t) {
+        return Utils.followCamera[Tanki.cameraElavationName] = t;
     },
     get turretDirectionName() {
         return Object.entries(Utils.turret, '==0').filter(t => typeof t[1] == 'number')[0][0];
