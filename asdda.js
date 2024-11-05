@@ -1743,10 +1743,9 @@ const deceleration = 3;
 const followSmoothingFactor = 0.1;
 function b() {}
 function getSpec() {
-    var first2 = searchInObject(Utils.followCamera, '== 14');
-    var second2 = searchInObject(Object.values(first2)[0], '== 3');
-    var third2 = searchInObject(Object.values(second2)[0], '== 41');
-    return Object.values(third2)[0];
+    var first2 = searchInObject(Utils.followCamera, '==1');
+    var second2 = searchInObject(Object.values(first2)[3], '==41');
+    return Object.values(second2)[0];
 };
 function getCamYaw() {
     return Tanki.cameraDirection;
@@ -1756,6 +1755,7 @@ function saveCameraFuncs() {
         cameraFuncs[k] = t[k];
     };
 };
+var camSpeed = 100;
 function setSpec() {
     config.hacks.spectate.enabled = true;
     for (const k in t = camera) {
@@ -1767,48 +1767,32 @@ function setSpec() {
     function b() {
         if (r2) {
             f2 = requestAnimationFrame(b);
-            const cameraYaw = -getCamYaw();
-            const forwardX = Math.sin(cameraYaw);
-            const forwardZ = Math.cos(cameraYaw);
+            const cameraYaw = getCamYaw();
+            const forwardX = Math.cos(cameraYaw + Math.PI/2);
+            const forwardZ = Math.sin(cameraYaw + Math.PI/2);
             const rightX = Math.cos(cameraYaw);
-            const rightZ = -Math.sin(cameraYaw);
+            const rightZ = Math.sin(cameraYaw);
             if (keysPressed.includes('w')) {
-                cameraVel.x += forwardX * acceleration;
-                cameraVel.z += forwardZ * acceleration;
-            } else if (cameraVel.x > 0 || cameraVel.z > 0) {
-                cameraVel.x = Math.max(cameraVel.x - deceleration, 0);
-                cameraVel.z = Math.max(cameraVel.z - deceleration, 0);
+                cameraPos.x += forwardX * camSpeed;
+                cameraPos.y += forwardZ * camSpeed;
             };
             if (keysPressed.includes('s')) {
-                cameraVel.x -= forwardX * acceleration;
-                cameraVel.z -= forwardZ * acceleration;
-            } else if (cameraVel.x < 0 || cameraVel.z < 0) {
-                cameraVel.x = Math.min(cameraVel.x + deceleration, 0);
-                cameraVel.z = Math.min(cameraVel.z + deceleration, 0);
+                cameraPos.x -= forwardX * camSpeed;
+                cameraPos.y -= forwardZ * camSpeed;
             };
             if (keysPressed.includes('a')) {
-                cameraVel.x -= rightX * acceleration;
-                cameraVel.z -= rightZ * acceleration;
-            } else if (cameraVel.x < 0 || cameraVel.z < 0) {
-                cameraVel.x = Math.min(cameraVel.x + deceleration, 0);
-                cameraVel.z = Math.min(cameraVel.z + deceleration, 0);
+                cameraPos.x -= rightX * camSpeed;
+                cameraPos.y -= rightZ * camSpeed;
             };
             if (keysPressed.includes('d')) {
-                cameraVel.x += rightX * acceleration;
-                cameraVel.z += rightZ * acceleration;
-            } else if (cameraVel.x > 0 || cameraVel.z > 0) {
-                cameraVel.x = Math.max(cameraVel.x - deceleration, 0);
-                cameraVel.z = Math.max(cameraVel.z - deceleration, 0);
+                cameraPos.x += rightX * camSpeed;
+                cameraPos.y += rightZ * camSpeed;
             };
             if (keysPressed.includes('f')) {
-                cameraVel.y = Math.min(cameraVel.y + acceleration, maxSpeed);
-            } else if (cameraVel.y > 0) {
-                cameraVel.y = Math.max(cameraVel.y - deceleration, 0);
+                cameraPos.z += camSpeed;
             };
             if (keysPressed.includes('v')) {
-                cameraVel.y = Math.max(cameraVel.y - acceleration, -maxSpeed);
-            } else if (cameraVel.y < 0) {
-                cameraVel.y = Math.min(cameraVel.y + deceleration, 0);
+                cameraPos.z -= camSpeed;
             };
             cameraPos.x += cameraVel.x;
             cameraPos.y += cameraVel.y;
@@ -1826,10 +1810,6 @@ function setSpec() {
         cancelAnimationFrame(f2);
     };
     setPointerMovement();
-    config.tank.position.x = myTankPos.v17_1;
-    config.tank.position.y = myTankPos.w17_1;
-    config.tank.position.z = Object.values(mapBounds)[2];
-    config.hacks.airBreak.enabled = true;
 };
 function updateSpec() {
     camera = getSpec();
@@ -2100,8 +2080,8 @@ function faceTargetQuaternion(myTankPos, otherTankPos, myTankInfo) {
     return quaternion;
 };
 function getTankYaw() {
-    const { a1b_1, b1b_1, c1b_1, z1a_1 } = myTankInfo[1];
-    const sinY = 2 * (z1a_1 * a1b_1 + b1b_1 * c1b_1);
-    const cosY = 1 - 2 * (a1b_1 * a1b_1 + b1b_1 * b1b_1);
+    const { c1b_1, b1b_1, a1b_1, z1a_1 } = myTankInfo[1];
+    const sinY = 2 * (z1a_1 * c1b_1 + b1b_1 * c1b_1);
+    const cosY = 1 - 2 * (c1b_1 * c1b_1 + b1b_1 * b1b_1);
     return Math.atan2(sinY, cosY);
 };
