@@ -1191,7 +1191,7 @@ function onJoinGame() {
         updateSpec();
     } catch (e){};
 };
-var Utils, myTankPos, myTankIntPos, myTankInfo, otherTanks, otherTankPos, isGameActive = false;
+var Utils, myTank, tankMovable, myTankPos, myTankIntPos, myTankInfo, otherTanks, otherTankPos, isGameActive = false;
 /*function getTanks(t) {
     if (t == 'others') {
         return Object.values(Tanki.allTanks).filter(p => {
@@ -1289,6 +1289,11 @@ var eventListeners = [
                 config.tank.position.x = myTankPos.v17_1;
                 config.tank.position.y = myTankPos.w17_1;
                 config.tank.position.z = myTankPos.x17_1;
+                myTank = getTanks('self')[0];
+                if (!tankMovable) {
+                    tankMovable = Object.entries(myTank).filter(t => typeof t[1] == 'boolean' && t[1])[0][0];
+                };
+                myTank[tankMovable] = config.hacks.airBreak.enabled ? false : true;
             };
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('2')) {
                 e.preventDefault();
@@ -1826,7 +1831,6 @@ document.addEventListener('keyup', (e) => {
 });
 function resetSpec() {
     config.hacks.spectate.enabled = false;
-    myTankPos.x17_1 = Object.values(mapBounds)[5];
     for (const k in cameraFuncs) {
         camera[k] = cameraFuncs[k];
     };
