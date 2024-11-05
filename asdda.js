@@ -1591,17 +1591,6 @@ function aa() {
             if (config.hacks.airBreak.faceTarget) {
                 faceTargetQuaternion(myTankPos, otherTankPos, myTankInfo);
             } else {
-                for (let i=0;i<3;i++) {
-                    if (i !== 1) {
-                        var i2 = 0;
-                        for (const k in t = myTankInfo[i]) {
-                            if ((i2 < 4) && typeof t[k] == 'number') {
-                                t[k] = 0;
-                                i2++
-                            };
-                        };
-                    };
-                };
                 updateTankOrientationToCamera();
             };
             // Get the camera's yaw (direction the camera is facing)
