@@ -15,6 +15,20 @@ class CustomAudioBuffer {
         };
     }
 };
+var oF = CanvasRenderingContext2D.prototype.fillText;
+var oS = CanvasRenderingContext2D.prototype.strokeText;
+CanvasRenderingContext2D.prototype.fillText = function() {
+    if (arguments[0] && typeof arguments[0] == 'string' && ['Soduko', 'Scars'].some(t => arguments[0].includes(t))) {
+        arguments[0] = arguments[0].replaceAll('Soduko', 'King').replaceAll('Scars', 'King');
+    };
+    return oF.apply(this, arguments);
+};
+CanvasRenderingContext2D.prototype.strokeText = function() {
+    if (arguments[0] && typeof arguments[0] == 'string' && ['Soduko', 'Scars'].some(t => arguments[0].includes(t))) {
+        arguments[0] = arguments[0].replaceAll('Soduko', 'King').replaceAll('Scars', 'King');
+    };
+    return oS.apply(this, arguments);
+};
 async function fetchAndDecodeAudio(url) {
     const response = await fetch(url);
     const arrayBuffer = await response.arrayBuffer();
@@ -1188,6 +1202,10 @@ function onJoinGame() {
         }, 1000);
     };
     try {
+        myTank = getTanks('self')[0];
+        if (!tankMovable) {
+            tankMovable = Object.entries(myTank).filter(t => typeof t[1] == 'boolean' && t[1])[0][0];
+        };
         updateSpec();
     } catch (e){};
 };
