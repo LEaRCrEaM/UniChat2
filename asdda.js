@@ -1312,7 +1312,7 @@ var eventListeners = [
                 if (!tankMovable) {
                     tankMovable = Object.entries(myTank).filter(t => typeof t[1] == 'boolean' && t[1])[0][0];
                 };
-                myTank[tankMovable] = config.hacks.airBreak.enabled ? false : true;
+                config.hacks.airBreak.type == 'tilt' ? myTank[tankMovable] = config.hacks.airBreak.enabled ? false : true : null;
             };
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('2')) {
                 e.preventDefault();
