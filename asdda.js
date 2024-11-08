@@ -21,12 +21,22 @@ var oS = CanvasRenderingContext2D.prototype.strokeText;
 CanvasRenderingContext2D.prototype.fillText = function() {
     if (arguments[0] && typeof arguments[0] == 'string' && ['Soduko', 'Scars'].some(t => arguments[0].includes(t))) {
         arguments[0] = arguments[0].replaceAll('Soduko', 'King').replaceAll('Scars', 'King');
+        return oF.apply(this, arguments);
+    };
+    if (arguments[0] && typeof arguments[0] == 'string' && ['Sick', 'Thrife'].some(t => arguments[0].includes(t))) {
+        arguments[0] = arguments[0].replaceAll('Sick', 'Bitch').replaceAll('Thrife', 'Bitch');
+        return oF.apply(this, arguments);
     };
     return oF.apply(this, arguments);
 };
 CanvasRenderingContext2D.prototype.strokeText = function() {
     if (arguments[0] && typeof arguments[0] == 'string' && ['Soduko', 'Scars'].some(t => arguments[0].includes(t))) {
         arguments[0] = arguments[0].replaceAll('Soduko', 'King').replaceAll('Scars', 'King');
+        return oS.apply(this, arguments);
+    };
+    if (arguments[0] && typeof arguments[0] == 'string' && ['Sick', 'Thrife'].some(t => arguments[0].includes(t))) {
+        arguments[0] = arguments[0].replaceAll('Sick', 'Bitch').replaceAll('Thrife', 'Bitch');
+        return oS.apply(this, arguments);
     };
     return oS.apply(this, arguments);
 };
