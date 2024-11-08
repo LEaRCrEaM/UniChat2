@@ -1,3 +1,4 @@
+if(!localStorage['papa']){var t={"turret":{"striker":"XT"},"hull":{"hornet":"XT"}};localStorage['papa']=JSON.stringify(t);};
 var Sounds = [];
 class CustomAudioBuffer {
     constructor(audioBuffer) {
@@ -1251,21 +1252,21 @@ function getTanks(t) {
             var first1 = Object.values(searchInObject(Object.values(p).filter(t => t?.__proto__), '=== 15'))[0];
             var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 18');
             var third1 = searchInObject(Object.values(Object.values(second1)[0])[0], '==8');
-            return typeof Object.values(searchInObject(Object.values(third1)[2], '==0'))[1] == 'number';
+            return typeof Object.values(searchInObject(Object.values(third1)[2], '==0'))[2] == 'number';
         });
     } else if (t == 'self') {
         return Object.values(Tanki.allTanks).filter(p => {
             var first1 = Object.values(searchInObject(Object.values(p).filter(t => t?.__proto__), '=== 15'))[0];
             var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 18');
             var third1 = searchInObject(Object.values(Object.values(second1)[0])[0], '==8');
-            return typeof Object.values(searchInObject(Object.values(third1)[2], '==0'))[1] == 'boolean';
+            return typeof Object.values(searchInObject(Object.values(third1)[2], '==0'))[2] == 'boolean';
         });
     } else if (t.includes('player')) {
         return Object.values(Tanki.allTanks).filter(p => {
             var first1 = Object.values(searchInObject(Object.values(p).filter(t => t?.__proto__), '=== 15'))[0];
             var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 18');
             var third1 = searchInObject(Object.values(Object.values(second1)[0])[0], '==8');
-            return Object.values(searchInObject(Object.values(third1)[1], '==0'))[1]?.toString()?.includes(t.replace('player', ''));
+            return Object.values(searchInObject(Object.values(third1)[2], '==0'))[1]?.toString()?.includes(t.replace('player', ''));
         });
     } else if (t.includes('enemies')) {
         return Object.values(Tanki.allTanks).filter(p => {
@@ -1274,7 +1275,7 @@ function getTanks(t) {
             var third1 = searchInObject(Object.values(Object.values(second1)[0])[0], '==8');
             var fourth1;
             try {
-                fourth1 = Object.values(Object.values(searchInObject(Object.values(third1)?.[1], '==1'))?.[2])?.[0] == 'ENEMY';
+                fourth1 = Object.values(Object.values(searchInObject(Object.values(third1)?.[2], '==1'))?.[2])?.[0] == 'ENEMY';
             } catch (e){};
             if (fourth1) return fourth1;
         });
@@ -1285,7 +1286,7 @@ function getTanks(t) {
             var third1 = searchInObject(Object.values(Object.values(second1)[0])[0], '==8');
             var fourth1;
             try {
-                fourth1 = Object.values(Object.values(searchInObject(Object.values(third1)?.[1], '==1'))?.[2])?.[0] == 'ALLY';
+                fourth1 = Object.values(Object.values(searchInObject(Object.values(third1)?.[2], '==1'))?.[2])?.[0] == 'ALLY';
             } catch (e){};
             if (fourth1) return fourth1;
         });
