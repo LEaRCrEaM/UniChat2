@@ -1123,6 +1123,9 @@ function press(t, n) {
 function getPositionOfTank(t) {
     return Object.values(Object.values(searchInObject(t, '=== 2'))[0])[3]
 };
+function getIntPosOfTank(t) {
+    return Object.values(searchInObject(Object.values(searchInObject(t, '==14'))[0], '==41'))[1];
+};
 function getInfoOfTank(t) {
     return Object.values(Object.values(searchInObject(t, '=== 2'))[0])
 };
@@ -1377,9 +1380,9 @@ var eventListeners = [
                     myTankIntPos = Object.values(searchInObject(tankPhysicsComponent.value, '==41'))[1];
                 };*/
                 if (config.hacks.airBreak.enabled) {
-                    myTankPosType = myTankPos;/*config.tank.position*/;
+                    myTankPosType = Tanki.interpolatedPosition;/*config.tank.position*/;
                 } else {
-                    myTankPosType = myTankPos;
+                    myTankPosType = Tanki.interpolatedPosition;
                 };
                 if (config.hacks.flagTp.index) {
                     config.hacks.flagTp.index = !config.hacks.flagTp.index;
@@ -2004,7 +2007,7 @@ var Tanki = {
         return getPositionOfTank(getTanks('self')[0]);
     },
     get interpolatedTankPosition() {
-        return Object.values(searchInObject(Utils.tankPhysicsComponent, '==41'))[1];
+        return getIntPosOfTank(myTank);
     },
     get tankPositionVelocity() {
         return getInfoOfTank(getTanks('self')[0])[0];
