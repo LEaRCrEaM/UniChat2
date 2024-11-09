@@ -2096,7 +2096,7 @@ function faceTargetQuaternion(myTankPos, otherTankPos, myTankInfo) {
     direction.x /= magnitude;
     direction.y /= magnitude;
     direction.z /= magnitude;
-    let yaw = Math.atan2(-direction.x, -direction.y);
+    let yaw = Math.atan2(-direction.x, direction.y);
     let pitch = Math.asin(-direction.z);
     let cy = Math.cos(yaw * 0.5);
     let sy = Math.sin(yaw * 0.5);
@@ -2108,9 +2108,9 @@ function faceTargetQuaternion(myTankPos, otherTankPos, myTankInfo) {
         y: sy * cp,
         z: -sy * sp
     };
-    myTankInfo[1].a1b_1 = quaternion.y;
+    myTankInfo[1].c1b_1 = quaternion.y;
     myTankInfo[1].b1b_1 = quaternion.z;
-    myTankInfo[1].c1b_1 = -quaternion.x;
+    myTankInfo[1].a1b_1 = -quaternion.x;
     myTankInfo[1].z1a_1 = quaternion.w;
     return quaternion;
 };
