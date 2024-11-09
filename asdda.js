@@ -1752,17 +1752,21 @@ function aa() {
 addEventListeners();
 var nick = '';
 function sendShells(player) {
+    if (!Utils[`${Utils.weaponName.toLowerCase()}CC`].fed_1 == 0) {
+        Utils[`${Utils.weaponName.toLowerCase()}CC`].fed_1 = 0;
+    };
     otherTanks = getTanks('enemies');
     var i = 0;
-    shells.forEach(shell => {
+    Tanki.shells.forEach(shell => {
         //setTimeout(() => {
         try {
-            var shellPos = Object.values(searchInObject(shell, '=== 41'))[0];
+            var shellRaycastMovement = getRaycastMovementOfShell(shell);
+            var shellPos = Object.values(searchInObject(shellRaycastMovement, '=== 41'))[0];
             shellPos.v17_1 = player.v17_1;
             shellPos.w17_1 = player.w17_1;
             shellPos.x17_1 = player.x17_1;
-            shell.u19v_1 = 9999;
-            shell.number = i;
+            shellRaycastMovement.s18j_1 = 9999;
+            shellRaycastMovement.number = i;
             //shells = shells.filter(shell2 => shell2 !== shell);
         } catch (er) {};
         //}, i * 300);
