@@ -1129,6 +1129,9 @@ function getIntPosOfTank(t) {
 function getInfoOfTank(t) {
     return Object.values(Object.values(searchInObject(t, '=== 2'))[0])
 };
+function getRaycastMovementOfShell(t) {
+    return Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(t, '==18'))[0], '==0'))[0], '==3'))[1], '==8'))[0], '==6'))[1];
+};
 function isChatOpen() {
     return document.querySelectorAll('input[type="text"]').length > 0;
 };
@@ -2018,6 +2021,9 @@ var Tanki = {
     },
     get tankQuaternions() {
         return getInfoOfTank(getTanks('self')[0])[1];
+    },
+    get shells() {
+        return Object.entries(Object.values(searchInObject(Utils.gunParamsCalculator, '==19'))[0]).filter(t => typeof t[1] == 'object')[0][1];
     },
     get tankOrientationVelocity() {
         return getInfoOfTank(getTanks('self')[0])[2];
