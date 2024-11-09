@@ -1328,7 +1328,7 @@ var eventListeners = [
                 if (config.hacks.airBreak.type == 'tilt' && config.hacks.airBreak.enabled) {
                     myTank[tankMovable] = false;
                 } else {
-                    myTank[tankMovable = true;
+                    myTank[tankMovable] = true;
                 };
             };
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('2')) {
