@@ -1737,7 +1737,7 @@ function aa() {
                     var deltaX = otherTankPos.v17_1 - myTankPos.v17_1;
                     var deltaY = otherTankPos.w17_1 - myTankPos.w17_1;
                     var dirYaw = Math.atan2(deltaY, deltaX);
-                    Tanki.turretDirection = (dirYaw + getTankYaw()) + Math.PI/2;
+                    Tanki.turretDirection = (dirYaw - getTankYaw()) - Math.PI/2;
                     break;
             };
         };
