@@ -1948,7 +1948,7 @@ function updateTankOrientationToCamera() {
     myTankInfo[1].c1b_1 = yawQuat.c1b_1;
     myTankInfo[1].z1a_1 = yawQuat.z1a_1;
 };
-function searchInLargeObject(obj, target, byValue = false, trackPath = false) {
+function searchInLargeObject(obj, target, byValue = false, trackPath = false, targetArrayLength = null) {
     const stack = [{ current: obj, path: [] }];
     const visited = new Set();
     while (stack.length > 0) {
@@ -1959,10 +1959,15 @@ function searchInLargeObject(obj, target, byValue = false, trackPath = false) {
             if (Object.prototype.hasOwnProperty.call(current, key)) {
                 const value = current[key];
                 const newPath = trackPath ? path.concat(key) : [];
-                if (byValue) {
-                    if (value === target) return { key, value, object: current, path: trackPath ? newPath : undefined };
-                } else {
-                    if (key === target) return { key, value, object: current, path: trackPath ? newPath : undefined };
+                if (targetArrayLength !== null && Array.isArray(value) && value.length === targetArrayLength) {
+                    return { key, value, object: current, path: trackPath ? newPath : undefined };
+                };
+                if (targetArrayLength === null) {
+                    if (byValue) {
+                        if (value === target) return { key, value, object: current, path: trackPath ? newPath : undefined };
+                    } else {
+                        if (key === target) return { key, value, object: current, path: trackPath ? newPath : undefined };
+                    };
                 };
                 if (typeof value === 'object' && value !== null) {
                     stack.push({ current: value, path: newPath });
