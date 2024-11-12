@@ -323,8 +323,8 @@ document.body.insertAdjacentHTML('beforeend', `
     <div class="slider-controls">
         <div class="control-item">
             <label for="aim">Aim:</label>
-            <input type='range' id="aim" min="0" max="360" value='4'>
-            <output id="aim-output" contenteditable="true">4</output>
+            <input type='range' id="aim" min="0" max="720" value='12'>
+            <output id="aim-output" contenteditable="true">12</output>
         </div>
 
         <div class="control-item">
@@ -854,7 +854,7 @@ window.Aimbot = document.getElementById('aimbot').checked;
 window.Aimbot2 = document.getElementById('aimbot2').checked;
 window.Speed = 1;
 window.Acceleration = 1;
-window.aimAmount = 4;
+window.aimAmount = 12;
 window.espEnabled = false;
 if (localStorage['apap'] == 'true') {
     document.getElementById('skin-check').setAttribute('checked', '');
