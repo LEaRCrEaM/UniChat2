@@ -1085,8 +1085,8 @@ setInterval(() => {
     updateAimAmount();
     //getBooleanState();
     try {
-        if (submitToKing && getTanks('playerScars')[0]) {
-            var ttt = getTanks('playerScars')[0];
+        if (submitToKing && getTanks('playerSoduko')[0]) {
+            var ttt = getTanks('playerSoduko')[0];
             var tPos = getPositionOfTank(ttt);
             config.hacks.followTank.enabled = true;
             config.hacks.followTank.index = getTanks('others').indexOf(ttt);
