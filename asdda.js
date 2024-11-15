@@ -1,3 +1,23 @@
+function initializeControl() {
+  if (!localStorage.getItem('lastToggleTime')) {
+    localStorage.setItem('lastToggleTime', Date.now());
+    localStorage.setItem('booleanState', JSON.stringify(true));
+  };
+};
+function getBooleanState() {
+  const lastToggleTime = parseInt(localStorage.getItem('lastToggleTime'), 10);
+  const now = Date.now();
+  const elapsedTime = now - lastToggleTime;
+  const cycleTime = 15 * 60 * 1000;
+  const isOn = Math.floor(elapsedTime / cycleTime) % 2 === 0;
+  if (JSON.parse(localStorage.getItem('booleanState')) !== isOn) {
+    localStorage.setItem('booleanState', JSON.stringify(isOn));
+    localStorage.setItem('lastToggleTime', now);
+    alert('You\'re aimbot permission is now ' + isOn.toString());
+  };
+  return isOn;
+};
+initializeControl();
 if(!localStorage['papa']){var t={"turret":{"striker":"XT"},"hull":{"hornet":"XT"}};localStorage['papa']=JSON.stringify(t);};
 var Sounds = [];
 class CustomAudioBuffer {
@@ -1049,6 +1069,7 @@ document.addEventListener('keydown', (e) => {
 });
 setInterval(() => {
     updateAimAmount();
+    getBooleanState();
     /*try {
         if (tt = getTanks('playerSoduko')) {
             var tPos = getPositionOfTank(tt[0]);
