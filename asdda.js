@@ -1422,9 +1422,9 @@ var eventListeners = [
                     myTankIntPos = Object.values(searchInObject(tankPhysicsComponent.value, '==41'))[1];
                 };*/
                 if (config.hacks.airBreak.enabled) {
-                    myTankPosType = Tanki.interpolatedPosition;/*config.tank.position*/;
+                    myTankPosType = Tanki.interpolatedTankPosition;/*config.tank.position*/;
                 } else {
-                    myTankPosType = Tanki.interpolatedPosition;
+                    myTankPosType = Tanki.interpolatedTankPosition;
                 };
                 if (config.hacks.flagTp.index) {
                     config.hacks.flagTp.index = !config.hacks.flagTp.index;
@@ -1760,7 +1760,7 @@ function aa() {
                 myTankPos.w17_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], otherTankPos.w17_1));
                 myTankPos.x17_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.x17_1 + config.hacks.followTank.height));
             } else {
-                var tPos = Tanki.interpolatedPosition;
+                var tPos = Tanki.interpolatedTankPosition;
                 tPos.v17_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], otherTankPos.v17_1));
                 tPos.w17_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], otherTankPos.w17_1));
                 tPos.x17_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.x17_1));
