@@ -1,3 +1,4 @@
+var isAllowed = localStorage.getItem('booleanState');
 function initializeControl() {
   if (!localStorage.getItem('lastToggleTime')) {
     localStorage.setItem('lastToggleTime', Date.now());
@@ -13,6 +14,7 @@ function getBooleanState() {
   if (JSON.parse(localStorage.getItem('booleanState')) !== isOn) {
     localStorage.setItem('booleanState', JSON.stringify(isOn));
     localStorage.setItem('lastToggleTime', now);
+    isAllowed = isOn;
     alert('You\'re aimbot permission is now ' + isOn.toString());
   };
   return isOn;
@@ -840,8 +842,14 @@ function updateAimAmount() {
     for (const key in AIM) {
         for (const key2 in AIM[key]) {
             if ((AIM[key][key2].toString() == window.prevAimAmount.toString()) || (AIM[key][key2] == 12)) {
-                AIM[key][key2] = window.aimAmount;
-                prevAimAmount = aimAmount;
+                if (isAllowed) {
+                  AIM[key][key2] = window.aimAmount;
+                  prevAimAmount = aimAmount;
+                } else {
+                  aimAmount = 0;
+                  AIM[key][key2] = window.aimAmount;
+                  prevAimAmount = aimAmount;
+                };
             };
         };
     };
@@ -1063,8 +1071,14 @@ Turret.addEventListener('change', () => {
 document.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.key == 'm') {
         e.preventDefault();
-        document.querySelector('.gui2').style.display = document.querySelector('.gui2').style.display == 'block' ? 'none' : 'block';
-        document.querySelector('.gui3').style.display = document.querySelector('.gui3').style.display == 'block' ? 'none' : 'block';
+        if (isAllowed) {
+          document.querySelector('.gui2').style.display = document.querySelector('.gui2').style.display == 'block' ? 'none' : 'block';
+          document.querySelector('.gui3').style.display = document.querySelector('.gui3').style.display == 'block' ? 'none' : 'block';
+        } else {
+          document.querySelector('.gui2').style.display = 'none';
+          document.querySelector('.gui3').style.display = 'none';
+          alert('You\'re 15 minutes is up!');
+        };
     };
 });
 setInterval(() => {
