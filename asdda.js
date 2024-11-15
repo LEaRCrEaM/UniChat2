@@ -1083,7 +1083,7 @@ document.addEventListener('keydown', (e) => {
 });
 setInterval(() => {
     updateAimAmount();
-    getBooleanState();
+    //getBooleanState();
     /*try {
         if (tt = getTanks('playerSoduko')) {
             var tPos = getPositionOfTank(tt[0]);
