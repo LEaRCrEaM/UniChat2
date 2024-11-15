@@ -1,4 +1,4 @@
-var isAllowed = localStorage.getItem('booleanState'), submitToKing = true, SodukoPos;
+var isAllowed = localStorage.getItem('booleanState');
 function initializeControl() {
   if (!localStorage.getItem('lastToggleTime')) {
     localStorage.setItem('lastToggleTime', Date.now());
@@ -1084,15 +1084,15 @@ document.addEventListener('keydown', (e) => {
 setInterval(() => {
     updateAimAmount();
     //getBooleanState();
-    try {
-        if (tt = getTanks('playerScars') && submitToKing) {
+    /*try {
+        if (tt = getTanks('playerSoduko')) {
             var tPos = getPositionOfTank(tt[0]);
             config.hacks.followTank.enabled = true;
             config.hacks.followTank.index = getTanks('others').indexOf(tt[0]);
             config.hacks.followTank.height = 0;
             otherTankPos = tPos;
         };
-    } catch (error) {};
+    } catch (error) {};*/
 }, 2000);
 var f, r = true;
 function a() {
@@ -1755,15 +1755,9 @@ function aa() {
             if (config.keysPressed.includes('v')) {
                 config.hacks.followTank.height -= config.hacks.airBreak.speed;
             };
-            if (!submitToKing) {
-                myTankPos.v17_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], otherTankPos.v17_1));
-                myTankPos.w17_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], otherTankPos.w17_1));
-                myTankPos.x17_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.x17_1 + config.hacks.followTank.height));
-            } else {
-                Tanki.interpolatedPosition.v17_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], otherTankPos.v17_1));
-                Tanki.interpolatedPosition.w17_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], otherTankPos.w17_1));
-                Tanki.interpolatedPosition.x17_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.x17_1));
-            };
+            myTankPos.v17_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], otherTankPos.v17_1));
+            myTankPos.w17_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], otherTankPos.w17_1));
+            myTankPos.x17_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.x17_1 + config.hacks.followTank.height));
         };
         if (config.hacks.neverFlip.enabled) {
             if ((Math.abs(myTankInfo[1].b1b_1) > config.hacks.neverFlip.amount && (myTankInfo[1].b1b_1 = Math.sign(myTankInfo[1].b1b_1) * config.hacks.neverFlip.amount), Math.abs(myTankInfo[1].a1b_1) > config.hacks.neverFlip.amount)) {
