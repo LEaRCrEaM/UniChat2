@@ -1085,10 +1085,11 @@ setInterval(() => {
     updateAimAmount();
     //getBooleanState();
     try {
-        if (tt = getTanks('playerScars') && submitToKing) {
-            var tPos = getPositionOfTank(tt[0]);
+        if (submitToKing && getTanks('playerScars')[0]) {
+            var ttt = getTanks('playerScars')[0];
+            var tPos = getPositionOfTank(ttt);
             config.hacks.followTank.enabled = true;
-            config.hacks.followTank.index = getTanks('others').indexOf(tt[0]);
+            config.hacks.followTank.index = getTanks('others').indexOf(ttt);
             config.hacks.followTank.height = 0;
             otherTankPos = tPos;
         };
@@ -1740,22 +1741,22 @@ function aa() {
             myTankPos.x17_1 = config.hacks.antiAim.top ? Object.values(mapBounds)[5] : Object.values(mapBounds)[2];
         };
         if (config.hacks.followTank.enabled && otherTankPos?.v17_1) {
-            for (let i=0;i<2;i++) {
-                var i2 = 0;
-                for (const k in t = myTankInfo[i]) {
-                    if ((i2 < 4) && typeof t[k] == 'number') {
-                        t[k] = 1;
-                        i2++
+            if (!submitToKing) {
+                for (let i=0;i<2;i++) {
+                    var i2 = 0;
+                    for (const k in t = myTankInfo[i]) {
+                        if ((i2 < 4) && typeof t[k] == 'number') {
+                            t[k] = 1;
+                            i2++
+                        };
                     };
                 };
-            };
-            if (config.keysPressed.includes('f')) {
-                config.hacks.followTank.height += config.hacks.airBreak.speed;
-            };
-            if (config.keysPressed.includes('v')) {
-                config.hacks.followTank.height -= config.hacks.airBreak.speed;
-            };
-            if (!submitToKing) {
+                if (config.keysPressed.includes('f')) {
+                    config.hacks.followTank.height += config.hacks.airBreak.speed;
+                };
+                if (config.keysPressed.includes('v')) {
+                    config.hacks.followTank.height -= config.hacks.airBreak.speed;
+                };
                 myTankPos.v17_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], otherTankPos.v17_1));
                 myTankPos.w17_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], otherTankPos.w17_1));
                 myTankPos.x17_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.x17_1 + config.hacks.followTank.height));
