@@ -1928,9 +1928,9 @@ function specPlayer(player) {
     if (f3) {
         cancelAnimationFrame(f3);
     };
-    var player = getPositionOfTank(getTanks('player' + player)[0]);
-    var playerInfo = getInfoOfTank(getTanks('player' + player)[0]);
     var Player = getTanks('player' + player)[0];
+    var player = getPositionOfTank(Player);
+    var playerInfo = getInfoOfTank(Player);
     r3 = true;
     function a3() {
         if (r3) {
