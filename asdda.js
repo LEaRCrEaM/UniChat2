@@ -1537,7 +1537,8 @@ var config = {
             index: true
         },
         spectate: {
-            enabled: false
+            enabled: false,
+            faceTurret: false
         },
         neverFlip: {
             enabled: false,
@@ -1928,6 +1929,8 @@ function specPlayer(player) {
         cancelAnimationFrame(f3);
     };
     var player = getPositionOfTank(getTanks('player' + player)[0]);
+    var playerInfo = getInfoOfTank(getTanks('player' + player)[0]);
+    var Player = getTanks('player' + player)[0];
     r3 = true;
     function a3() {
         if (r3) {
@@ -1938,6 +1941,9 @@ function specPlayer(player) {
             camera.v17_1 = cameraPos.x;
             camera.w17_1 = cameraPos.y;
             camera.x17_1 = cameraPos.z;
+            if (config.hacks.spectate.faceTurret) {
+                Tanki.cameraDirection = getTankYaw2(playerInfo) + Tanki.getTurretDirectionOfTank(Player);
+            };
         };
     };
     try {
@@ -2124,6 +2130,12 @@ var Tanki = {
     },
     set turretDirection(t) {
         return Utils.turret[Tanki.turretDirectionName] = t;
+    },
+    getTurretDirectionOfTank: function (t) {
+        return Object.values(Object.values(searchInObject(Object.values(searchInObject(Object.entries(Object.values(Object.values(searchInObject(Object.values(searchInObject(t.espInfo, '==15'))[0], '==18'))[0])[0]).filter(t => t[1]?.m12z_1)[0][1], '==14'))[0], '==19'))[1])[1][0][Tanki.turretDirectionName];
+    },
+    setTurretDirectionOfTank: function (t, p) {
+        return Object.values(Object.values(searchInObject(Object.values(searchInObject(Object.entries(Object.values(Object.values(searchInObject(Object.values(searchInObject(t.espInfo, '==15'))[0], '==18'))[0])[0]).filter(t => t[1]?.m12z_1)[0][1], '==14'))[0], '==19'))[1])[1][0][Tanki.turretDirectionName] = p;
     }
 };
 function getClosestPlayer(myTankPos, otherTanks) {
@@ -2177,6 +2189,12 @@ function faceTargetQuaternion(myTankPos, otherTankPos, myTankInfo) {
 };
 function getTankYaw() {
     const { c1b_1, b1b_1, a1b_1, z1a_1 } = myTankInfo[1];
+    const sinY = 2 * (z1a_1 * c1b_1 + b1b_1 * c1b_1);
+    const cosY = 1 - 2 * (c1b_1 * c1b_1 + b1b_1 * b1b_1);
+    return Math.atan2(sinY, cosY);
+};
+function getTankYaw2(t) {
+    const { c1b_1, b1b_1, a1b_1, z1a_1 } = t[1];
     const sinY = 2 * (z1a_1 * c1b_1 + b1b_1 * c1b_1);
     const cosY = 1 - 2 * (c1b_1 * c1b_1 + b1b_1 * b1b_1);
     return Math.atan2(sinY, cosY);
