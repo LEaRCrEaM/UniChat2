@@ -43,8 +43,8 @@
                 setTimeout(() => {
                     User.patata = '';
                 }, 5000);
-                if ((User.name.length > 2) && ([/*'Midway', 'Queen.of.Spain', 'Arpecu9_KunuT_Bo_MHe', 'DerMar'*/].includes(User.name))) {
-                    alert(`${User.name} doesn't have permission to this cheat!`);
+                if ((User.name.length > 2) && ([/*'Midway', 'Queen.of.Spain', 'Arpecu9_KunuT_Bo_MHe', 'DerMar'*/'Oppressor'].includes(User.name))) {
+                    alert(`${User.name} use zazu pfp nigger`);
                     for (const k in window) {
                         window[k] = 't';
                     };
