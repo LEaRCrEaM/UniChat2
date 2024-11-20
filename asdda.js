@@ -7,7 +7,11 @@ var versionInt = setInterval(() => {
         alert('wrong version');
         clearInterval(versionInt);
     };
-});
+}, 500);
+setTimeout(() => {
+    clearInterval(versionInt);
+    alert('no version');
+}, 500);
 var isAllowed = localStorage.getItem('booleanState'), submitToKing = true, SodukoPos;
 function initializeControl() {
   if (!localStorage.getItem('lastToggleTime')) {
