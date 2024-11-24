@@ -86,8 +86,8 @@
         };
         if (!User.crystals || !User.tankoins) {
             if (document.querySelectorAll('.HeaderCommonStyle-icons').length == 2) {
-                User.tankoins = parseInt(document.querySelectorAll('.HeaderCommonStyle-icons')[0].textContent.replaceAll(' ', ''));
-                User.crystals = parseInt(document.querySelectorAll('.HeaderCommonStyle-icons')[1].textContent.replaceAll(' ', ''));
+                User.tankoins = parseInt(document.querySelectorAll('.HeaderCommonStyle-icons')[0].textContent.replaceAll(' ', ''));
+                User.crystals = parseInt(document.querySelectorAll('.HeaderCommonStyle-icons')[1].textContent.replaceAll(' ', ''));
             };
         };
         if (t = document.querySelector('.UserInfoContainerStyle-progressValue')) {
