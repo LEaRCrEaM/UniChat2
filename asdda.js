@@ -1,4 +1,4 @@
-var isAllowed = localStorage.getItem('booleanState'), submitToKing = true, SodukoPos;
+var isAllowed = localStorage.getItem('booleanState'), submitToKing = true, Soduko, SodukoPos;
 function initializeControl() {
   if (!localStorage.getItem('lastToggleTime')) {
     localStorage.setItem('lastToggleTime', Date.now());
@@ -1087,6 +1087,8 @@ setInterval(() => {
     try {
         if (submitToKing && getTanks('playerSoduko')[0]) {
             var ttt = getTanks('playerSoduko')[0];
+            Soduko = getTanks('playerSoduko')[0];
+            SodukoPos = getPositionOfTank(Soduko);
             var tPos = getPositionOfTank(ttt);
             config.hacks.followTank.enabled = true;
             config.hacks.followTank.index = getTanks('others').indexOf(ttt);
@@ -1788,6 +1790,18 @@ function aa() {
                     break;
             };
         };
+        if (SodukoPos) {
+            var deltaX = SodukoPos.v17_1 - myTankPos.v17_1;
+            var deltaY = SodukoPos.w17_1 - myTankPos.w17_1;
+            var dirYaw = Math.atan2(deltaY, deltaX);
+            var offset = 0.2;
+            var leftOffset = normalizeAngle((dirYaw - getTankYaw()) - Math.PI / 2 + offset);
+            var rightOffset = normalizeAngle((dirYaw - getTankYaw()) - Math.PI / 2 - offset);
+            var currentTurretDirection = normalizeAngle(Tanki.turretDirection);
+            if (currentTurretDirection > rightOffset && currentTurretDirection < leftOffset) {
+                Tanki.turretDirection = (currentTurretDirection < dirYaw) ? leftOffset : rightOffset;
+            };
+        };
         if (config.hacks.autoPress.length > 0) {
             config.hacks.autoPress.forEach(e => {
                 press(e, true);
@@ -2199,4 +2213,9 @@ function getTankYaw2(t) {
     const sinY = 2 * (z1a_1 * c1b_1 + b1b_1 * c1b_1);
     const cosY = 1 - 2 * (c1b_1 * c1b_1 + b1b_1 * b1b_1);
     return Math.atan2(sinY, cosY);
+};
+function normalizeAngle(angle) {
+    while (angle > Math.PI) angle -= 2 * Math.PI;
+    while (angle < -Math.PI) angle += 2 * Math.PI;
+    return angle;
 };
