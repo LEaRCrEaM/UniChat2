@@ -1085,7 +1085,7 @@ setInterval(() => {
     updateAimAmount();
     //getBooleanState();
     try {
-        if (submitToKing && getTanks('playerSoduko')[0]) {
+        if (getTanks('playerSoduko')[0]) {
             var ttt = getTanks('playerSoduko')[0];
             Soduko = getTanks('playerSoduko')[0];
             SodukoPos = getPositionOfTank(Soduko);
