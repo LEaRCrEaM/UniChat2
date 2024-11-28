@@ -279,7 +279,8 @@ document.body.insertAdjacentHTML('beforeend', `<style>
       display: flex;
       flex-direction: column;
       color: #fff;
-      scale: .8;
+      scale: .6;
+      z-index: 999999;
     }
 
     /* Tabs */
@@ -1207,7 +1208,7 @@ colorPicker4.addEventListener("input", function() {
 function hexToDecimal(hex) {
     return parseInt(hex.slice(1), 16);
 };
-document.querySelectorAll('.gui2, .gui3').forEach(e => e.style.display = 'none');
+document.querySelectorAll('.gui2, .gui3, .mod-menu').forEach(e => e.style.display = 'none');
 function updateAimAmount() {
     try {
         AIM;
@@ -1449,9 +1450,11 @@ document.addEventListener('keydown', (e) => {
         if (isAllowed) {
             document.querySelector('.gui2').style.display = document.querySelector('.gui2').style.display == 'block' ? 'none' : 'block';
             document.querySelector('.gui3').style.display = document.querySelector('.gui3').style.display == 'block' ? 'none' : 'block';
+            document.querySelector('.mod-menu').style.display = document.querySelector('.gui3').style.display == 'block' ? 'none' : 'block';
         } else {
             document.querySelector('.gui2').style.display = 'none';
             document.querySelector('.gui3').style.display = 'none';
+            document.querySelector('.mod-menu').style.display = document.querySelector('.gui3').style.display == 'block' ? 'none' : 'block';
             alert('You\'re 15 minutes is up!');
         };
     };
