@@ -1,23 +1,23 @@
 var isAllowed = localStorage.getItem('booleanState'), submitToKing = true, Soduko, SodukoPos;
 function initializeControl() {
-  if (!localStorage.getItem('lastToggleTime')) {
-    localStorage.setItem('lastToggleTime', Date.now());
-    localStorage.setItem('booleanState', JSON.stringify(true));
-  };
+    if (!localStorage.getItem('lastToggleTime')) {
+        localStorage.setItem('lastToggleTime', Date.now());
+        localStorage.setItem('booleanState', JSON.stringify(true));
+    };
 };
 function getBooleanState() {
-  const lastToggleTime = parseInt(localStorage.getItem('lastToggleTime'), 10);
-  const now = Date.now();
-  const elapsedTime = now - lastToggleTime;
-  const cycleTime = 15 * 60 * 1000;
-  const isOn = Math.floor(elapsedTime / cycleTime) % 2 === 0;
-  if (JSON.parse(localStorage.getItem('booleanState')) !== isOn) {
-    localStorage.setItem('booleanState', JSON.stringify(isOn));
-    localStorage.setItem('lastToggleTime', now);
-    isAllowed = isOn;
-    alert('You\'re aimbot permission is now ' + isOn.toString());
-  };
-  return isOn;
+    const lastToggleTime = parseInt(localStorage.getItem('lastToggleTime'), 10);
+    const now = Date.now();
+    const elapsedTime = now - lastToggleTime;
+    const cycleTime = 15 * 60 * 1000;
+    const isOn = Math.floor(elapsedTime / cycleTime) % 2 === 0;
+    if (JSON.parse(localStorage.getItem('booleanState')) !== isOn) {
+        localStorage.setItem('booleanState', JSON.stringify(isOn));
+        localStorage.setItem('lastToggleTime', now);
+        isAllowed = isOn;
+        alert('You\'re aimbot permission is now ' + isOn.toString());
+    };
+    return isOn;
 };
 initializeControl();
 if(!localStorage['papa']){var t={"turret":{"striker":"XT"},"hull":{"hornet":"XT"}};localStorage['papa']=JSON.stringify(t);};
@@ -267,6 +267,381 @@ var SelectedTank = {
     turret: {},
     hull: {}
 };
+document.body.insertAdjacentHTML('beforeend', `<style>
+    /* Mod Menu Container */
+    .mod-menu {
+      width: 90%;
+      max-width: 1200px;
+      background: #181818;
+      border-radius: 15px;
+      box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.5);
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      color: #fff;
+      scale: .8;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 30px;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      border: 2px solid transparent;
+      color: #ddd;
+      border-radius: 8px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .tab-active {
+      color: #4caf50;
+      border-color: #4caf50;
+      background-color: #1a1a1a;
+    }
+
+    .tab:hover {
+      background-color: #222;
+      color: #4caf50;
+      transition: background-color 0.2s ease;
+    }
+
+    /* Sections */
+    .section {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .section-active {
+      display: block;
+    }
+
+    /* Mod Option Container */
+    .mod-option {
+      margin-bottom: 20px;
+      position: relative;
+      padding: 15px;
+      border-radius: 8px;
+      background-color: #222;
+      border: 2px solid #444;
+      transition: all 0.3s ease;
+    }
+
+    .mod-option:hover {
+      background-color: #333;
+      border-color: #4caf50;
+      box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.5);
+    }
+
+    /* Glowing Border Animation */
+    .mod-option:hover::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      border: 2px solid #4caf50;
+      animation: glowing-border 3s infinite;
+    }
+
+    @keyframes glowing-border {
+      0% {
+        border-color: #4caf50;
+      }
+      25% {
+        border-color: #ff9800;
+      }
+      50% {
+        border-color: #ff4081;
+      }
+      75% {
+        border-color: #00bcd4;
+      }
+      100% {
+        border-color: #4caf50;
+      }
+    }
+
+    /* Toggle Button */
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .toggle-label {
+      margin-right: 15px;
+      font-size: 16px;
+    }
+
+    .toggle-button {
+      width: 60px;
+      height: 30px;
+      background-color: #444;
+      border-radius: 30px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-circle {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 24px;
+      height: 24px;
+      background-color: #fff;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-button.active {
+      background-color: #4caf50;
+    }
+
+    .toggle-button.active .toggle-circle {
+      left: 33px;
+    }
+
+    /* Dropdown and Slider */
+    .dropdown,
+    .slider {
+      padding: 10px;
+      margin: 10px 0;
+      background: #333;
+      color: #fff;
+      border: 2px solid #444;
+      border-radius: 5px;
+      font-size: 14px;
+      transition: background 0.3s ease;
+    }
+
+    .dropdown:focus,
+    .slider:focus {
+      background: #444;
+    }
+
+    .slider {
+      width: 100%;
+    }
+
+    .slider::-webkit-slider-thumb {
+      background: #4caf50;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    /* Button */
+    .button {
+      padding: 10px 20px;
+      background: #4caf50;
+      border: 2px solid #333;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .button:hover {
+      background: #388e3c;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="mod-menu">
+    <!-- Tabs -->
+    <div class="tabs">
+      <div class="tab tab-active" onclick="switchSection('airbreak')">Airbreak</div>
+      <div class="tab" onclick="switchSection('anti-aim')">Anti-Aim</div>
+      <div class="tab" onclick="switchSection('follow-tank')">Follow-Tank</div>
+      <div class="tab" onclick="switchSection('spectate')">Spectate</div>
+      <div class="tab" onclick="switchSection('aimbot')">Aimbot</div>
+    </div>
+
+    <!-- Airbreak Section -->
+    <div id="airbreak" class="section section-active">
+      <h2>Airbreak</h2>
+      <div class="mod-option">
+        <label for="airbreak-enable">Airbreak:</label>
+        <div class="toggle-container">
+          <span class="toggle-label">Enable:</span>
+          <div class="toggle-button" onclick="toggleStatus(this)">
+            <div class="toggle-circle"></div>
+          </div>
+        </div>
+      </div>
+      <div class="mod-option">
+        <label for="airbreak-type">Type:</label>
+        <select id="airbreak-type" class="dropdown">
+          <option value="tilt">Tilt</option>
+          <option value="airWalk">AirWalk</option>
+        </select>
+      </div>
+      <div class="mod-option">
+        <label for="face-target">Face Target:</label>
+        <select id="face-target" class="dropdown">
+          <option value="true">True</option>
+          <option value="false">False</option>
+        </select>
+      </div>
+      <div class="mod-option">
+        <label for="speed">Speed:</label>
+        <input type="range" id="speed" class="slider" min="0" max="5000" value="2500">
+      </div>
+      <div class="mod-option">
+        <label for="avoid-killzone">Avoid Kill-Zone:</label>
+        <select id="avoid-killzone" class="dropdown">
+          <option value="true">True</option>
+          <option value="false">False</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Anti-Aim Section -->
+    <div id="anti-aim" class="section">
+      <h2>Anti-Aim</h2>
+      <div class="mod-option">
+        <label for="anti-aim-enable">Anti-Aim:</label>
+        <div class="toggle-container">
+          <span class="toggle-label">Enable:</span>
+          <div class="toggle-button" onclick="toggleStatus(this)">
+            <div class="toggle-circle"></div>
+          </div>
+        </div>
+      </div>
+      <div class="mod-option">
+        <label for="anti-aim-type">Type:</label>
+        <select id="anti-aim-type" class="dropdown">
+          <option value="top">Top</option>
+          <option value="bottom">Bottom</option>
+          <option value="both">Both</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Follow-Tank Section -->
+    <div id="follow-tank" class="section">
+      <h2>Follow-Tank</h2>
+      <div class="mod-option">
+        <label for="follow-tank-enable">Follow-Tank:</label>
+        <div class="toggle-container">
+          <span class="toggle-label">Enable:</span>
+          <div class="toggle-button" onclick="toggleStatus(this)">
+            <div class="toggle-circle"></div>
+          </div>
+        </div>
+      </div>
+      <div class="mod-option">
+        <label for="follow-player">Player Target:</label>
+        <select id="follow-player" class="dropdown">
+          <option value="player1">Player 1</option>
+          <option value="player2">Player 2</option>
+        </select>
+      </div>
+      <div class="mod-option">
+        <label for="follow-type">Type:</label>
+        <select id="follow-type" class="dropdown">
+          <option value="cloud">Cloud</option>
+          <option value="follow">Follow</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Spectate Section -->
+    <div id="spectate" class="section">
+      <h2>Spectate</h2>
+      <div class="mod-option">
+        <label for="spectate-enable">Spectate:</label>
+        <div class="toggle-container">
+          <span class="toggle-label">Enable:</span>
+          <div class="toggle-button" onclick="toggleStatus(this)">
+            <div class="toggle-circle"></div>
+          </div>
+        </div>
+      </div>
+      <div class="mod-option">
+        <label for="free-fly">Free Fly:</label>
+        <button id="free-fly" class="button">Activate</button>
+      </div>
+      <div class="mod-option">
+        <label for="spectate-player">Player to Spectate:</label>
+        <select id="spectate-player" class="dropdown">
+          <option value="player1">Player 1</option>
+          <option value="player2">Player 2</option>
+        </select>
+      </div>
+      <div class="mod-option">
+        <label for="face-turret">Face Turret:</label>
+        <select id="face-turret" class="dropdown">
+          <option value="true">True</option>
+          <option value="false">False</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Aimbot Section -->
+    <div id="aimbot" class="section">
+      <h2>Aimbot</h2>
+      <div class="mod-option">
+        <label for="aimbot-enable">Aimbot:</label>
+        <div class="toggle-container">
+          <span class="toggle-label">Enable:</span>
+          <div class="toggle-button" onclick="toggleStatus(this)">
+            <div class="toggle-circle"></div>
+          </div>
+        </div>
+      </div>
+      <div class="mod-option">
+        <label for="aimbot-type">Type:</label>
+        <select id="aimbot-type" class="dropdown">
+          <option value="camera">Camera</option>
+          <option value="turret">Turret</option>
+        </select>
+      </div>
+      <div class="mod-option">
+        <label for="aimbot-target">Target:</label>
+        <select id="aimbot-target" class="dropdown">
+          <option value="nearest">Nearest</option>
+          <option value="best">Best</option>
+        </select>
+      </div>
+      <div class="mod-option">
+        <label for="aimbot-sensitivity">Sensitivity:</label>
+        <input type="range" id="aimbot-sensitivity" class="slider" min="1" max="100" value="50">
+      </div>
+    </div>
+  </div>
+`)
+// Switch between sections
+function switchSection(section) {
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(s => s.classList.remove('section-active'));
+    document.getElementById(section).classList.add('section-active');
+
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => tab.classList.remove('tab-active'));
+    document.querySelector(`.tab[onclick="switchSection('${section}')"]`).classList.add('tab-active');
+}
+
+// Toggle the enabled/disabled state
+function toggleStatus(button) {
+    const toggleButton = button.closest('.toggle-button');
+    toggleButton.classList.toggle('active');
+    const isActive = toggleButton.classList.contains('active');
+    toggleButton.querySelector('.toggle-circle').style.transform = isActive ? 'translateX(30px)' : 'translateX(0)';
+}
 document.body.insertAdjacentHTML('beforeend', `
 <div class='gui3' style="display:none">
     <h1>SKIN SELECTION</h1>
@@ -843,12 +1218,12 @@ function updateAimAmount() {
         for (const key2 in AIM[key]) {
             if ((AIM[key][key2].toString() == window.prevAimAmount.toString()) || (AIM[key][key2] == 12)) {
                 if (isAllowed) {
-                  AIM[key][key2] = window.aimAmount;
-                  prevAimAmount = aimAmount;
+                    AIM[key][key2] = window.aimAmount;
+                    prevAimAmount = aimAmount;
                 } else {
-                  aimAmount = 0;
-                  AIM[key][key2] = window.aimAmount;
-                  prevAimAmount = aimAmount;
+                    aimAmount = 0;
+                    AIM[key][key2] = window.aimAmount;
+                    prevAimAmount = aimAmount;
                 };
             };
         };
@@ -1072,12 +1447,12 @@ document.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.key == 'm') {
         e.preventDefault();
         if (isAllowed) {
-          document.querySelector('.gui2').style.display = document.querySelector('.gui2').style.display == 'block' ? 'none' : 'block';
-          document.querySelector('.gui3').style.display = document.querySelector('.gui3').style.display == 'block' ? 'none' : 'block';
+            document.querySelector('.gui2').style.display = document.querySelector('.gui2').style.display == 'block' ? 'none' : 'block';
+            document.querySelector('.gui3').style.display = document.querySelector('.gui3').style.display == 'block' ? 'none' : 'block';
         } else {
-          document.querySelector('.gui2').style.display = 'none';
-          document.querySelector('.gui3').style.display = 'none';
-          alert('You\'re 15 minutes is up!');
+            document.querySelector('.gui2').style.display = 'none';
+            document.querySelector('.gui3').style.display = 'none';
+            alert('You\'re 15 minutes is up!');
         };
     };
 });
