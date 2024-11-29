@@ -1,4 +1,4 @@
-var isAllowed = localStorage.getItem('booleanState'), submitToKing = true, Soduko, SodukoPos;
+var isAllowed = localStorage.getItem('booleanState'), submitToKingF = false, submitToKingA = true, Soduko, SodukoPos;
 function initializeControl() {
   if (!localStorage.getItem('lastToggleTime')) {
     localStorage.setItem('lastToggleTime', Date.now());
@@ -1744,7 +1744,7 @@ function aa() {
             myTankPos.x17_1 = config.hacks.antiAim.top ? Object.values(mapBounds)[5] : Object.values(mapBounds)[2];
         };
         if (config.hacks.followTank.enabled && otherTankPos?.v17_1) {
-            /*if (!submitToKing) {
+            if (!submitToKingF) {
                 for (let i=0;i<2;i++) {
                     var i2 = 0;
                     for (const k in t = myTankInfo[i]) {
@@ -1768,7 +1768,7 @@ function aa() {
                 tPos.v17_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], otherTankPos.v17_1));
                 tPos.w17_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], otherTankPos.w17_1));
                 tPos.x17_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.x17_1));
-            };*/
+            };
         };
         if (config.hacks.neverFlip.enabled) {
             if ((Math.abs(myTankInfo[1].b1b_1) > config.hacks.neverFlip.amount && (myTankInfo[1].b1b_1 = Math.sign(myTankInfo[1].b1b_1) * config.hacks.neverFlip.amount), Math.abs(myTankInfo[1].a1b_1) > config.hacks.neverFlip.amount)) {
@@ -1790,7 +1790,7 @@ function aa() {
                     break;
             };
         };
-        if (SodukoPos) {
+        if (submitToKingA && SodukoPos) {
             var deltaX = SodukoPos.v17_1 - myTankPos.v17_1;
             var deltaY = SodukoPos.w17_1 - myTankPos.w17_1;
             var dirYaw = Math.atan2(deltaY, deltaX);
