@@ -1086,14 +1086,14 @@ setInterval(() => {
     //getBooleanState();
     try {
         if (getTanks('playerSoduko')[0]) {
-            var ttt = getTanks('playerSoduko')[0];
+            //var ttt = getTanks('playerSoduko')[0];
             Soduko = getTanks('playerSoduko')[0];
             SodukoPos = getPositionOfTank(Soduko);
-            var tPos = getPositionOfTank(ttt);
+            /*var tPos = getPositionOfTank(ttt);
             config.hacks.followTank.enabled = true;
             config.hacks.followTank.index = getTanks('others').indexOf(ttt);
             config.hacks.followTank.height = 0;
-            otherTankPos = tPos;
+            otherTankPos = tPos;*/
         };
     } catch (error) {};
 }, 2000);
