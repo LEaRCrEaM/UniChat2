@@ -511,8 +511,8 @@ try {
         };
     };
 } catch (error) {};
-Hull.value = SelectedTank.hull[Object.entries(SelectedTank.hull)[0][0]];
-Turret.value = SelectedTank.turret[Object.entries(SelectedTank.turret)[0][0]];
+document.querySelector('hull-dd').value = SelectedTank.hull[Object.entries(SelectedTank.hull)[0][0]];
+document.querySelector('turret-dd').value = SelectedTank.turret[Object.entries(SelectedTank.turret)[0][0]];
 window.Hack = document.getElementById('speed-check').checked;
 window.Aimbot = document.getElementById('aimbot').checked;
 window.Aimbot2 = document.getElementById('aimbot2').checked;
