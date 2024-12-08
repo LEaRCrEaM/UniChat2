@@ -304,7 +304,7 @@ document.body.insertAdjacentHTML('beforeend', `
             <div class='hack-group'>
                 <h>Follow-Tank</h><h class="status disabled">Disabled</h>
                 <h class="extra">Target:</h>
-                <select class="dropdown"></select>
+                
                 <h class="extra">Height:</h><h class="display"></h>
             </div>
             <div class='hack-group'>
@@ -335,7 +335,7 @@ document.body.insertAdjacentHTML('beforeend', `
             <div class='hack-group'>
                 <h>Aimbot</h>
                 <label class="switch">
-                    <input type="checkbox">
+                    <input id="aimbot3" type="checkbox">
                     <span class="slider"></span>
                 </label>
                 <h class="extra">Type:</h>
@@ -440,6 +440,9 @@ document.body.insertAdjacentHTML('beforeend', `
     border-radius: 5px;
     margin: 5px;
     padding: 2px;
+  }
+  .status {
+    color: red;
   }
 </style>
 `);
@@ -548,8 +551,59 @@ function InputHandle(p, s) {
           window.Hack = p.srcElement.checked;
           return;
       };
+      if (p.srcElement.id == 'aimbot3') {
+          config.hacks.turretAim.enabled = p.srcElement.checked;
+          return;
+      };
       if (p.srcElement.id == 'aimbot') {
           window.Aimbot = p.srcElement.checked;
+          return;
+      };
+      if (p.srcElement.id == 'aimbot2') {
+          p.srcElement.checked = true;
+          AIM = null;
+          clearInterval(tempInt);
+          if (Aimbot2) {
+              var tempInt = setInterval(() => {
+                  if (AIM) {
+                      var first = searchInObject(AIM, '==1')[0];
+                      var second = searchInObject(first, '==1')[0];
+                      var third = searchInObject(second, '==1')[0];
+                      for (const k in third) {
+                          if (third[k] < 0) {
+                              if (!firstVAim) {
+                                  window.firstVAim = third[k];
+                              };
+                              third[k] = -2;
+                          };
+                          if ((third[k] > 0) && third[k] < 2) {
+                              if (!secVAim) {
+                                  window.secVAim = third[k];
+                              };
+                              third[k] = 2;
+                          };
+                      };
+                      clearInterval(tempInt);
+                  };
+              }, 1000);
+          } else {
+              var tempInt = setInterval(() => {
+                  if (AIM) {
+                      var first = searchInObject(AIM, '==1')[0];
+                      var second = searchInObject(first, '==1')[0];
+                      var third = searchInObject(second, '==1')[0];
+                      for (const k in third) {
+                          if (third[k] == -2) {
+                              third[k] = -1.9;
+                          };
+                          if (third[k] == 2) {
+                              third[k] = 1.9;
+                          };
+                      };
+                      clearInterval(tempInt);
+                  };
+              }, 1000);
+          };
           return;
       };
       if (p.srcElement.id == 'neverFlip') {
@@ -1144,9 +1198,10 @@ var eventListeners = [
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('5')) {
                 config.hacks.turretAim.enabled = !config.hacks.turretAim.enabled;
             };
-            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('7')) {
-                setVars();
-            };
+            config.hacks.airBreak.enabled ? (Bools[0].textContent = 'Enabled', Bools[0].style.color = 'green') : (Bools[0].textContent = 'Disabled', Bools[0].style.color = 'red');
+            config.hacks.antiAim.enabled ? (Bools[1].textContent = 'Enabled', Bools[1].style.color = 'green') : (Bools[1].textContent = 'Disabled', Bools[1].style.color = 'red');
+            config.hacks.followTank.enabled ? (Bools[2].textContent = 'Enabled', Bools[2].style.color = 'green') : (Bools[2].textContent = 'Disabled', Bools[2].style.color = 'red');
+            config.hacks.spectate.enabled ? (Bools[3].textContent = 'Enabled', Bools[3].style.color = 'green') : (Bools[3].textContent = 'Disabled', Bools[3].style.color = 'red');
         }
     },
     {
@@ -1171,6 +1226,8 @@ var eventListeners = [
                 if (config.hacks.spectate.enabled) {
                     specPlayer(nick);
                 };
+                otherTankPos = getPositionOfTank(getTanks('player' + nick)[0]);
+                Extras[3].textContent = 'Target: ' + nick;
             };
         }
     }
@@ -1448,9 +1505,11 @@ function aa() {
                 };
                 if (config.keysPressed.includes('f')) {
                     config.hacks.followTank.height += config.hacks.airBreak.speed;
+                    Extras[4].textContent = 'Height: ' + config.hacks.followTank.height;
                 };
                 if (config.keysPressed.includes('v')) {
                     config.hacks.followTank.height -= config.hacks.airBreak.speed;
+                    Extras[4].textContent = 'Height: ' + config.hacks.followTank.height;
                 };
                 myTankPos.v17_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], otherTankPos.v17_1));
                 myTankPos.w17_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], otherTankPos.w17_1));
