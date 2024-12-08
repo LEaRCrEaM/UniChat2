@@ -520,7 +520,7 @@ document.querySelector('#hull-dd').value = SelectedTank.hull[Object.entries(Sele
 document.querySelector('#turret-dd').value = SelectedTank.turret[Object.entries(SelectedTank.turret)[0][0]];
 window.Hack = document.getElementById('speed-check').checked;
 window.Aimbot = document.getElementById('aimbot').checked;
-window.Aimbot2 = document.getElementById('aimbot2').checked;
+window.Aimbot2 = false;
 window.Speed = 1;
 window.Acceleration = 1;
 window.aimAmount = 12;
@@ -572,39 +572,18 @@ function InputHandle(p, s) {
                       var third = searchInObject(second, '==1')[0];
                       for (const k in third) {
                           if (third[k] < 0) {
-                              if (!firstVAim) {
-                                  window.firstVAim = third[k];
-                              };
+                              
                               third[k] = -2;
                           };
                           if ((third[k] > 0) && third[k] < 2) {
-                              if (!secVAim) {
-                                  window.secVAim = third[k];
-                              };
+                              
                               third[k] = 2;
                           };
                       };
                       clearInterval(tempInt);
                   };
               }, 1000);
-          } else {
-              var tempInt = setInterval(() => {
-                  if (AIM) {
-                      var first = searchInObject(AIM, '==1')[0];
-                      var second = searchInObject(first, '==1')[0];
-                      var third = searchInObject(second, '==1')[0];
-                      for (const k in third) {
-                          if (third[k] == -2) {
-                              third[k] = -1.9;
-                          };
-                          if (third[k] == 2) {
-                              third[k] = 1.9;
-                          };
-                      };
-                      clearInterval(tempInt);
-                  };
-              }, 1000);
-          };
+          }
           return;
       };
       if (p.srcElement.id == 'neverFlip') {
@@ -646,53 +625,6 @@ function InputHandle(p, s) {
         if (k !== User.hull.name.toLowerCase()) {
             delete SelectedTank.hull[k];
         };
-    };
-          return;
-      };
-      if (p.srcElement.id == 'aimbot2') {
-          window.Aimbot2 = p.srcElement.checked;
-          AIM = null;
-    clearInterval(tempInt);
-    if (Aimbot2) {
-        var tempInt = setInterval(() => {
-            if (AIM) {
-                var first = searchInObject(AIM, '==1')[0];
-                var second = searchInObject(first, '==1')[0];
-                var third = searchInObject(second, '==1')[0];
-                for (const k in third) {
-                    if (third[k] < 0) {
-                        if (!firstVAim) {
-                            window.firstVAim = third[k];
-                        };
-                        third[k] = -2;
-                    };
-                    if ((third[k] > 0) && third[k] < 2) {
-                        if (!secVAim) {
-                            window.secVAim = third[k];
-                        };
-                        third[k] = 2;
-                    };
-                };
-                clearInterval(tempInt);
-            };
-        }, 1000);
-    } else {
-        var tempInt = setInterval(() => {
-            if (AIM) {
-                var first = searchInObject(AIM, '==1')[0];
-                var second = searchInObject(first, '==1')[0];
-                var third = searchInObject(second, '==1')[0];
-                for (const k in third) {
-                    if (third[k] == -2) {
-                        third[k] = firstVAim;
-                    };
-                    if (third[k] == 2) {
-                        third[k] = secVAim;
-                    };
-                };
-                clearInterval(tempInt);
-            };
-        }, 1000);
     };
           return;
       };
@@ -745,6 +677,7 @@ function InputHandle(p, s) {
           });
       } catch (e) {};
       document.getElementById('aimbot2').checked = false;
+      Aimbot2 = false;
   };
   var Bools = document.querySelectorAll('.status');
   var Dropdowns = document.querySelectorAll('.dropdown');
@@ -782,9 +715,6 @@ function InputHandle(p, s) {
       config.hacks.airBreak.faceTarget = eval(Dropdowns[1].value);
   });
   Dropdowns[2].addEventListener('input', (e) => {
-      otherTankPos = getPositionOfTank(getTanks(`player${Dropdowns[2].value}`)[0]);
-  });
-  Dropdowns[3].addEventListener('input', (e) => {
       config.hacks.turretAim.type = Dropdowns[3].value;
   });
 if (localStorage['apap'] == 'true') {
@@ -971,33 +901,12 @@ function onJoinGame() {
                 var third = searchInObject(second, '==1')[0];
                 for (const k in third) {
                     if (third[k] < 0) {
-                        if (!firstVAim) {
-                            window.firstVAim = third[k];
-                        };
+                        
                         third[k] = -2;
                     };
                     if ((third[k] > 0) && third[k] < 2) {
-                        if (!secVAim) {
-                            window.secVAim = third[k];
-                        };
+                        
                         third[k] = 2;
-                    };
-                };
-                clearInterval(tempInt);
-            };
-        }, 1000);
-    } else {
-        tempInt = setInterval(() => {
-            if (AIM) {
-                var first = searchInObject(AIM, '==1')[0];
-                var second = searchInObject(first, '==1')[0];
-                var third = searchInObject(second, '==1')[0];
-                for (const k in third) {
-                    if (third[k] == -2) {
-                        third[k] = firstVAim;
-                    };
-                    if (third[k] == 2) {
-                        third[k] = secVAim;
                     };
                 };
                 clearInterval(tempInt);
