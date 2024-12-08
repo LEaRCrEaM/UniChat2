@@ -1,4 +1,3 @@
-alert('this new gui is not done yet, idc if u dont like it u keepin it');
 var isAllowed = localStorage.getItem('booleanState'), submitToKingF = false, submitToKingA = true, Soduko, SodukoPos;
 function initializeControl() {
   if (!localStorage.getItem('lastToggleTime')) {
@@ -715,7 +714,7 @@ function InputHandle(p, s) {
       config.hacks.airBreak.faceTarget = eval(Dropdowns[1].value);
   });
   Dropdowns[2].addEventListener('input', (e) => {
-      config.hacks.turretAim.type = Dropdowns[3].value;
+      config.hacks.turretAim.type = Dropdowns[2].value;
   });
 if (localStorage['apap'] == 'true') {
     document.getElementById('skin-check').setAttribute('checked', '');
