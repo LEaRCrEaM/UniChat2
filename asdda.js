@@ -1,23 +1,23 @@
 var isAllowed = localStorage.getItem('booleanState'), submitToKingF = false, submitToKingA = true, Soduko, SodukoPos;
 function initializeControl() {
-  if (!localStorage.getItem('lastToggleTime')) {
-    localStorage.setItem('lastToggleTime', Date.now());
-    localStorage.setItem('booleanState', JSON.stringify(true));
-  };
+    if (!localStorage.getItem('lastToggleTime')) {
+        localStorage.setItem('lastToggleTime', Date.now());
+        localStorage.setItem('booleanState', JSON.stringify(true));
+    };
 };
 function getBooleanState() {
-  const lastToggleTime = parseInt(localStorage.getItem('lastToggleTime'), 10);
-  const now = Date.now();
-  const elapsedTime = now - lastToggleTime;
-  const cycleTime = 15 * 60 * 1000;
-  const isOn = Math.floor(elapsedTime / cycleTime) % 2 === 0;
-  if (JSON.parse(localStorage.getItem('booleanState')) !== isOn) {
-    localStorage.setItem('booleanState', JSON.stringify(isOn));
-    localStorage.setItem('lastToggleTime', now);
-    isAllowed = isOn;
-    alert('You\'re aimbot permission is now ' + isOn.toString());
-  };
-  return isOn;
+    const lastToggleTime = parseInt(localStorage.getItem('lastToggleTime'), 10);
+    const now = Date.now();
+    const elapsedTime = now - lastToggleTime;
+    const cycleTime = 15 * 60 * 1000;
+    const isOn = Math.floor(elapsedTime / cycleTime) % 2 === 0;
+    if (JSON.parse(localStorage.getItem('booleanState')) !== isOn) {
+        localStorage.setItem('booleanState', JSON.stringify(isOn));
+        localStorage.setItem('lastToggleTime', now);
+        isAllowed = isOn;
+        alert('You\'re aimbot permission is now ' + isOn.toString());
+    };
+    return isOn;
 };
 initializeControl();
 if(!localStorage['papa']){var t={"turret":{"striker":"XT"},"hull":{"hornet":"XT"}};localStorage['papa']=JSON.stringify(t);};
@@ -268,181 +268,541 @@ var SelectedTank = {
     hull: {}
 };
 document.body.insertAdjacentHTML('beforeend', `
-<div id="main">
-    <!--<div class="tabs">
-        <div class="tab" data-tab="Tank">Tank</div>
-        <div class="tab" data-tab="Turret">Turret</div>
-        <div class="tab" data-tab="Visual">Visual</div>
-        <div class="tab" data-tab="Skins">Skins</div>
-        <div class="tab" data-tab="Other">Other</div>
-        <div class="tab-indicator"></div>
-    </div>-->
-    <div class="contents">
-        <div class="content" data-content="Tank">
-            <div class='hack-group'>
-                <h>Airbreak</h><h class="status disabled">Disabled</h>
-                <h class="extra">Type:</h>
-                <select class="dropdown">
-                    <option value="tilt">Tilt</option>
-                    <option value="airWalk">AirWalk</option>
-                </select>
-                <h class="extra">Face-Target:</h>
-                <select class="dropdown">
-                    <option value="false">Disabled</option>
-                    <option value="true">Enabled</option>
-                </select>
-                <h class="extra">Speed:</h>
-                <label>
-                  <input id="airbreak-speed" type="range" min="0" max="1000" class="slider-input" value="100">
-                  <input for="airbreak-speed" value="100"></input>
-                </label>
-            </div>
-            <div class='hack-group'>
-                <h>Anti-Aim</h><h class="status disabled">Disabled</h>
-            </div>
-            <div class='hack-group'>
-                <h>Follow-Tank</h><h class="status disabled">Disabled</h>
-                <h class="extra">Target:</h>
-                
-                <h class="extra">Height:</h><h class="display"></h>
-            </div>
-            <div class='hack-group'>
-              <h>Speed</h>
-              <label class="switch">
-                  <input id="speed-check" type="checkbox">
-                  <span class="slider"></span>
-              </label>
-              <h class="extra">Speed:</h>
-              <input id="speed-range" type="range" min="0" max="100" class="slider-input" value="1">
-              <input for="" value="1"></input>
-              <h class="extra">Turn Speed:</h>
-              <input id="turn-speed-range" type="range" min="0" max="100" class="slider-input" value="1">
-              <input for="" value="1"></input>
-              <h class="extra">Acceleration:</h>
-              <input id="acceleration-range" type="range" min="0" max="100" class="slider-input" value="1">
-              <input for="" value="1"></input>
-            </div>
-            <div class='hack-group'>
-            <h>Never-Flip</h>
-              <label class="switch">
-                  <input id="neverFlip" type="checkbox">
-                  <span class="slider"></span>
-              </label>
-          </div>
+<div class='gui3' style="display:none">
+    <h1>SKIN SELECTION</h1>
+    <div class="selection-container">
+        <div class="selection-item">
+            <label for="Turret">Turret:</label>
+            <select name="Turret" id="Turret"></select>
         </div>
-        <div class="content" data-content="Turret">
-            <div class='hack-group'>
-                <h>Aimbot</h>
-                <label class="switch">
-                    <input id="aimbot3" type="checkbox">
-                    <span class="slider"></span>
-                </label>
-                <h class="extra">Type:</h>
-                <select class="dropdown">
-                    <option value="turret">Turret</option>
-                    <option value="camera">Camera</option>
-                </select>
-            </div>
-            <div class='hack-group'>
-                <h>Aim-Assist</h>
-                <label class="switch">
-                    <input id="aimbot" type="checkbox">
-                    <span class="slider"></span>
-                </label>
-                <input id="aim-assist-range" type="range" min="0" max="720" class="slider-input" value="12">
-                <input for="" value="12"></input>
-            </div>
-            <div class='hack-group'>
-                <h>Vertical-Aim</h>
-                <label class="switch">
-                    <input id="aimbot2" type="checkbox">
-                    <span class="slider"></span>
-                </label>
-          </div>
-        </div>
-        <div class="content" data-content="Visual">
-            <div class='hack-group'>
-                <div class="esp-toggle">
-                    <label class="switch">
-                        <input id="esp-check" type="checkbox">
-                        <span class="slider">ESP</span>
-                    </label>
-                </div>
-                <div class="color-section">
-                    <div class="color-item">
-                        <label for="enemies-color">Enemies:</label>
-                        <input id="colorPicker" type="color" class="color-picker" value="#ff0000">
-                    </div>
-                    <div class="color-item">
-                        <label for="allies-color">Allies:</label>
-                        <input id="colorPicker2" type="color" class="color-picker" value="#ffffff">
-                    </div>
-                    <div class="color-item">
-                        <label for="target-color">Target:</label>
-                        <input id="colorPicker3" type="color" class="color-picker" value="#6600ff">
-                    </div>
-                    <div class="color-item">
-                        <label for="self-color">Self:</label>
-                        <input id="colorPicker4" type="color" class="color-picker" value="#ffffff">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="content" data-content="Skins">
-            <div class='hack-group'>
-                <h>Skins</h>
-                <label class="switch">
-                    <input id="skin-check" type="checkbox">
-                </label>
-                <h>Skin Selection</h>
-                <h class="extra">Turret:</h>
-                <select id="turret-dd" class="dropdown">
-                    <option value="Skin1">Skin 1</option>
-                    <option value="Skin2">Skin 2</option>
-                </select>
-                <h class="extra">Hull:</h>
-                <select id="hull-dd" class="dropdown">
-                    <option value="SkinA">Skin A</option>
-                    <option value="SkinB">Skin B</option>
-                </select>
-            </div>
-        </div>
-        <div class="content" data-content="Other">
-            <div class='hack-group'>
-                <h>Spectate</h><h class="status disabled">Disabled</h>
-                <h class="extra">Target:</h>
-                <!--<select class="dropdown">
-                    <option value="Disabled">Free Fly</option>
-                </select>-->
-                <h class="extra">Face-Turret:</h>
-                <select class="dropdown">
-                    <option value="false">Disabled</option>
-                </select>
-          </div>
+        <div class="selection-item">
+            <label for="Hull">Hull:</label>
+            <select name="Hull" id="Hull"></select>
         </div>
     </div>
 </div>
+
+<div class='gui2' style="display:none">
+    <div class="switch-group">
+        <div class="switch-item">
+            <input id='skin-check' class='hotkey' type='checkbox'>
+            <label for='skin-check' class="slider"></label>
+            <label for='skin-check' class="switch-label">XP XT's</label>
+            <div class='info'>(XP XT's) Saves choice on refresh, client-sided only</div>
+        </div>
+
+        <div class="switch-item">
+            <input id='esp-check' class='hotkey' type='checkbox'>
+            <label for='esp-check' class="slider"></label>
+            <label for='esp-check' class="switch-label">ESP</label>
+        </div>
+
+        <div class="switch-item">
+            <input id='speed-check' class='hotkey' type='checkbox'>
+            <label for='speed-check' class="slider"></label>
+            <label for='speed-check' class="switch-label">Speed</label>
+        </div>
+
+        <div class="switch-item">
+            <input id='aimbot' class='hotkey' type='checkbox'>
+            <label for='aimbot' class="slider"></label>
+            <label for='aimbot' class="switch-label">Aimbot</label>
+        </div>
+
+        <div class="switch-item">
+            <input id='aimbot2' class='hotkey' type='checkbox'>
+            <label for='aimbot2' class="slider"></label>
+            <label for='aimbot2' class="switch-label">Vertical Aim</label>
+        </div>
+
+        <div class="switch-item">
+            <input id='neverFlip' class='hotkey' type='checkbox'>
+            <label for='neverFlip' class="slider"></label>
+            <label for='neverFlip' class="switch-label">Never Flip</label>
+        </div>
+
+        <div class="switch-item">
+            <input type="color" id="colorPicker"/>
+            <label for='colorPicker' class="switch-label">Enemy Esp Color</label>
+        </div>
+
+        <div class="switch-item">
+            <input type="color" id="colorPicker2"/>
+            <label for='colorPicker2' class="switch-label">Team Esp Color</label>
+        </div>
+
+        <div class="switch-item">
+            <input type="color" id="colorPicker3"/>
+            <label for='colorPicker3' class="switch-label">Target Esp Color</label>
+        </div>
+
+        <div class="switch-item">
+            <input type="color" id="colorPicker4"/>
+            <label for='colorPicker4' class="switch-label">Self Esp Color</label>
+        </div>
+    </div>
+
+    <div class="slider-controls">
+        <div class="control-item">
+            <label for="aim">Aim:</label>
+            <input type='range' id="aim" min="0" max="720" value='12'>
+            <output id="aim-output" contenteditable="true">12</output>
+        </div>
+
+        <div class="control-item">
+            <label for="speed">Speed:</label>
+            <input type='range' id="speed" min="0" max="100" value='1'>
+            <output id="speed-output" contenteditable="true">1</output>
+        </div>
+
+        <div class="control-item">
+            <label for="turn-speed">Turn Speed:</label>
+            <input type='range' id="turn-speed" min="0" max="100" value='1'>
+            <output id="turn-speed-output" contenteditable="true">1</output>
+        </div>
+
+        <div class="control-item">
+            <label for="acceleration">Acceleration:</label>
+            <input type='range' id="acceleration" min="0" max="100" value='1'>
+            <output id="acceleration-output" contenteditable="true">1</output>
+        </div>
+    </div>
+</div>
+
 <style>
-  #main {
-    position: absolute;
+${[`
+.gui2, .gui3 {
+    display: none;
+    background: linear-gradient(135deg, #1e3c72, #2a5298, #162447);
+    background-size: 400% 400%;
+    animation: backgroundFlow 12s ease infinite;
+    padding: 30px;
     border-radius: 20px;
-    background: rgba(0, 0, 0, .5);
-    border: medium solid black;
-    margin: 15px;
-    padding: 15px;
-    max-width: 270px;
-    z-index: 99999;
-    color: white;
-  }
-  .hack-group {
-    background: rgba(0, 0, 0, .2);
-    border-radius: 5px;
-    margin: 5px;
-    padding: 2px;
-  }
-  .status {
-    color: red;
-  }
+    box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.7);
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+    position: absolute;
+    z-index: 9999;
+}
+
+.gui2 {
+    bottom: 0;
+}
+
+.gui3 {
+    right: 0;
+}
+
+@keyframes backgroundFlow {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+/* H1 Styling */
+.gui3 h1 {
+    color: #ffffff;
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 25px;
+    text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.8);
+    letter-spacing: 3px;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px #1e3c72, 0 0 20px #1e3c72, 0 0 30px #1e3c72, 0 0 40px #1e3c72;
+    }
+    to {
+        text-shadow: 0 0 20px #2a5298, 0 0 30px #2a5298, 0 0 40px #2a5298, 0 0 50px #2a5298;
+    }
+}
+
+/* Selection Containers */
+.selection-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.selection-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.selection-item label {
+    color: #ffffff;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.selection-item select {
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font-size: 16px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Switch Group */
+.switch-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.switch-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.switch-item input[type='checkbox'] {
+    display: none;
+}
+
+.switch-item .slider {
+    position: relative;
+    width: 60px;
+    height: 30px;
+    background-color: #0d253f;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.4s ease;
+}
+
+.switch-item .slider:before {
+    content: "";
+    position: absolute;
+    height: 26px;
+    width: 26px;
+    left: 2px;
+    bottom: 2px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    transition: 0.4s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+input[type='checkbox']:checked + .slider {
+    background-color: #1e3c72;
+}
+
+input[type='checkbox']:checked + .slider:before {
+    transform: translateX(30px);
+}
+
+.switch-item .switch-label {
+    margin-top: 10px;
+    color: #ffffff;
+    font-size: 18px;
+    text-align: center;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+}
+
+/* Slider Controls */
+.slider-controls {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.control-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.control-item label {
+    margin-bottom: 10px;
+    color: #ffffff;
+    font-size: 14px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+}
+
+.control-item input[type='range'] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 20px;
+    background: #1e3c72;
+    outline: none;
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.control-item input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    background: #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.control-item input[type='range']::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    background: #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.control-item output {
+    margin-top: 10px;
+    color: #ffffff;
+    font-size: 16px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+}
+
+/* Tooltip Styling */
+.info {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 12px;
+    color: #0d253f;
+    margin-top: 5px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.switch-item:hover .info {
+    opacity: 1;
+    transform: translateY(0);
+}`,`.gui2, .gui3 {
+    display: none;
+    background: linear-gradient(135deg, #8B0000, #B22222, #4B0000);
+    background-size: 400% 400%;
+    animation: backgroundFlow 12s ease infinite;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.7);
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+    position: absolute;
+    z-index: 9999;
+}
+
+.gui2 {
+    bottom: 0;
+}
+
+@keyframes backgroundFlow {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+/* H1 Styling */
+.gui3 h1 {
+    color: #ffffff;
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 25px;
+    text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.8);
+    letter-spacing: 3px;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px #8B0000, 0 0 20px #8B0000, 0 0 30px #8B0000, 0 0 40px #8B0000;
+    }
+    to {
+        text-shadow: 0 0 20px #B22222, 0 0 30px #B22222, 0 0 40px #B22222, 0 0 50px #B22222;
+    }
+}
+
+/* Selection Containers */
+.selection-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.selection-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.selection-item label {
+    color: #ffffff;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.selection-item select {
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font-size: 16px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Switch Group */
+.switch-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.switch-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.switch-item input[type='checkbox'] {
+    display: none;
+}
+
+.switch-item .slider {
+    position: relative;
+    width: 60px;
+    height: 30px;
+    background-color: #4B0000;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.4s ease;
+}
+
+.switch-item .slider:before {
+    content: "";
+    position: absolute;
+    height: 26px;
+    width: 26px;
+    left: 2px;
+    bottom: 2px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    transition: 0.4s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+input[type='checkbox']:checked + .slider {
+    background-color: #8B0000;
+}
+
+input[type='checkbox']:checked + .slider:before {
+    transform: translateX(30px);
+}
+
+.switch-item .switch-label {
+    margin-top: 10px;
+    color: #ffffff;
+    font-size: 18px;
+    text-align: center;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+}
+
+/* Slider Controls */
+.slider-controls {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.control-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.control-item label {
+    margin-bottom: 10px;
+    color: #ffffff;
+    font-size: 14px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+}
+
+.control-item input[type='range'] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 20px;
+    background: #8B0000;
+    outline: none;
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.control-item input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    background: #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.control-item input[type='range']::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    background: #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.control-item output {
+    margin-top: 10px;
+    color: #ffffff;
+    font-size: 16px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+}
+
+/* Tooltip Styling */
+.info {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 12px;
+    color: #4B0000;
+    margin-top: 5px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.switch-item:hover .info {
+    opacity: 1;
+    transform: translateY(0);
+}
+`][Math.floor(Math.random()*2)]}
 </style>
 `);
 const colorPicker = document.getElementById("colorPicker");
@@ -472,7 +832,7 @@ colorPicker4.addEventListener("input", function() {
 function hexToDecimal(hex) {
     return parseInt(hex.slice(1), 16);
 };
-document.querySelectorAll('#main').forEach(e => e.style.display = 'none');
+document.querySelectorAll('.gui2, .gui3').forEach(e => e.style.display = 'none');
 function updateAimAmount() {
     try {
         AIM;
@@ -483,12 +843,12 @@ function updateAimAmount() {
         for (const key2 in AIM[key]) {
             if ((AIM[key][key2].toString() == window.prevAimAmount.toString()) || (AIM[key][key2] == 12)) {
                 if (isAllowed) {
-                  AIM[key][key2] = window.aimAmount;
-                  prevAimAmount = aimAmount;
+                    AIM[key][key2] = window.aimAmount;
+                    prevAimAmount = aimAmount;
                 } else {
-                  aimAmount = 0;
-                  AIM[key][key2] = window.aimAmount;
-                  prevAimAmount = aimAmount;
+                    aimAmount = 0;
+                    AIM[key][key2] = window.aimAmount;
+                    prevAimAmount = aimAmount;
                 };
             };
         };
@@ -515,207 +875,15 @@ try {
         };
     };
 } catch (error) {};
-document.querySelector('#hull-dd').value = SelectedTank.hull[Object.entries(SelectedTank.hull)[0][0]];
-document.querySelector('#turret-dd').value = SelectedTank.turret[Object.entries(SelectedTank.turret)[0][0]];
+Hull.value = SelectedTank.hull[Object.entries(SelectedTank.hull)[0][0]];
+Turret.value = SelectedTank.turret[Object.entries(SelectedTank.turret)[0][0]];
 window.Hack = document.getElementById('speed-check').checked;
 window.Aimbot = document.getElementById('aimbot').checked;
-window.Aimbot2 = false;
+window.Aimbot2 = document.getElementById('aimbot2').checked;
 window.Speed = 1;
 window.Acceleration = 1;
 window.aimAmount = 12;
 window.espEnabled = false;
-function InputHandle(p, s) {
-      if (p.id == 'airbreak-speed') {
-          config.hacks.airBreak.speed = parseInt(Exputs[s].value);
-          return;
-      };
-      if (p.id == 'speed-range') {
-          window.Speed = parseInt(Exputs[s].value);
-          return;
-      };
-      if (p.id == 'turn-speed-range') {
-          window.turnSpeed = parseInt(Exputs[s].value);
-          return;
-      };
-      if (p.id == 'acceleration-range') {
-          window.Acceleration = parseInt(Exputs[s].value);
-          return;
-      };
-      if (p.id == 'aim-assist-range') {
-          window.aimAmount = parseInt(Exputs[s].value);
-          updateAimAmount();
-          return;
-      };
-      if (p.srcElement.id == 'speed-check') {
-          window.Hack = p.srcElement.checked;
-          return;
-      };
-      if (p.srcElement.id == 'aimbot3') {
-          config.hacks.turretAim.enabled = p.srcElement.checked;
-          return;
-      };
-      if (p.srcElement.id == 'aimbot') {
-          window.Aimbot = p.srcElement.checked;
-          return;
-      };
-      if (p.srcElement.id == 'aimbot2') {
-          p.srcElement.checked = true;
-          Aimbot2 = true;
-          AIM = null;
-          clearInterval(tempInt);
-          if (Aimbot2) {
-              var tempInt = setInterval(() => {
-                  if (AIM) {
-                      var first = searchInObject(AIM, '==1')[0];
-                      var second = searchInObject(first, '==1')[0];
-                      var third = searchInObject(second, '==1')[0];
-                      for (const k in third) {
-                          if (third[k] < 0) {
-                              
-                              third[k] = -2;
-                          };
-                          if ((third[k] > 0) && third[k] < 2) {
-                              
-                              third[k] = 2;
-                          };
-                      };
-                      clearInterval(tempInt);
-                  };
-              }, 1000);
-          }
-          return;
-      };
-      if (p.srcElement.id == 'neverFlip') {
-          config.hacks.neverFlip.enabled = p.srcElement.checked;
-          return;
-      };
-      if (p.srcElement.id == 'esp-check') {
-          window.espEnabled = p.srcElement.checked;
-          return;
-      };
-      if (p.srcElement.id == 'skin-check') {
-          localStorage['apap'] = p.srcElement.checked;
-          return;
-      };
-      if (p.srcElement.id == 'turret-dd') {
-          SelectedTank.turret[User.turret.name.toLowerCase()] = Turret.value;
-    localStorage['papa'] = JSON.stringify(SelectedTank);
-    for (const k in SelectedTank.turret) {
-        if (k !== User.turret.name.toLowerCase()) {
-            delete SelectedTank.turret[k];
-        };
-    };
-    for (const k in SelectedTank.hull) {
-        if (k !== User.hull.name.toLowerCase()) {
-            delete SelectedTank.hull[k];
-        };
-    };
-          return;
-      };
-      if (p.srcElement.id == 'hull-dd') {
-          SelectedTank.hull[User.hull.name.toLowerCase()] = Hull.value;
-    localStorage['papa'] = JSON.stringify(SelectedTank);
-    for (const k in SelectedTank.turret) {
-        if (k !== User.turret.name.toLowerCase()) {
-            delete SelectedTank.turret[k];
-        };
-    };
-    for (const k in SelectedTank.hull) {
-        if (k !== User.hull.name.toLowerCase()) {
-            delete SelectedTank.hull[k];
-        };
-    };
-          return;
-      };
-  };
-  function InputHandle2(p, s) {
-      
-  };
-  var Config;
-  function saveConfig() {
-    Config = [];
-    document.querySelectorAll('#main input, #main select').forEach(e => {
-        if (e.type === 'checkbox') {
-            Config.push(e.checked);
-        } else {
-            Config.push(e.value);
-        }
-    });
-    localStorage['Config'] = JSON.stringify(Config);
-  };
-  function loadConfig() {
-      Config = JSON.parse(localStorage['Config']);
-      let i = 0;
-      document.querySelectorAll('#main input, #main select').forEach(e => {
-          if (e.type === 'checkbox') {
-              e.checked = Config[i];
-          } else {
-              e.value = Config[i];
-          };
-          i++;
-      });
-      try {
-          RangeInputs.forEach(e => {
-              e.dispatchEvent(new Event('input', {
-                  bubbles: true
-              }))
-          });
-      } catch (e) {};
-      try {
-          Inputs.forEach(e => {
-              e.dispatchEvent(new Event('input', {
-                  bubbles: true
-              }))
-          });
-      } catch (e) {};
-      try {
-          Dropdowns.forEach(e => {
-              e.dispatchEvent(new Event('input', {
-                  bubbles: true
-              }))
-          });
-      } catch (e) {};
-      document.getElementById('aimbot2').checked = false;
-      Aimbot2 = false;
-  };
-  var Bools = document.querySelectorAll('.status');
-  var Dropdowns = document.querySelectorAll('.dropdown');
-  var Extras = document.querySelectorAll('.extra');
-  var RangeInputs = document.querySelectorAll('input[type="range"]');
-  var Inputs = document.querySelectorAll('input:not([type="range"]):not([for])');
-  var Exputs = document.querySelectorAll('input[for]');
-  for (let i=0;i<RangeInputs.length;i++) {
-      RangeInputs[i].addEventListener("input", (e) => {
-          Exputs[i].value = RangeInputs[i].value;
-          InputHandle(RangeInputs[i], i);
-          saveConfig();
-      });
-      Exputs[i].addEventListener('input', (e) => {
-          RangeInputs[i].value = Exputs[i].value;
-          InputHandle(RangeInputs[i], i);
-          saveConfig();
-      });
-  };
-  Inputs.forEach(e => {
-      e.addEventListener('input', (e) => {
-          InputHandle(e);
-          saveConfig();
-      });
-  });
-  Dropdowns.forEach(e => {
-      e.addEventListener('input', (ev) => {
-          saveConfig();
-      });
-  });
-  Dropdowns[0].addEventListener('input', (e) => {
-      config.hacks.airBreak.type = Dropdowns[0].value;
-  });
-  Dropdowns[1].addEventListener('input', (e) => {
-      config.hacks.airBreak.faceTarget = eval(Dropdowns[1].value);
-  });
-  Dropdowns[2].addEventListener('input', (e) => {
-      config.hacks.turretAim.type = Dropdowns[2].value;
-  });
 if (localStorage['apap'] == 'true') {
     document.getElementById('skin-check').setAttribute('checked', '');
     var ta = 0;
@@ -745,14 +913,171 @@ if (localStorage['apap'] == 'true') {
         return o.apply(this, arguments);
     };
 };
+
+// Get references to the output elements
+const speedOutput = document.getElementById('speed-output');
+const turnSpeedOutput = document.getElementById('turn-speed-output');
+const accelerationOutput = document.getElementById('acceleration-output');
+const aimOutput = document.getElementById('aim-output');
+
+// Add event listeners to handle user input
+speedOutput.addEventListener('input', function () {
+    let value = parseFloat(this.textContent);
+    value = Math.max(0, Math.min(100, value));
+    document.getElementById('speed').value = value;
+    window.Speed = value;
+});
+
+turnSpeedOutput.addEventListener('input', function () {
+    let value = parseFloat(this.textContent);
+    value = Math.max(0, Math.min(100, value));
+    document.getElementById('turn-speed').value = value;
+    window.turnSpeed = value;
+});
+
+accelerationOutput.addEventListener('input', function () {
+    let value = parseFloat(this.textContent);
+    value = Math.max(0, Math.min(100, value));
+    document.getElementById('acceleration').value = value;
+    window.Acceleration = value;
+});
+
+aimOutput.addEventListener('input', function () {
+    let value = parseFloat(this.textContent);
+    value = Math.max(0, Math.min(360, value));
+    document.getElementById('aim').value = value;
+    window.aimAmount = value;
+    updateAimAmount();
+});
+
+document.getElementById('speed').addEventListener('input', function () {
+    speedOutput.textContent = this.value;
+    window.Speed = parseFloat(this.value);
+});
+
+document.getElementById('turn-speed').addEventListener('input', function () {
+    turnSpeedOutput.textContent = this.value;
+    window.turnSpeed = parseFloat(this.value);
+});
+
+document.getElementById('acceleration').addEventListener('input', function () {
+    accelerationOutput.textContent = this.value;
+    window.Acceleration = parseFloat(this.value);
+});
+
+document.getElementById('aim').addEventListener('input', function () {
+    aimOutput.textContent = this.value;
+    window.aimAmount = parseFloat(this.value);
+    updateAimAmount();
+});
+
+document.getElementById('speed-check').addEventListener('change', function () {
+    window.Hack = this.checked;
+});
+
+document.getElementById('aimbot').addEventListener('change', function () {
+    window.Aimbot = this.checked;
+});
+
+document.getElementById('neverFlip').addEventListener('change', function () {
+    config.hacks.neverFlip.enabled = this.checked;
+});
+
+document.getElementById('aimbot2').addEventListener('change', function () {
+    window.Aimbot2 = this.checked;
+    AIM = null;
+    clearInterval(tempInt);
+    if (Aimbot2) {
+        var tempInt = setInterval(() => {
+            if (AIM) {
+                var first = searchInObject(AIM, '==1')[0];
+                var second = searchInObject(first, '==1')[0];
+                var third = searchInObject(second, '==1')[0];
+                for (const k in third) {
+                    if (third[k] < 0) {
+                        if (!firstVAim) {
+                            window.firstVAim = third[k];
+                        };
+                        third[k] = -2;
+                    };
+                    if ((third[k] > 0) && third[k] < 2) {
+                        if (!secVAim) {
+                            window.secVAim = third[k];
+                        };
+                        third[k] = 2;
+                    };
+                };
+                clearInterval(tempInt);
+            };
+        }, 1000);
+    } else {
+        var tempInt = setInterval(() => {
+            if (AIM) {
+                var first = searchInObject(AIM, '==1')[0];
+                var second = searchInObject(first, '==1')[0];
+                var third = searchInObject(second, '==1')[0];
+                for (const k in third) {
+                    if (third[k] == -2) {
+                        third[k] = firstVAim;
+                    };
+                    if (third[k] == 2) {
+                        third[k] = secVAim;
+                    };
+                };
+                clearInterval(tempInt);
+            };
+        }, 1000);
+    };
+});
+
+document.getElementById('esp-check').addEventListener('change', function () {
+    window.espEnabled = this.checked;
+});
+
+document.getElementById('skin-check').addEventListener('change', function () {
+    localStorage['apap'] = this.checked;
+});
+
+Hull.addEventListener('change', () => {
+    SelectedTank.hull[User.hull.name.toLowerCase()] = Hull.value;
+    localStorage['papa'] = JSON.stringify(SelectedTank);
+    for (const k in SelectedTank.turret) {
+        if (k !== User.turret.name.toLowerCase()) {
+            delete SelectedTank.turret[k];
+        };
+    };
+    for (const k in SelectedTank.hull) {
+        if (k !== User.hull.name.toLowerCase()) {
+            delete SelectedTank.hull[k];
+        };
+    };
+});
+
+Turret.addEventListener('change', () => {
+    SelectedTank.turret[User.turret.name.toLowerCase()] = Turret.value;
+    localStorage['papa'] = JSON.stringify(SelectedTank);
+    for (const k in SelectedTank.turret) {
+        if (k !== User.turret.name.toLowerCase()) {
+            delete SelectedTank.turret[k];
+        };
+    };
+    for (const k in SelectedTank.hull) {
+        if (k !== User.hull.name.toLowerCase()) {
+            delete SelectedTank.hull[k];
+        };
+    };
+});
+
 document.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.key == 'm') {
         e.preventDefault();
         if (isAllowed) {
-          document.querySelector('#main').style.display = document.querySelector('#main').style.display == 'block' ? 'none' : 'block';
+            document.querySelector('.gui2').style.display = document.querySelector('.gui2').style.display == 'block' ? 'none' : 'block';
+            document.querySelector('.gui3').style.display = document.querySelector('.gui3').style.display == 'block' ? 'none' : 'block';
         } else {
-          document.querySelector('#main').style.display = 'none';
-          alert('You\'re 15 minutes is up!');
+            document.querySelector('.gui2').style.display = 'none';
+            document.querySelector('.gui3').style.display = 'none';
+            alert('You\'re 15 minutes is up!');
         };
     };
 });
@@ -777,10 +1102,8 @@ function a() {
     if (r) {
         f = requestAnimationFrame(a);
         if (User?.turret?.name) {
-            try {
-                Array.from(document.querySelectorAll('.extra')).filter(t=>t.textContent=='Turret:')[0].textContent = User.turret.name;
-                Array.from(document.querySelectorAll('.extra')).filter(t=>t.textContent=='Hull:')[0].textContent = User.hull.name;
-            } catch (e) {};
+            document.querySelector('label[for="Turret"]').textContent = User.turret.name;
+            document.querySelector('label[for="Hull"]').textContent = User.hull.name;
             for (const k in SelectedTank.turret) {
                 if (k !== User?.turret?.name?.toLowerCase()) {
                     delete SelectedTank.turret[k];
@@ -791,18 +1114,18 @@ function a() {
                     delete SelectedTank.hull[k];
                 };
             };
-            SelectedTank.hull[User?.hull?.name?.toLowerCase()] = document.querySelector("#hull-dd").value;
-            SelectedTank.turret[User?.turret?.name?.toLowerCase()] = document.querySelector("#turret-dd").value;
+            SelectedTank.hull[User?.hull?.name?.toLowerCase()] = Hull.value;
+            SelectedTank.turret[User?.turret?.name?.toLowerCase()] = Turret.value;
             localStorage['papa'] = JSON.stringify(SelectedTank);
-            document.querySelector("#hull-dd").innerHTML = '';
-            document.querySelector("#turret-dd").innerHTML = '';
+            Hull.innerHTML = '';
+            Turret.innerHTML = '';
             try {
                 for (const k in t = Object.entries(Skins?.[User?.hull?.name?.toLowerCase()])) {
                     if (t[k][0] !== 'or') {
                         var el = document.createElement('option');
                         el.textContent = t[k][0];
                         el.value = t[k][0];
-                        document.querySelector("#hull-dd").appendChild(el);
+                        Hull.appendChild(el);
                     };
                 };
                 for (const k in t = Object.entries(Skins?.[User?.turret?.name?.toLowerCase()])) {
@@ -810,7 +1133,7 @@ function a() {
                         var el = document.createElement('option');
                         el.textContent = t[k][0];
                         el.value = t[k][0];
-                        document.querySelector("#turret-dd").appendChild(el);
+                        Turret.appendChild(el);
                     };
                 };
             } catch (error) {};
@@ -900,12 +1223,33 @@ function onJoinGame() {
                 var third = searchInObject(second, '==1')[0];
                 for (const k in third) {
                     if (third[k] < 0) {
-                        
+                        if (!firstVAim) {
+                            window.firstVAim = third[k];
+                        };
                         third[k] = -2;
                     };
                     if ((third[k] > 0) && third[k] < 2) {
-                        
+                        if (!secVAim) {
+                            window.secVAim = third[k];
+                        };
                         third[k] = 2;
+                    };
+                };
+                clearInterval(tempInt);
+            };
+        }, 1000);
+    } else {
+        tempInt = setInterval(() => {
+            if (AIM) {
+                var first = searchInObject(AIM, '==1')[0];
+                var second = searchInObject(first, '==1')[0];
+                var third = searchInObject(second, '==1')[0];
+                for (const k in third) {
+                    if (third[k] == -2) {
+                        third[k] = firstVAim;
+                    };
+                    if (third[k] == 2) {
+                        third[k] = secVAim;
                     };
                 };
                 clearInterval(tempInt);
@@ -1108,10 +1452,9 @@ var eventListeners = [
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('5')) {
                 config.hacks.turretAim.enabled = !config.hacks.turretAim.enabled;
             };
-            config.hacks.airBreak.enabled ? (Bools[0].textContent = 'Enabled', Bools[0].style.color = 'green') : (Bools[0].textContent = 'Disabled', Bools[0].style.color = 'red');
-            config.hacks.antiAim.enabled ? (Bools[1].textContent = 'Enabled', Bools[1].style.color = 'green') : (Bools[1].textContent = 'Disabled', Bools[1].style.color = 'red');
-            config.hacks.followTank.enabled ? (Bools[2].textContent = 'Enabled', Bools[2].style.color = 'green') : (Bools[2].textContent = 'Disabled', Bools[2].style.color = 'red');
-            config.hacks.spectate.enabled ? (Bools[3].textContent = 'Enabled', Bools[3].style.color = 'green') : (Bools[3].textContent = 'Disabled', Bools[3].style.color = 'red');
+            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('7')) {
+                setVars();
+            };
         }
     },
     {
@@ -1136,8 +1479,6 @@ var eventListeners = [
                 if (config.hacks.spectate.enabled) {
                     specPlayer(nick);
                 };
-                otherTankPos = getPositionOfTank(getTanks('player' + nick)[0]);
-                Extras[3].textContent = 'Target: ' + nick;
             };
         }
     }
@@ -1415,11 +1756,9 @@ function aa() {
                 };
                 if (config.keysPressed.includes('f')) {
                     config.hacks.followTank.height += config.hacks.airBreak.speed;
-                    Extras[4].textContent = 'Height: ' + config.hacks.followTank.height;
                 };
                 if (config.keysPressed.includes('v')) {
                     config.hacks.followTank.height -= config.hacks.airBreak.speed;
-                    Extras[4].textContent = 'Height: ' + config.hacks.followTank.height;
                 };
                 myTankPos.v17_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], otherTankPos.v17_1));
                 myTankPos.w17_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], otherTankPos.w17_1));
@@ -1880,6 +2219,3 @@ function normalizeAngle(angle) {
     while (angle < -Math.PI) angle += 2 * Math.PI;
     return angle;
 };
-if (localStorage['Config']) {
-      loadConfig();
-  };
