@@ -523,13 +523,16 @@ window.Acceleration = 1;
 window.aimAmount = 12;
 window.espEnabled = false;
 function InputHandle(p, s) {
+      if (p.id == 'airbreak-speed') {
+          config.hacks.airBreak.speed = parseInt(Exputs[s].value);
+          return;
+      };
       if (p.id == 'speed-range') {
           window.Speed = parseInt(Exputs[s].value);
           return;
       };
       if (p.id == 'turn-speed-range') {
           window.turnSpeed = parseInt(Exputs[s].value);
-          return;
           return;
       };
       if (p.id == 'acceleration-range') {
