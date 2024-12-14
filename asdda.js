@@ -526,23 +526,23 @@ window.aimAmount = 12;
 window.espEnabled = false;
 function InputHandle(p, s) {
       if (p.id == 'airbreak-speed') {
-          config.hacks.airBreak.speed = parseInt(Exputs[s].value);
+          config.hacks.airBreak.speed = parseFloat(Exputs[s].value);
           return;
       };
       if (p.id == 'speed-range') {
-          window.Speed = parseInt(Exputs[s].value);
+          window.Speed = parseFloat(Exputs[s].value);
           return;
       };
       if (p.id == 'turn-speed-range') {
-          window.turnSpeed = parseInt(Exputs[s].value);
+          window.turnSpeed = parseFloat(Exputs[s].value);
           return;
       };
       if (p.id == 'acceleration-range') {
-          window.Acceleration = parseInt(Exputs[s].value);
+          window.Acceleration = parseFloat(Exputs[s].value);
           return;
       };
       if (p.id == 'aim-assist-range') {
-          window.aimAmount = parseInt(Exputs[s].value);
+          window.aimAmount = parseFloat(Exputs[s].value);
           updateAimAmount();
           return;
       };
