@@ -40,9 +40,9 @@
                 } else {
                     User.name = t.textContent.trim();
                 };
-                setTimeout(() => {
+                /*setTimeout(() => {
                     User.patata = '';
-                }, 5000);
+                }, 5000);*/
                 if ((User.name.length > 2) && ([/*'Midway', 'Queen.of.Spain', 'Arpecu9_KunuT_Bo_MHe', 'DerMar'*/].includes(User.name))) {
                     alert(`You have an old version of this cheat, update.`);
                     for (const k in window) {
