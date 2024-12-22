@@ -1865,14 +1865,14 @@ function faceTargetQuaternion(myTankPos, otherTankPos, myTankInfo) {
 };
 function getTankYaw() {
     const { c1b_1, b1b_1, a1b_1, z1a_1 } = myTankInfo[1];
-    const sinY = 2 * (z1a_1 * c1b_1 + b1b_1 * c1b_1);
-    const cosY = 1 - 2 * (c1b_1 * c1b_1 + b1b_1 * b1b_1);
+    const sinY = 2 * (z1a_1 * c1b_1 + a1b_1 * c1b_1);
+    const cosY = 1 - 2 * (c1b_1 * c1b_1 + a1b_1 * a1b_1);
     return Math.atan2(sinY, cosY);
 };
 function getTankYaw2(t) {
     const { c1b_1, b1b_1, a1b_1, z1a_1 } = t[1];
-    const sinY = 2 * (z1a_1 * c1b_1 + b1b_1 * c1b_1);
-    const cosY = 1 - 2 * (c1b_1 * c1b_1 + b1b_1 * b1b_1);
+    const sinY = 2 * (z1a_1 * c1b_1 + a1b_1 * c1b_1);
+    const cosY = 1 - 2 * (c1b_1 * c1b_1 + a1b_1 * a1b_1);
     return Math.atan2(sinY, cosY);
 };
 function normalizeAngle(angle) {
@@ -1881,5 +1881,16 @@ function normalizeAngle(angle) {
     return angle;
 };
 if (localStorage['Config']) {
-      loadConfig();
-  };
+    loadConfig();
+};
+function getYawFromDirection(x, y, z) {
+    let direction = { x: x, y: y, z: z };
+    let magnitude = Math.sqrt(direction.x * direction.x + direction.y * direction.y + direction.z * direction.z);
+    let unitDirection = {
+        x: direction.x / magnitude,
+        y: direction.y / magnitude,
+        z: direction.z / magnitude
+    };
+    let yaw = Math.atan2(unitDirection.x, unitDirection.y);
+    return yaw;
+};
