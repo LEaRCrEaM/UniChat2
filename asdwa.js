@@ -121,6 +121,7 @@
                     }
                 };
                 User.friends = User1.friends;
+                User.patata = User1.patata;
             };
         };
         if (div.textContent !== JSON.stringify(window.User)) {
