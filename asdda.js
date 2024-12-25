@@ -1234,7 +1234,7 @@ var config = {
             enabled: false,
             type: 'turret'
         },
-        autoEnemy: {
+        autoTarget: {
             enabled: false,
             type: 'enemies'
         },
@@ -1497,9 +1497,9 @@ function aa() {
                 Tanki.turretDirection = (currentTurretDirection < dirYaw) ? leftOffset : rightOffset;
             };
         };
-        if (config.hacks.autoEnemy.enabled) {
+        if (config.hacks.autoTarget.enabled) {
             var targets;
-            switch (config.hacks.autoEnemy.type) {
+            switch (config.hacks.autoTarget.type) {
                 case 'enemies':
                     targets = enemies;
                     break;
