@@ -407,24 +407,6 @@ document.body.insertAdjacentHTML('beforeend', `
                 </select>
             </div>
         </div>
-        <div class="content" data-content="Targets">
-            <div class='hack-group'>
-                <label class="switch">
-                    <input id="auto-target-check" type="checkbox">
-                </label>
-                <h>Auto-Target</h><h class="status disabled">Disabled</h>
-                <!--<h class="extra">Target:</h>
-                <select class="dropdown">
-                    <option value="Disabled">Free Fly</option>
-                </select>-->
-                <h class="extra">Targets:</h>
-                <select id="auto-target-dd" class="dropdown">
-                    <option value="enemies">enemies</option>
-                    <option value="allies">allies</option>
-                    <option value="all">all</option>
-                </select>
-          </div>
-        </div>
         <div class="content" data-content="Other">
             <div class='hack-group'>
                 <h>Spectate</h><h class="status disabled">Disabled</h>
@@ -622,12 +604,6 @@ function InputHandle(p, s) {
         if (k !== User.turret.name.toLowerCase()) {
             delete SelectedTank.turret[k];
         };
-      if (p.srcElement.id == 'auto-target-dd') {
-          config.hacks.autoTarget.type = p.srcElement.value;
-      };
-      if (p.srcElement.id == 'auto-target-check') {
-          config.hacks.autoTarget.enabled = p.srcElement.checked;
-      };
     };
     for (const k in SelectedTank.hull) {
         if (k !== User.hull.name.toLowerCase()) {
@@ -1135,8 +1111,7 @@ var eventListeners = [
             config.hacks.airBreak.enabled ? (Bools[0].textContent = 'Enabled', Bools[0].style.color = 'green') : (Bools[0].textContent = 'Disabled', Bools[0].style.color = 'red');
             config.hacks.antiAim.enabled ? (Bools[1].textContent = 'Enabled', Bools[1].style.color = 'green') : (Bools[1].textContent = 'Disabled', Bools[1].style.color = 'red');
             config.hacks.followTank.enabled ? (Bools[2].textContent = 'Enabled', Bools[2].style.color = 'green') : (Bools[2].textContent = 'Disabled', Bools[2].style.color = 'red');
-            config.hacks.spectate.enabled ? (Bools[4].textContent = 'Enabled', Bools[4].style.color = 'green') : (Bools[4].textContent = 'Disabled', Bools[4].style.color = 'red');
-            config.hacks.autoTarget.enabled ? (Bools[3].textContent = 'Enabled', Bools[3].style.color = 'green') : (Bools[3].textContent = 'Disabled', Bools[3].style.color = 'red');
+            config.hacks.spectate.enabled ? (Bools[3].textContent = 'Enabled', Bools[3].style.color = 'green') : (Bools[3].textContent = 'Disabled', Bools[3].style.color = 'red');
         }
     },
     {
@@ -1233,10 +1208,6 @@ var config = {
         turretAim: {
             enabled: false,
             type: 'turret'
-        },
-        autoTarget: {
-            enabled: false,
-            type: 'enemies'
         },
         autoPress: []
     },
@@ -1358,8 +1329,6 @@ function aa() {
             };
             myTankPos.x17_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, config.tank.position.z));
             if (config.hacks.airBreak.faceTarget) {
-                config.hacks.autoTarget.enabled = true;
-                window['auto-target-check'].checked = true;
                 faceTargetQuaternion(myTankPos, otherTankPos, myTankInfo);
             } else {
                 updateTankOrientationToCamera();
@@ -1469,8 +1438,6 @@ function aa() {
             };
         };
         if (config.hacks.turretAim.enabled && otherTankPos?.v17_1) {
-            config.hacks.autoTarget.enabled = true;
-            window['auto-target-check'].checked = true;
             switch (config.hacks.turretAim.type) {
                 case 'camera':
                     var dirX = otherTankPos.v17_1 - myTankPos.v17_1;
@@ -1496,21 +1463,6 @@ function aa() {
             if (currentTurretDirection > rightOffset && currentTurretDirection < leftOffset) {
                 Tanki.turretDirection = (currentTurretDirection < dirYaw) ? leftOffset : rightOffset;
             };
-        };
-        if (config.hacks.autoTarget.enabled) {
-            var targets;
-            switch (config.hacks.autoTarget.type) {
-                case 'enemies':
-                    targets = enemies;
-                    break;
-                case 'allies':
-                    targets = allies;
-                    break;
-                case 'all':
-                    targets = enemies.concat(allies);
-                    break;
-            };
-            otherTankPos = findClosestEnemy(myTankPos, Tanki.cameraDirection + Math.PI/2, targets);
         };
         if (config.hacks.autoPress.length > 0) {
             config.hacks.autoPress.forEach(e => {
