@@ -1894,3 +1894,32 @@ function getYawFromDirection(x, y, z) {
     let yaw = Math.atan2(unitDirection.x, unitDirection.y);
     return yaw;
 };
+function findClosestEnemy(tankPosition, cameraDirection, enemies) {
+    tankPosition = myTankPos;
+    cameraDirection = Tanki.cameraDirection + Math.PI/2;
+    const normalize = vector => {
+        const length = Math.sqrt(vector.x ** 2 + vector.z ** 2);
+        return { x: vector.x / length, z: vector.z / length };
+    };
+    const dotProduct = (vec1, vec2) => vec1.x * vec2.x + vec1.z * vec2.z;
+    const cameraVector = {
+        x: Math.cos(cameraDirection),
+        z: Math.sin(cameraDirection)
+    };
+    const closestEnemy = enemies
+        .map(enemy => {
+            enemy = getPositionOfTank(enemy);
+            const vectorToEnemy = {
+                x: enemy.v17_1 - tankPosition.v17_1,
+                z: enemy.w17_1 - tankPosition.w17_1
+            };
+            const normalizedVector = normalize(vectorToEnemy);
+            const cosineTheta = dotProduct(cameraVector, normalizedVector);
+            const angle = Math.acos(cosineTheta);
+            return { enemy, angle };
+        })
+        .reduce((closest, current) =>
+            current.angle < closest.angle ? current : closest
+        ).enemy;
+    return closestEnemy;
+};
