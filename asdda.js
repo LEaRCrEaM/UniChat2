@@ -1432,6 +1432,7 @@ function aa() {
             };
         };
         if (config.hacks.neverFlip.enabled) {
+            if (!myTankInfo[1]) return;
             if ((Math.abs(myTankInfo[1].b1b_1) > config.hacks.neverFlip.amount && (myTankInfo[1].b1b_1 = Math.sign(myTankInfo[1].b1b_1) * config.hacks.neverFlip.amount), Math.abs(myTankInfo[1].a1b_1) > config.hacks.neverFlip.amount)) {
                 myTankInfo[1].a1b_1 = Math.sign(myTankInfo[1].a1b_1) * config.hacks.neverFlip.amount;
             };
@@ -1897,6 +1898,7 @@ function getYawFromDirection(x, y, z) {
 function findClosestEnemy(tankPosition, cameraDirection, enemies) {
     tankPosition = myTankPos;
     cameraDirection = Tanki.cameraDirection + Math.PI/2;
+    if (!tankPosition || !cameraDirection || !enemies.length > 0) return;
     const normalize = vector => {
         const length = Math.sqrt(vector.x ** 2 + vector.z ** 2);
         return { x: vector.x / length, z: vector.z / length };
