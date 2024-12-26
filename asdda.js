@@ -1925,3 +1925,12 @@ function findClosestEnemy(tankPosition, cameraDirection, enemies) {
         ).enemy;
     return closestEnemy;
 };
+function getRelativePosition(myTankPos, otherTankPos, cameraDirection) {
+    var deltaX = otherTankPos.v17_1 - myTankPos.v17_1;
+    var deltaY = otherTankPos.w17_1 - myTankPos.w17_1;
+    var dirYaw = Math.atan2(deltaY, deltaX);
+    var relativeAngle = Math.atan2(Math.sin(dirYaw - cameraDirection), Math.cos(dirYaw - cameraDirection));
+    if (relativeAngle > 0) return "right";
+    if (relativeAngle < 0) return "left";
+    return "front";
+};
