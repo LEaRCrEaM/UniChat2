@@ -445,90 +445,6 @@ document.body.insertAdjacentHTML('beforeend', `
   }
 </style>
 `);
-var indicator = document.createElement('div');
-indicator.style.cssText = `
-position: absolute;
-z-index: 9999999999999999;
-top: 70%;
-left: 50%;
-width: 500px;
-height: 300px;
-transform: translate(-50%, -50%);
-pointer-events: none;
-transition: all 0.5s ease-in-out;
-filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.5));
-opacity: 0;
-`;
-document.body.appendChild(indicator);
-
-var indicatorPart1 = document.createElement('div');
-indicatorPart1.style.cssText = `
-position: absolute;
-z-index: 99999999;
-background: conic-gradient(
-    #00ffcc 0 ${(aimAmount / 4) - 2}deg, 
-    rgba(0, 0, 0, 0.7) ${(aimAmount / 4) - 2}deg ${(aimAmount / 4)}deg, 
-    transparent ${(aimAmount / 4)}deg 360deg
-);
-width: 500px;
-height: 300px;
-border-radius: 50%;
-transition: background 0.3s ease-in-out;
-box-shadow: 0 0 20px #00ffcc;
-`;
-indicator.appendChild(indicatorPart1);
-
-var indicatorPart2 = document.createElement('div');
-indicatorPart2.style.cssText = `
-position: absolute;
-z-index: 99999999;
-background: conic-gradient(
-    #00ffcc 0 ${(aimAmount / 4) - 2}deg, 
-    rgba(0, 0, 0, 0.7) ${(aimAmount / 4) - 2}deg ${(aimAmount / 4)}deg, 
-    transparent ${(aimAmount / 4)}deg 360deg
-);
-transform: rotateY(180deg);
-width: 500px;
-height: 300px;
-border-radius: 50%;
-transition: background 0.3s ease-in-out;
-box-shadow: 0 0 20px #00ffcc;
-`;
-indicator.appendChild(indicatorPart2);
-
-window['aim-assist-range'].addEventListener('input', () => {
-    indicator.style.opacity = '1';
-    setTimeout(() => {
-        indicator.style.opacity = '0';
-    }, 500);
-    indicatorPart1.style.background = `conic-gradient(
-        #00ffcc 0 ${(aimAmount / 4) - 2}deg, 
-        rgba(0, 0, 0, 0.7) ${(aimAmount / 4) - 2}deg ${(aimAmount / 4)}deg, 
-        transparent ${(aimAmount / 4)}deg 360deg
-    )`;
-    indicatorPart2.style.background = `conic-gradient(
-        #00ffcc 0 ${(aimAmount / 4) - 2}deg, 
-        rgba(0, 0, 0, 0.7) ${(aimAmount / 4) - 2}deg ${(aimAmount / 4)}deg, 
-        transparent ${(aimAmount / 4)}deg 360deg
-    )`;
-});
-
-window['aim-assist-range'].parentElement.children[3].addEventListener('input', () => {
-    indicator.style.opacity = '1';
-    setTimeout(() => {
-        indicator.style.opacity = '0';
-    }, 500);
-    indicatorPart1.style.background = `conic-gradient(
-        #00ffcc 0 ${(aimAmount / 4) - 2}deg, 
-        rgba(0, 0, 0, 0.7) ${(aimAmount / 4) - 2}deg ${(aimAmount / 4)}deg, 
-        transparent ${(aimAmount / 4)}deg 360deg
-    )`;
-    indicatorPart2.style.background = `conic-gradient(
-        #00ffcc 0 ${(aimAmount / 4) - 2}deg, 
-        rgba(0, 0, 0, 0.7) ${(aimAmount / 4) - 2}deg ${(aimAmount / 4)}deg, 
-        transparent ${(aimAmount / 4)}deg 360deg
-    )`;
-});
 const colorPicker = document.getElementById("colorPicker");
 colorPicker.addEventListener("input", function() {
     const hexColor = colorPicker.value;
@@ -2018,3 +1934,91 @@ function getRelativePosition(myTankPos, otherTankPos, cameraDirection) {
     if (relativeAngle < 0) return "left";
     return "front";
 };
+
+
+(() => {
+  var indicator = document.createElement('div');
+indicator.style.cssText = `
+position: absolute;
+z-index: 9999999999999999;
+top: 70%;
+left: 50%;
+width: 500px;
+height: 300px;
+transform: translate(-50%, -50%);
+pointer-events: none;
+transition: all 0.5s ease-in-out;
+filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.5));
+opacity: 0;
+`;
+document.body.appendChild(indicator);
+
+var indicatorPart1 = document.createElement('div');
+indicatorPart1.style.cssText = `
+position: absolute;
+z-index: 99999999;
+background: conic-gradient(
+    #00ffcc 0 ${(aimAmount / 4) - 2}deg, 
+    rgba(0, 0, 0, 0.7) ${(aimAmount / 4) - 2}deg ${(aimAmount / 4)}deg, 
+    transparent ${(aimAmount / 4)}deg 360deg
+);
+width: 500px;
+height: 300px;
+border-radius: 50%;
+transition: background 0.3s ease-in-out;
+box-shadow: 0 0 20px #00ffcc;
+`;
+indicator.appendChild(indicatorPart1);
+
+var indicatorPart2 = document.createElement('div');
+indicatorPart2.style.cssText = `
+position: absolute;
+z-index: 99999999;
+background: conic-gradient(
+    #00ffcc 0 ${(aimAmount / 4) - 2}deg, 
+    rgba(0, 0, 0, 0.7) ${(aimAmount / 4) - 2}deg ${(aimAmount / 4)}deg, 
+    transparent ${(aimAmount / 4)}deg 360deg
+);
+transform: rotateY(180deg);
+width: 500px;
+height: 300px;
+border-radius: 50%;
+transition: background 0.3s ease-in-out;
+box-shadow: 0 0 20px #00ffcc;
+`;
+indicator.appendChild(indicatorPart2);
+
+window['aim-assist-range'].addEventListener('input', () => {
+    indicator.style.opacity = '1';
+    setTimeout(() => {
+        indicator.style.opacity = '0';
+    }, 500);
+    indicatorPart1.style.background = `conic-gradient(
+        #00ffcc 0 ${(aimAmount / 4) - 2}deg, 
+        rgba(0, 0, 0, 0.7) ${(aimAmount / 4) - 2}deg ${(aimAmount / 4)}deg, 
+        transparent ${(aimAmount / 4)}deg 360deg
+    )`;
+    indicatorPart2.style.background = `conic-gradient(
+        #00ffcc 0 ${(aimAmount / 4) - 2}deg, 
+        rgba(0, 0, 0, 0.7) ${(aimAmount / 4) - 2}deg ${(aimAmount / 4)}deg, 
+        transparent ${(aimAmount / 4)}deg 360deg
+    )`;
+});
+
+window['aim-assist-range'].parentElement.children[3].addEventListener('input', () => {
+    indicator.style.opacity = '1';
+    setTimeout(() => {
+        indicator.style.opacity = '0';
+    }, 500);
+    indicatorPart1.style.background = `conic-gradient(
+        #00ffcc 0 ${(aimAmount / 4) - 2}deg, 
+        rgba(0, 0, 0, 0.7) ${(aimAmount / 4) - 2}deg ${(aimAmount / 4)}deg, 
+        transparent ${(aimAmount / 4)}deg 360deg
+    )`;
+    indicatorPart2.style.background = `conic-gradient(
+        #00ffcc 0 ${(aimAmount / 4) - 2}deg, 
+        rgba(0, 0, 0, 0.7) ${(aimAmount / 4) - 2}deg ${(aimAmount / 4)}deg, 
+        transparent ${(aimAmount / 4)}deg 360deg
+    )`;
+});
+})();
