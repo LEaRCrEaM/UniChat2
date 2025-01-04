@@ -717,6 +717,8 @@ function InputHandle(p, s) {
       config.hacks.turretAim.type = Dropdowns[2].value;
   });
 if (localStorage['apap'] == 'true') {
+    var tttttt = {"turret":{"railgun":"XT"},"hull":{"hornet":"XT"}};
+    localStorage['papa'] = JSON.stringify(tttttt);
     document.getElementById('skin-check').setAttribute('checked', '');
     var ta = 0;
     var o = fetch;
