@@ -426,15 +426,13 @@ document.body.insertAdjacentHTML('beforeend', `
     #main {
         position: absolute;
         border-radius: 15px;
-        width: 600px;
-        height: 400px;
+        width: 500px;
         z-index: 99999;
         background: linear-gradient(145deg, #240053, #3b007b);
-        left: 50%;
-        top: 50%;
+        left: 25px;
+        top: 25px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         border: 2px solid #4000a3;
-        transform: translate(-50%, -50%);
         user-select: none;
         backdrop-filter: blur(10px);
         overflow: hidden;
@@ -557,7 +555,6 @@ document.body.insertAdjacentHTML('beforeend', `
                 content.classList.remove('on');
                 content.classList.add('off');
             });
-            console.log(document.querySelector(`.content[data-content="${tab.getAttribute('data-tab')}"]`));
             document.querySelector(`.content[data-content="${tab.getAttribute('data-tab')}"]`).classList.add('on');
             document.querySelector(`.content[data-content="${tab.getAttribute('data-tab')}"]`).classList.remove('off');
         });
