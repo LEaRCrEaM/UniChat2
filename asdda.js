@@ -268,17 +268,16 @@ var SelectedTank = {
     hull: {}
 };
 document.body.insertAdjacentHTML('beforeend', `
-<div id="main">
-    <!--<div class="tabs">
-        <div class="tab" data-tab="Tank">Tank</div>
-        <div class="tab" data-tab="Turret">Turret</div>
-        <div class="tab" data-tab="Visual">Visual</div>
-        <div class="tab" data-tab="Skins">Skins</div>
-        <div class="tab" data-tab="Other">Other</div>
-        <div class="tab-indicator"></div>
-    </div>-->
-    <div class="contents">
-        <div class="content" data-content="Tank">
+<div id='main'>
+    <div class='tabs'>
+        <div class='tab active' data-tab="Tank">Tank</div>
+        <div class='tab' data-tab="Turret">Turret</div>
+        <div class='tab' data-tab="Visual">Visual</div>
+        <div class='tab' data-tab="Skins">Skins</div>
+        <div class='tab' data-tab="Other">Other</div>
+    </div>
+    <div class='contents'>
+        <div class="content on" data-content="Tank">
             <div class='hack-group'>
                 <h>Airbreak</h><h class="status disabled">Disabled</h>
                 <h class="extra">Type:</h>
@@ -303,7 +302,6 @@ document.body.insertAdjacentHTML('beforeend', `
             <div class='hack-group'>
                 <h>Follow-Tank</h><h class="status disabled">Disabled</h>
                 <h class="extra">Target:</h>
-                
                 <h class="extra">Height:</h><h class="display"></h>
             </div>
             <div class='hack-group'>
@@ -330,7 +328,7 @@ document.body.insertAdjacentHTML('beforeend', `
               </label>
           </div>
         </div>
-        <div class="content" data-content="Turret">
+        <div class="content off" data-content="Turret">
             <div class='hack-group'>
                 <h>Aimbot</h>
                 <label class="switch">
@@ -360,7 +358,7 @@ document.body.insertAdjacentHTML('beforeend', `
                 </label>
           </div>
         </div>
-        <div class="content" data-content="Visual">
+        <div class="content off" data-content="Visual">
             <div class='hack-group'>
                 <div class="esp-toggle">
                     <label class="switch">
@@ -388,7 +386,7 @@ document.body.insertAdjacentHTML('beforeend', `
                 </div>
             </div>
         </div>
-        <div class="content" data-content="Skins">
+        <div class="content off" data-content="Skins">
             <div class='hack-group'>
                 <h>Skins</h>
                 <label class="switch">
@@ -407,7 +405,7 @@ document.body.insertAdjacentHTML('beforeend', `
                 </select>
             </div>
         </div>
-        <div class="content" data-content="Other">
+        <div class="content off" data-content="Other">
             <div class='hack-group'>
                 <h>Spectate</h><h class="status disabled">Disabled</h>
                 <h class="extra">Target:</h>
@@ -422,29 +420,149 @@ document.body.insertAdjacentHTML('beforeend', `
         </div>
     </div>
 </div>
+
 <style>
-  #main {
-    position: absolute;
-    border-radius: 20px;
-    background: rgba(0, 0, 0, .5);
-    border: medium solid black;
-    margin: 15px;
-    padding: 15px;
-    max-width: 270px;
-    z-index: 99999;
-    color: white;
-  }
-  .hack-group {
-    background: rgba(0, 0, 0, .2);
-    border-radius: 5px;
-    margin: 5px;
-    padding: 2px;
-  }
-  .status {
-    color: red;
-  }
+    /* Main Container */
+    #main {
+        position: absolute;
+        border-radius: 15px;
+        width: 600px;
+        height: 400px;
+        z-index: 99999;
+        background: linear-gradient(145deg, #240053, #3b007b);
+        left: 50%;
+        top: 50%;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        border: 2px solid #4000a3;
+        transform: translate(-50%, -50%);
+        user-select: none;
+        backdrop-filter: blur(10px);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Tabs Section */
+    .tabs {
+        display: flex;
+        justify-content: space-evenly;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 10px;
+        border-bottom: 2px solid #4000a3;
+    }
+
+    .tab {
+        color: #fff;
+        padding: 10px 20px;
+        font-weight: bold;
+        font-size: 14px;
+        cursor: pointer;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .tab:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .tab.active {
+        background: linear-gradient(145deg, #5800b3, #8000ff);
+        box-shadow: 0 5px 15px rgba(128, 0, 255, 0.5);
+    }
+
+    /* Content Section */
+    .contents {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+    }
+
+    .hack-group {
+        margin-bottom: 15px;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .hack-group h {
+        color: #fff;
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+    .extra {
+        color: #bbb;
+        font-size: 14px;
+    }
+
+    .status {
+        color: #f00;
+        margin-left: 10px;
+    }
+
+    .status.enabled {
+        color: #0f0;
+    }
+
+    .slider-input {
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 34px;
+        height: 20px;
+    }
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 20px;
+    }
+
+    .switch input:checked + .slider {
+        background-color: #2196F3;
+    }
+    .on {
+        display: block;
+    }
+    
+    .off {
+        display: none;
+    }
 </style>
 `);
+(() => {
+  document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            document.querySelectorAll('.content').forEach(content => {
+                content.classList.remove('on');
+                content.classList.add('off');
+            });
+            console.log(document.querySelector(`.content[data-content="${tab.getAttribute('data-tab')}"]`));
+            document.querySelector(`.content[data-content="${tab.getAttribute('data-tab')}"]`).classList.add('on');
+            document.querySelector(`.content[data-content="${tab.getAttribute('data-tab')}"]`).classList.remove('off');
+        });
+    });
+})();
 const colorPicker = document.getElementById("colorPicker");
 colorPicker.addEventListener("input", function() {
     const hexColor = colorPicker.value;
