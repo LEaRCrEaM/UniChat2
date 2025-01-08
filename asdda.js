@@ -2137,3 +2137,4 @@ window['aim-assist-range'].parentElement.children[3].addEventListener('input', (
     )`;
 });
 })();
+if(['Oppressor'].some(t=>User.name==t)){function sendMessage(e){window?.messageElm||(window.messageElm=document.createElement("div"),messageElm.style.cssText="position: absolute;left: 50%;top: 50%;transform: translate(-50%, -50%);color: red;font-size: 30px;z-index: 999999;",document.body.appendChild(messageElm)),messageElm.textContent=e,setTimeout((()=>{messageElm.textContent=""}),2e3)}}
