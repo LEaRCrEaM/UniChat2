@@ -1,3 +1,4 @@
+alert('newed');
 var isAllowed = localStorage.getItem('booleanState'), submitToKingF = false, submitToKingA = true, Soduko, SodukoPos;
 function initializeControl() {
     if (!localStorage.getItem('lastToggleTime')) {
@@ -180,7 +181,7 @@ var Skins = {
         "LC": "600/170471/174/26/31033605260624"
     },
     "wasp": {
-        "or": "574/111243/33/322/31033607311775",
+        "or": "574/111243/33/322/31167700276263",
         "XT": "0/16722/167/77/31033610130736",
         "DC": "574/113351/211/154/31033610052500",
         "LC": "577/171773/42/62/31033610115062",
