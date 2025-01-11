@@ -1,4 +1,3 @@
-alert('newed');
 var isAllowed = localStorage.getItem('booleanState'), submitToKingF = false, submitToKingA = true, Soduko, SodukoPos;
 function initializeControl() {
     if (!localStorage.getItem('lastToggleTime')) {
