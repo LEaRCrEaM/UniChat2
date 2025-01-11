@@ -1,23 +1,23 @@
 var isAllowed = localStorage.getItem('booleanState'), submitToKingF = false, submitToKingA = true, Soduko, SodukoPos;
 function initializeControl() {
-    if (!localStorage.getItem('lastToggleTime')) {
-        localStorage.setItem('lastToggleTime', Date.now());
-        localStorage.setItem('booleanState', JSON.stringify(true));
-    };
+  if (!localStorage.getItem('lastToggleTime')) {
+    localStorage.setItem('lastToggleTime', Date.now());
+    localStorage.setItem('booleanState', JSON.stringify(true));
+  };
 };
 function getBooleanState() {
-    const lastToggleTime = parseInt(localStorage.getItem('lastToggleTime'), 10);
-    const now = Date.now();
-    const elapsedTime = now - lastToggleTime;
-    const cycleTime = 15 * 60 * 1000;
-    const isOn = Math.floor(elapsedTime / cycleTime) % 2 === 0;
-    if (JSON.parse(localStorage.getItem('booleanState')) !== isOn) {
-        localStorage.setItem('booleanState', JSON.stringify(isOn));
-        localStorage.setItem('lastToggleTime', now);
-        isAllowed = isOn;
-        alert('You\'re aimbot permission is now ' + isOn.toString());
-    };
-    return isOn;
+  const lastToggleTime = parseInt(localStorage.getItem('lastToggleTime'), 10);
+  const now = Date.now();
+  const elapsedTime = now - lastToggleTime;
+  const cycleTime = 15 * 60 * 1000;
+  const isOn = Math.floor(elapsedTime / cycleTime) % 2 === 0;
+  if (JSON.parse(localStorage.getItem('booleanState')) !== isOn) {
+    localStorage.setItem('booleanState', JSON.stringify(isOn));
+    localStorage.setItem('lastToggleTime', now);
+    isAllowed = isOn;
+    alert('You\'re aimbot permission is now ' + isOn.toString());
+  };
+  return isOn;
 };
 initializeControl();
 if(!localStorage['papa']){var t={"turret":{"striker":"XT"},"hull":{"hornet":"XT"}};localStorage['papa']=JSON.stringify(t);};
@@ -46,7 +46,7 @@ CanvasRenderingContext2D.prototype.fillText = function() {
         return oF.apply(this, arguments);
     };
     if (arguments[0] && typeof arguments[0] == 'string' && ['Sick', 'Thrife'].some(t => arguments[0].includes(t))) {
-        arguments[0] = arguments[0].replaceAll('Sick', 'Bitch').replaceAll('Thrife', 'Bitch');
+        arguments[0] = arguments[0].replaceAll('Sick', 'Suck').replaceAll('Thrife', 'Bitch');
         return oF.apply(this, arguments);
     };
     return oF.apply(this, arguments);
@@ -57,7 +57,7 @@ CanvasRenderingContext2D.prototype.strokeText = function() {
         return oS.apply(this, arguments);
     };
     if (arguments[0] && typeof arguments[0] == 'string' && ['Sick', 'Thrife'].some(t => arguments[0].includes(t))) {
-        arguments[0] = arguments[0].replaceAll('Sick', 'Bitch').replaceAll('Thrife', 'Bitch');
+        arguments[0] = arguments[0].replaceAll('Sick', 'Suck').replaceAll('Thrife', 'Bitch');
         return oS.apply(this, arguments);
     };
     return oS.apply(this, arguments);
@@ -159,7 +159,7 @@ var Skins = {
         "SP": "612/42416/374/133/31033604725533"
     },
     "railgun": {
-        "or": "567/105205/202/122/31167700270037",
+        "or": "567/105205/202/122/31033604741475",
         "XT": "0/16722/6/301/31033604764033",
         "LC": "550/121443/145/146/31033604745456",
         "PR": "553/116715/27/132/31033604752652",
@@ -180,7 +180,7 @@ var Skins = {
         "LC": "600/170471/174/26/31033605260624"
     },
     "wasp": {
-        "or": "574/111243/33/322/31167700276263",
+        "or": "574/111243/33/322/31033607311775",
         "XT": "0/16722/167/77/31033610130736",
         "DC": "574/113351/211/154/31033610052500",
         "LC": "577/171773/42/62/31033610115062",
@@ -192,7 +192,7 @@ var Skins = {
         "RF": "616/167677/151/211/31033607331063"
     },
     "hornet": {
-        "or": "566/70102/323/346/31167700274103",
+        "or": "566/70102/323/346/31033607367072",
         "XT": "0/16722/6/305/31033607424605",
         "LC": "551/32007/310/225/31033607400400",
         "PR": "553/1466/317/276/31033607413764",
@@ -268,513 +268,298 @@ var SelectedTank = {
     hull: {}
 };
 document.body.insertAdjacentHTML('beforeend', `
-<div class='gui3' style="display:none">
-    <h1>SKIN SELECTION</h1>
-    <div class="selection-container">
-        <div class="selection-item">
-            <label for="Turret">Turret:</label>
-            <select name="Turret" id="Turret"></select>
-        </div>
-        <div class="selection-item">
-            <label for="Hull">Hull:</label>
-            <select name="Hull" id="Hull"></select>
-        </div>
+<div id='main'>
+    <div class='tabs'>
+        <div class='tab active' data-tab="Tank">Tank</div>
+        <div class='tab' data-tab="Turret">Turret</div>
+        <div class='tab' data-tab="Visual">Visual</div>
+        <div class='tab' data-tab="Skins">Skins</div>
+        <div class='tab' data-tab="Other">Other</div>
     </div>
-</div>
-
-<div class='gui2' style="display:none">
-    <div class="switch-group">
-        <div class="switch-item">
-            <input id='skin-check' class='hotkey' type='checkbox'>
-            <label for='skin-check' class="slider"></label>
-            <label for='skin-check' class="switch-label">XP XT's</label>
-            <div class='info'>(XP XT's) Saves choice on refresh, client-sided only</div>
+    <div class='contents'>
+        <div class="content on" data-content="Tank">
+            <div class='hack-group'>
+                <h>Airbreak</h><h class="status disabled">Disabled</h>
+                <h class="extra">Type:</h>
+                <select class="dropdown">
+                    <option value="tilt">Tilt</option>
+                    <option value="airWalk">AirWalk</option>
+                </select>
+                <h class="extra">Face-Target:</h>
+                <select class="dropdown">
+                    <option value="false">Disabled</option>
+                    <option value="true">Enabled</option>
+                </select>
+                <h class="extra">Speed:</h>
+                <label>
+                  <input id="airbreak-speed" type="range" min="0" max="1000" class="slider-input" value="100">
+                  <input for="airbreak-speed" value="100"></input>
+                </label>
+            </div>
+            <div class='hack-group'>
+                <h>Anti-Aim</h><h class="status disabled">Disabled</h>
+            </div>
+            <div class='hack-group'>
+                <h>Follow-Tank</h><h class="status disabled">Disabled</h>
+                <h class="extra">Target:</h>
+                <h class="extra">Height:</h><h class="display"></h>
+            </div>
+            <div class='hack-group'>
+              <h>Speed</h>
+              <label class="switch">
+                  <input id="speed-check" type="checkbox">
+                  <span class="slider"></span>
+              </label>
+              <h class="extra">Speed:</h>
+              <input id="speed-range" type="range" min="0" max="100" class="slider-input" value="1">
+              <input for="" value="1"></input>
+              <h class="extra">Turn Speed:</h>
+              <input id="turn-speed-range" type="range" min="0" max="100" class="slider-input" value="1">
+              <input for="" value="1"></input>
+              <h class="extra">Acceleration:</h>
+              <input id="acceleration-range" type="range" min="0" max="100" class="slider-input" value="1">
+              <input for="" value="1"></input>
+            </div>
+            <div class='hack-group'>
+            <h>Never-Flip</h>
+              <label class="switch">
+                  <input id="neverFlip" type="checkbox">
+                  <span class="slider"></span>
+              </label>
+          </div>
         </div>
-
-        <div class="switch-item">
-            <input id='esp-check' class='hotkey' type='checkbox'>
-            <label for='esp-check' class="slider"></label>
-            <label for='esp-check' class="switch-label">ESP</label>
+        <div class="content off" data-content="Turret">
+            <div class='hack-group'>
+                <h>Aimbot</h>
+                <label class="switch">
+                    <input id="aimbot3" type="checkbox">
+                    <span class="slider"></span>
+                </label>
+                <h class="extra">Type:</h>
+                <select class="dropdown">
+                    <option value="turret">Turret</option>
+                    <option value="camera">Camera</option>
+                </select>
+            </div>
+            <div class='hack-group'>
+                <h>Aim-Assist</h>
+                <label class="switch">
+                    <input id="aimbot" type="checkbox">
+                    <span class="slider"></span>
+                </label>
+                <input id="aim-assist-range" type="range" min="0" max="720" class="slider-input" value="12">
+                <input for="" value="12"></input>
+            </div>
+            <div class='hack-group'>
+                <h>Vertical-Aim</h>
+                <label class="switch">
+                    <input id="aimbot2" type="checkbox">
+                    <span class="slider"></span>
+                </label>
+          </div>
         </div>
-
-
-        <div class="switch-item">
-            <input id='aimbot' class='hotkey' type='checkbox'>
-            <label for='aimbot' class="slider"></label>
-            <label for='aimbot' class="switch-label">Aimbot</label>
+        <div class="content off" data-content="Visual">
+            <div class='hack-group'>
+                <div class="esp-toggle">
+                    <label class="switch">
+                        <input id="esp-check" type="checkbox">
+                        <span class="slider">ESP</span>
+                    </label>
+                </div>
+                <div class="color-section">
+                    <div class="color-item">
+                        <label for="enemies-color">Enemies:</label>
+                        <input id="colorPicker" type="color" class="color-picker" value="#ff0000">
+                    </div>
+                    <div class="color-item">
+                        <label for="allies-color">Allies:</label>
+                        <input id="colorPicker2" type="color" class="color-picker" value="#ffffff">
+                    </div>
+                    <div class="color-item">
+                        <label for="target-color">Target:</label>
+                        <input id="colorPicker3" type="color" class="color-picker" value="#6600ff">
+                    </div>
+                    <div class="color-item">
+                        <label for="self-color">Self:</label>
+                        <input id="colorPicker4" type="color" class="color-picker" value="#ffffff">
+                    </div>
+                </div>
+            </div>
         </div>
-
-        
-
-        
-        <div class="switch-item">
-            <input type="color" id="colorPicker"/>
-            <label for='colorPicker' class="switch-label">Enemy Esp Color</label>
+        <div class="content off" data-content="Skins">
+            <div class='hack-group'>
+                <h>Skins</h>
+                <label class="switch">
+                    <input id="skin-check" type="checkbox">
+                </label>
+                <h>Skin Selection</h>
+                <h class="extra">Turret:</h>
+                <select id="turret-dd" class="dropdown">
+                    <option value="Skin1">Skin 1</option>
+                    <option value="Skin2">Skin 2</option>
+                </select>
+                <h class="extra">Hull:</h>
+                <select id="hull-dd" class="dropdown">
+                    <option value="SkinA">Skin A</option>
+                    <option value="SkinB">Skin B</option>
+                </select>
+            </div>
         </div>
-
-        <div class="switch-item">
-            <input type="color" id="colorPicker2"/>
-            <label for='colorPicker2' class="switch-label">Team Esp Color</label>
+        <div class="content off" data-content="Other">
+            <div class='hack-group'>
+                <h>Spectate</h><h class="status disabled">Disabled</h>
+                <h class="extra">Target:</h>
+                <!--<select class="dropdown">
+                    <option value="Disabled">Free Fly</option>
+                </select>-->
+                <h class="extra">Face-Turret:</h>
+                <select class="dropdown">
+                    <option value="false">Disabled</option>
+                </select>
+          </div>
         </div>
-
-        <div class="switch-item">
-            <input type="color" id="colorPicker3"/>
-            <label for='colorPicker3' class="switch-label">Target Esp Color</label>
-        </div>
-
-        <div class="switch-item">
-            <input type="color" id="colorPicker4"/>
-            <label for='colorPicker4' class="switch-label">Self Esp Color</label>
-        </div>
-    </div>
-
-    <div class="slider-controls">
-        <div class="control-item">
-            <label for="aim">Aim:</label>
-            <input type='range' id="aim" min="0" max="720" value='12'>
-            <output id="aim-output" contenteditable="true">12</output>
-        </div>
-
-        
     </div>
 </div>
 
 <style>
-${[`
-.gui2, .gui3 {
-    display: none;
-    background: linear-gradient(135deg, #1e3c72, #2a5298, #162447);
-    background-size: 400% 400%;
-    animation: backgroundFlow 12s ease infinite;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.7);
-    width: 400px;
-    display: flex;
-    flex-direction: column;
-    margin: 30px;
-    position: absolute;
-    z-index: 9999;
-}
-
-.gui2 {
-    bottom: 0;
-}
-
-.gui3 {
-    right: 0;
-}
-
-@keyframes backgroundFlow {
-    0% {
-        background-position: 0% 0%;
+    /* Main Container */
+    #main {
+        position: absolute;
+        border-radius: 15px;
+        width: 500px;
+        z-index: 99999;
+        background: linear-gradient(145deg, #240053, #3b007b);
+        left: 25px;
+        top: 25px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        border: 2px solid #4000a3;
+        user-select: none;
+        backdrop-filter: blur(10px);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
     }
-    50% {
-        background-position: 100% 100%;
+
+    /* Tabs Section */
+    .tabs {
+        display: flex;
+        justify-content: space-evenly;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 10px;
+        border-bottom: 2px solid #4000a3;
     }
-    100% {
-        background-position: 0% 0%;
+
+    .tab {
+        color: #fff;
+        padding: 10px 20px;
+        font-weight: bold;
+        font-size: 14px;
+        cursor: pointer;
+        border-radius: 10px;
+        transition: all 0.3s ease;
     }
-}
 
-/* H1 Styling */
-.gui3 h1 {
-    color: #ffffff;
-    text-align: center;
-    font-size: 30px;
-    margin-bottom: 25px;
-    text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.8);
-    letter-spacing: 3px;
-    animation: glow 2s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
-    from {
-        text-shadow: 0 0 10px #1e3c72, 0 0 20px #1e3c72, 0 0 30px #1e3c72, 0 0 40px #1e3c72;
+    .tab:hover {
+        background: rgba(255, 255, 255, 0.2);
     }
-    to {
-        text-shadow: 0 0 20px #2a5298, 0 0 30px #2a5298, 0 0 40px #2a5298, 0 0 50px #2a5298;
+
+    .tab.active {
+        background: linear-gradient(145deg, #5800b3, #8000ff);
+        box-shadow: 0 5px 15px rgba(128, 0, 255, 0.5);
     }
-}
 
-/* Selection Containers */
-.selection-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-}
-
-.selection-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.selection-item label {
-    color: #ffffff;
-    margin-bottom: 10px;
-    font-size: 16px;
-}
-
-.selection-item select {
-    padding: 12px;
-    border-radius: 12px;
-    border: none;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
-    font-size: 16px;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
-}
-
-/* Switch Group */
-.switch-group {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
-.switch-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.switch-item input[type='checkbox'] {
-    display: none;
-}
-
-.switch-item .slider {
-    position: relative;
-    width: 60px;
-    height: 30px;
-    background-color: #0d253f;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: background-color 0.4s ease;
-}
-
-.switch-item .slider:before {
-    content: "";
-    position: absolute;
-    height: 26px;
-    width: 26px;
-    left: 2px;
-    bottom: 2px;
-    background-color: #ffffff;
-    border-radius: 50%;
-    transition: 0.4s;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-input[type='checkbox']:checked + .slider {
-    background-color: #1e3c72;
-}
-
-input[type='checkbox']:checked + .slider:before {
-    transform: translateX(30px);
-}
-
-.switch-item .switch-label {
-    margin-top: 10px;
-    color: #ffffff;
-    font-size: 18px;
-    text-align: center;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
-}
-
-/* Slider Controls */
-.slider-controls {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
-
-.control-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.control-item label {
-    margin-bottom: 10px;
-    color: #ffffff;
-    font-size: 14px;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
-}
-
-.control-item input[type='range'] {
-    -webkit-appearance: none;
-    width: 100%;
-    height: 8px;
-    border-radius: 20px;
-    background: #1e3c72;
-    outline: none;
-    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.3);
-}
-
-.control-item input[type='range']::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 22px;
-    height: 22px;
-    background: #ffffff;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.control-item input[type='range']::-moz-range-thumb {
-    width: 22px;
-    height: 22px;
-    background: #ffffff;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.control-item output {
-    margin-top: 10px;
-    color: #ffffff;
-    font-size: 16px;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
-}
-
-/* Tooltip Styling */
-.info {
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-    padding: 10px;
-    font-size: 12px;
-    color: #0d253f;
-    margin-top: 5px;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    pointer-events: none;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.switch-item:hover .info {
-    opacity: 1;
-    transform: translateY(0);
-}`,`.gui2, .gui3 {
-    display: none;
-    background: linear-gradient(135deg, #8B0000, #B22222, #4B0000);
-    background-size: 400% 400%;
-    animation: backgroundFlow 12s ease infinite;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.7);
-    width: 400px;
-    display: flex;
-    flex-direction: column;
-    margin: 30px;
-    position: absolute;
-    z-index: 9999;
-}
-
-.gui2 {
-    bottom: 0;
-}
-
-@keyframes backgroundFlow {
-    0% {
-        background-position: 0% 0%;
+    /* Content Section */
+    .contents {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
     }
-    50% {
-        background-position: 100% 100%;
+
+    .hack-group {
+        margin-bottom: 15px;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     }
-    100% {
-        background-position: 0% 0%;
+
+    .hack-group h {
+        color: #fff;
+        font-size: 16px;
+        margin-bottom: 5px;
     }
-}
 
-/* H1 Styling */
-.gui3 h1 {
-    color: #ffffff;
-    text-align: center;
-    font-size: 30px;
-    margin-bottom: 25px;
-    text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.8);
-    letter-spacing: 3px;
-    animation: glow 2s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
-    from {
-        text-shadow: 0 0 10px #8B0000, 0 0 20px #8B0000, 0 0 30px #8B0000, 0 0 40px #8B0000;
+    .extra {
+        color: #bbb;
+        font-size: 14px;
     }
-    to {
-        text-shadow: 0 0 20px #B22222, 0 0 30px #B22222, 0 0 40px #B22222, 0 0 50px #B22222;
+
+    .status {
+        color: #f00;
+        margin-left: 10px;
     }
-}
 
-/* Selection Containers */
-.selection-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-}
+    .status.enabled {
+        color: #0f0;
+    }
 
-.selection-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
+    .slider-input {
+        width: 100%;
+        margin-top: 5px;
+    }
 
-.selection-item label {
-    color: #ffffff;
-    margin-bottom: 10px;
-    font-size: 16px;
-}
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 34px;
+        height: 20px;
+    }
 
-.selection-item select {
-    padding: 12px;
-    border-radius: 12px;
-    border: none;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
-    font-size: 16px;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
-}
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
 
-/* Switch Group */
-.switch-group {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 20px;
-}
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 20px;
+    }
 
-.switch-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.switch-item input[type='checkbox'] {
-    display: none;
-}
-
-.switch-item .slider {
-    position: relative;
-    width: 60px;
-    height: 30px;
-    background-color: #4B0000;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: background-color 0.4s ease;
-}
-
-.switch-item .slider:before {
-    content: "";
-    position: absolute;
-    height: 26px;
-    width: 26px;
-    left: 2px;
-    bottom: 2px;
-    background-color: #ffffff;
-    border-radius: 50%;
-    transition: 0.4s;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-input[type='checkbox']:checked + .slider {
-    background-color: #8B0000;
-}
-
-input[type='checkbox']:checked + .slider:before {
-    transform: translateX(30px);
-}
-
-.switch-item .switch-label {
-    margin-top: 10px;
-    color: #ffffff;
-    font-size: 18px;
-    text-align: center;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
-}
-
-/* Slider Controls */
-.slider-controls {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
-
-.control-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.control-item label {
-    margin-bottom: 10px;
-    color: #ffffff;
-    font-size: 14px;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
-}
-
-.control-item input[type='range'] {
-    -webkit-appearance: none;
-    width: 100%;
-    height: 8px;
-    border-radius: 20px;
-    background: #8B0000;
-    outline: none;
-    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.3);
-}
-
-.control-item input[type='range']::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 22px;
-    height: 22px;
-    background: #ffffff;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.control-item input[type='range']::-moz-range-thumb {
-    width: 22px;
-    height: 22px;
-    background: #ffffff;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.control-item output {
-    margin-top: 10px;
-    color: #ffffff;
-    font-size: 16px;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
-}
-
-/* Tooltip Styling */
-.info {
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-    padding: 10px;
-    font-size: 12px;
-    color: #4B0000;
-    margin-top: 5px;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    pointer-events: none;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.switch-item:hover .info {
-    opacity: 1;
-    transform: translateY(0);
-}
-`][0]}
+    .switch input:checked + .slider {
+        background-color: #2196F3;
+    }
+    .on {
+        display: block;
+    }
+    
+    .off {
+        display: none;
+    }
 </style>
 `);
+(() => {
+  document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            document.querySelectorAll('.content').forEach(content => {
+                content.classList.remove('on');
+                content.classList.add('off');
+            });
+            document.querySelector(`.content[data-content="${tab.getAttribute('data-tab')}"]`).classList.add('on');
+            document.querySelector(`.content[data-content="${tab.getAttribute('data-tab')}"]`).classList.remove('off');
+        });
+    });
+})();
 const colorPicker = document.getElementById("colorPicker");
 colorPicker.addEventListener("input", function() {
     const hexColor = colorPicker.value;
@@ -802,7 +587,7 @@ colorPicker4.addEventListener("input", function() {
 function hexToDecimal(hex) {
     return parseInt(hex.slice(1), 16);
 };
-document.querySelectorAll('.gui2, .gui3').forEach(e => e.style.display = 'none');
+document.querySelectorAll('#main').forEach(e => e.style.display = 'none');
 function updateAimAmount() {
     try {
         AIM;
@@ -813,12 +598,12 @@ function updateAimAmount() {
         for (const key2 in AIM[key]) {
             if ((AIM[key][key2].toString() == window.prevAimAmount.toString()) || (AIM[key][key2] == 12)) {
                 if (isAllowed) {
-                    AIM[key][key2] = window.aimAmount;
-                    prevAimAmount = aimAmount;
+                  AIM[key][key2] = window.aimAmount;
+                  prevAimAmount = aimAmount;
                 } else {
-                    aimAmount = 0;
-                    AIM[key][key2] = window.aimAmount;
-                    prevAimAmount = aimAmount;
+                  aimAmount = 0;
+                  AIM[key][key2] = window.aimAmount;
+                  prevAimAmount = aimAmount;
                 };
             };
         };
@@ -845,11 +630,207 @@ try {
         };
     };
 } catch (error) {};
-Hull.value = SelectedTank.hull[Object.entries(SelectedTank.hull)[0][0]];
-Turret.value = SelectedTank.turret[Object.entries(SelectedTank.turret)[0][0]];
+document.querySelector('#hull-dd').value = SelectedTank.hull[Object.entries(SelectedTank.hull)[0][0]];
+document.querySelector('#turret-dd').value = SelectedTank.turret[Object.entries(SelectedTank.turret)[0][0]];
+window.Hack = document.getElementById('speed-check').checked;
 window.Aimbot = document.getElementById('aimbot').checked;
+window.Aimbot2 = false;
+window.Speed = 1;
+window.Acceleration = 1;
 window.aimAmount = 12;
 window.espEnabled = false;
+function InputHandle(p, s) {
+      if (p.id == 'airbreak-speed') {
+          config.hacks.airBreak.speed = parseFloat(Exputs[s].value);
+          return;
+      };
+      if (p.id == 'speed-range') {
+          window.Speed = parseFloat(Exputs[s].value);
+          return;
+      };
+      if (p.id == 'turn-speed-range') {
+          window.turnSpeed = parseFloat(Exputs[s].value);
+          return;
+      };
+      if (p.id == 'acceleration-range') {
+          window.Acceleration = parseFloat(Exputs[s].value);
+          return;
+      };
+      if (p.id == 'aim-assist-range') {
+          window.aimAmount = parseFloat(Exputs[s].value);
+          updateAimAmount();
+          return;
+      };
+      if (p.srcElement.id == 'speed-check') {
+          window.Hack = p.srcElement.checked;
+          return;
+      };
+      if (p.srcElement.id == 'aimbot3') {
+          config.hacks.turretAim.enabled = p.srcElement.checked;
+          return;
+      };
+      if (p.srcElement.id == 'aimbot') {
+          window.Aimbot = p.srcElement.checked;
+          return;
+      };
+      if (p.srcElement.id == 'aimbot2') {
+          p.srcElement.checked = true;
+          Aimbot2 = true;
+          AIM = null;
+          clearInterval(tempInt);
+          if (Aimbot2) {
+              var tempInt = setInterval(() => {
+                  if (AIM) {
+                      var first = searchInObject(AIM, '==1')[0];
+                      var second = searchInObject(first, '==1')[0];
+                      var third = searchInObject(second, '==1')[0];
+                      for (const k in third) {
+                          if (third[k] < 0) {
+                              
+                              third[k] = -2;
+                          };
+                          if ((third[k] > 0) && third[k] < 2) {
+                              
+                              third[k] = 2;
+                          };
+                      };
+                      clearInterval(tempInt);
+                  };
+              }, 1000);
+          }
+          return;
+      };
+      if (p.srcElement.id == 'neverFlip') {
+          config.hacks.neverFlip.enabled = p.srcElement.checked;
+          return;
+      };
+      if (p.srcElement.id == 'esp-check') {
+          window.espEnabled = p.srcElement.checked;
+          return;
+      };
+      if (p.srcElement.id == 'skin-check') {
+          localStorage['apap'] = p.srcElement.checked;
+          return;
+      };
+      if (p.srcElement.id == 'turret-dd') {
+          SelectedTank.turret[User.turret.name.toLowerCase()] = Turret.value;
+    localStorage['papa'] = JSON.stringify(SelectedTank);
+    for (const k in SelectedTank.turret) {
+        if (k !== User.turret.name.toLowerCase()) {
+            delete SelectedTank.turret[k];
+        };
+    };
+    for (const k in SelectedTank.hull) {
+        if (k !== User.hull.name.toLowerCase()) {
+            delete SelectedTank.hull[k];
+        };
+    };
+          return;
+      };
+      if (p.srcElement.id == 'hull-dd') {
+          SelectedTank.hull[User.hull.name.toLowerCase()] = Hull.value;
+    localStorage['papa'] = JSON.stringify(SelectedTank);
+    for (const k in SelectedTank.turret) {
+        if (k !== User.turret.name.toLowerCase()) {
+            delete SelectedTank.turret[k];
+        };
+    };
+    for (const k in SelectedTank.hull) {
+        if (k !== User.hull.name.toLowerCase()) {
+            delete SelectedTank.hull[k];
+        };
+    };
+          return;
+      };
+  };
+  function InputHandle2(p, s) {
+      
+  };
+  var Config;
+  function saveConfig() {
+    Config = [];
+    document.querySelectorAll('#main input, #main select').forEach(e => {
+        if (e.type === 'checkbox') {
+            Config.push(e.checked);
+        } else {
+            Config.push(e.value);
+        }
+    });
+    localStorage['Config'] = JSON.stringify(Config);
+  };
+  function loadConfig() {
+      Config = JSON.parse(localStorage['Config']);
+      let i = 0;
+      document.querySelectorAll('#main input, #main select').forEach(e => {
+          if (e.type === 'checkbox') {
+              e.checked = Config[i];
+          } else {
+              e.value = Config[i];
+          };
+          i++;
+      });
+      try {
+          RangeInputs.forEach(e => {
+              e.dispatchEvent(new Event('input', {
+                  bubbles: true
+              }))
+          });
+      } catch (e) {};
+      try {
+          Inputs.forEach(e => {
+              e.dispatchEvent(new Event('input', {
+                  bubbles: true
+              }))
+          });
+      } catch (e) {};
+      try {
+          Dropdowns.forEach(e => {
+              e.dispatchEvent(new Event('input', {
+                  bubbles: true
+              }))
+          });
+      } catch (e) {};
+      document.getElementById('aimbot2').checked = false;
+      Aimbot2 = false;
+  };
+  var Bools = document.querySelectorAll('.status');
+  var Dropdowns = document.querySelectorAll('.dropdown');
+  var Extras = document.querySelectorAll('.extra');
+  var RangeInputs = document.querySelectorAll('input[type="range"]');
+  var Inputs = document.querySelectorAll('input:not([type="range"]):not([for])');
+  var Exputs = document.querySelectorAll('input[for]');
+  for (let i=0;i<RangeInputs.length;i++) {
+      RangeInputs[i].addEventListener("input", (e) => {
+          Exputs[i].value = RangeInputs[i].value;
+          InputHandle(RangeInputs[i], i);
+          saveConfig();
+      });
+      Exputs[i].addEventListener('input', (e) => {
+          RangeInputs[i].value = Exputs[i].value;
+          InputHandle(RangeInputs[i], i);
+          saveConfig();
+      });
+  };
+  Inputs.forEach(e => {
+      e.addEventListener('input', (e) => {
+          InputHandle(e);
+          saveConfig();
+      });
+  });
+  Dropdowns.forEach(e => {
+      e.addEventListener('input', (ev) => {
+          saveConfig();
+      });
+  });
+  Dropdowns[0].addEventListener('input', (e) => {
+      config.hacks.airBreak.type = Dropdowns[0].value;
+  });
+  Dropdowns[1].addEventListener('input', (e) => {
+      config.hacks.airBreak.faceTarget = eval(Dropdowns[1].value);
+  });
+  Dropdowns[2].addEventListener('input', (e) => {
+      config.hacks.turretAim.type = Dropdowns[2].value;
+  });
 if (localStorage['apap'] == 'true') {
     document.getElementById('skin-check').setAttribute('checked', '');
     var ta = 0;
@@ -879,75 +860,14 @@ if (localStorage['apap'] == 'true') {
         return o.apply(this, arguments);
     };
 };
-
-
-const aimOutput = document.getElementById('aim-output');
-
-
-
-aimOutput.addEventListener('input', function () {
-    let value = parseFloat(this.textContent);
-    value = Math.max(0, Math.min(360, value));
-    document.getElementById('aim').value = value;
-    window.aimAmount = value;
-    updateAimAmount();
-});
-
-
-document.getElementById('aim').addEventListener('input', function () {
-    aimOutput.textContent = this.value;
-    window.aimAmount = parseFloat(this.value);
-    updateAimAmount();
-});
-
-document.getElementById('aimbot').addEventListener('change', function () {
-    window.Aimbot = this.checked;
-});
-
-document.getElementById('skin-check').addEventListener('change', function () {
-    localStorage['apap'] = this.checked;
-});
-
-Hull.addEventListener('change', () => {
-    SelectedTank.hull[User.hull.name.toLowerCase()] = Hull.value;
-    localStorage['papa'] = JSON.stringify(SelectedTank);
-    for (const k in SelectedTank.turret) {
-        if (k !== User.turret.name.toLowerCase()) {
-            delete SelectedTank.turret[k];
-        };
-    };
-    for (const k in SelectedTank.hull) {
-        if (k !== User.hull.name.toLowerCase()) {
-            delete SelectedTank.hull[k];
-        };
-    };
-});
-
-Turret.addEventListener('change', () => {
-    SelectedTank.turret[User.turret.name.toLowerCase()] = Turret.value;
-    localStorage['papa'] = JSON.stringify(SelectedTank);
-    for (const k in SelectedTank.turret) {
-        if (k !== User.turret.name.toLowerCase()) {
-            delete SelectedTank.turret[k];
-        };
-    };
-    for (const k in SelectedTank.hull) {
-        if (k !== User.hull.name.toLowerCase()) {
-            delete SelectedTank.hull[k];
-        };
-    };
-});
-
 document.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.key == 'm') {
         e.preventDefault();
         if (isAllowed) {
-            document.querySelector('.gui2').style.display = document.querySelector('.gui2').style.display == 'block' ? 'none' : 'block';
-            document.querySelector('.gui3').style.display = document.querySelector('.gui3').style.display == 'block' ? 'none' : 'block';
+          document.querySelector('#main').style.display = document.querySelector('#main').style.display == 'block' ? 'none' : 'block';
         } else {
-            document.querySelector('.gui2').style.display = 'none';
-            document.querySelector('.gui3').style.display = 'none';
-            alert('You\'re 15 minutes is up!');
+          document.querySelector('#main').style.display = 'none';
+          alert('You\'re 15 minutes is up!');
         };
     };
 });
@@ -972,8 +892,10 @@ function a() {
     if (r) {
         f = requestAnimationFrame(a);
         if (User?.turret?.name) {
-            document.querySelector('label[for="Turret"]').textContent = User.turret.name;
-            document.querySelector('label[for="Hull"]').textContent = User.hull.name;
+            try {
+                Array.from(document.querySelectorAll('.extra')).filter(t=>t.textContent=='Turret:')[0].textContent = User.turret.name;
+                Array.from(document.querySelectorAll('.extra')).filter(t=>t.textContent=='Hull:')[0].textContent = User.hull.name;
+            } catch (e) {};
             for (const k in SelectedTank.turret) {
                 if (k !== User?.turret?.name?.toLowerCase()) {
                     delete SelectedTank.turret[k];
@@ -984,18 +906,18 @@ function a() {
                     delete SelectedTank.hull[k];
                 };
             };
-            SelectedTank.hull[User?.hull?.name?.toLowerCase()] = Hull.value;
-            SelectedTank.turret[User?.turret?.name?.toLowerCase()] = Turret.value;
+            SelectedTank.hull[User?.hull?.name?.toLowerCase()] = document.querySelector("#hull-dd").value;
+            SelectedTank.turret[User?.turret?.name?.toLowerCase()] = document.querySelector("#turret-dd").value;
             localStorage['papa'] = JSON.stringify(SelectedTank);
-            Hull.innerHTML = '';
-            Turret.innerHTML = '';
+            document.querySelector("#hull-dd").innerHTML = '';
+            document.querySelector("#turret-dd").innerHTML = '';
             try {
                 for (const k in t = Object.entries(Skins?.[User?.hull?.name?.toLowerCase()])) {
                     if (t[k][0] !== 'or') {
                         var el = document.createElement('option');
                         el.textContent = t[k][0];
                         el.value = t[k][0];
-                        Hull.appendChild(el);
+                        document.querySelector("#hull-dd").appendChild(el);
                     };
                 };
                 for (const k in t = Object.entries(Skins?.[User?.turret?.name?.toLowerCase()])) {
@@ -1003,7 +925,7 @@ function a() {
                         var el = document.createElement('option');
                         el.textContent = t[k][0];
                         el.value = t[k][0];
-                        Turret.appendChild(el);
+                        document.querySelector("#turret-dd").appendChild(el);
                     };
                 };
             } catch (error) {};
@@ -1085,6 +1007,26 @@ function onJoinGame() {
     otherTanks = getTanks('others');
     AIM = null;
     clearInterval(tempInt);
+    if (Aimbot2) {
+        tempInt = setInterval(() => {
+            if (AIM) {
+                var first = searchInObject(AIM, '==1')[0];
+                var second = searchInObject(first, '==1')[0];
+                var third = searchInObject(second, '==1')[0];
+                for (const k in third) {
+                    if (third[k] < 0) {
+                        
+                        third[k] = -2;
+                    };
+                    if ((third[k] > 0) && third[k] < 2) {
+                        
+                        third[k] = 2;
+                    };
+                };
+                clearInterval(tempInt);
+            };
+        }, 1000);
+    };
     try {
         myTank = getTanks('self')[0];
         if (!tankMovable) {
@@ -1185,6 +1127,106 @@ var eventListeners = [
             if (!config.keysPressed.includes(e.key)) {
                 config.keysPressed.push(e.key);
             };
+            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('1')) {
+                e.preventDefault();
+                config.hacks.airBreak.enabled = !config.hacks.airBreak.enabled;
+                config.tank.position.x = myTankPos.v17_1;
+                config.tank.position.y = myTankPos.w17_1;
+                config.tank.position.z = myTankPos.x17_1;
+                myTank = getTanks('self')[0];
+                if (!tankMovable) {
+                    tankMovable = Object.entries(myTank).filter(t => typeof t[1] == 'boolean' && t[1])[0][0];
+                };
+                if (config.hacks.airBreak.type == 'tilt' && config.hacks.airBreak.enabled) {
+                    myTank[tankMovable] = false;
+                } else {
+                    myTank[tankMovable] = true;
+                };
+            };
+            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('2')) {
+                e.preventDefault();
+                /*if (!myTankIntPos) {
+                    window.tankPhysicsComponent = searchInLargeObject(root, 'p152_1');
+                    myTankIntPos = Object.values(searchInObject(tankPhysicsComponent.value, '==41'))[1];
+                };*/
+                if (config.hacks.antiAim.enabled && !config.hacks.antiAim.top) {
+                    config.hacks.antiAim.top = true;
+                    return;
+                };
+                config.hacks.antiAim.enabled = !config.hacks.antiAim.enabled;
+                config.hacks.antiAim.top = false;
+            };
+            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('+')) {
+                e.preventDefault();
+                config.hacks.airBreak.speed += 5;
+            };
+            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('-')) {
+                e.preventDefault();
+                config.hacks.airBreak.speed -= 5;
+            };
+            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('3')) {
+                e.preventDefault();
+                config.hacks.followTank.enabled = !config.hacks.followTank.enabled;
+                otherTankPos = getPositionOfTank(getTanks('others')[config.hacks.followTank.index]);
+            };
+            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('y')) {
+                e.preventDefault();
+                otherTanks = getTanks('others');
+                config.hacks.followTank.index = (config.hacks.followTank.index + 1) % otherTanks.length;
+                otherTankPos = getPositionOfTank(otherTanks[config.hacks.followTank.index]);
+            };
+            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('t')) {
+                e.preventDefault();
+                otherTanks = getTanks('others');
+                config.hacks.followTank.index = (config.hacks.followTank.index - 1 + otherTanks.length) % otherTanks.length;
+                otherTankPos = getPositionOfTank(otherTanks[config.hacks.followTank.index]);
+            };
+            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('b')) {
+                e.preventDefault();
+                try {
+                    sendShells(Object.values(Object.values(searchInObject(getTanks('player' + nick)[0], '=== 2'))[0])[3]);
+                    //sendShells(getClosestPlayer(myTankPos, otherTanks));
+                } catch (er) {};
+            };
+            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('v')) {
+                e.preventDefault();
+                var myTankPosType;
+                /*if (!myTankIntPos) {
+                    window.tankPhysicsComponent = searchInLargeObject(root, 'p152_1');
+                    myTankIntPos = Object.values(searchInObject(tankPhysicsComponent.value, '==41'))[1];
+                };*/
+                if (config.hacks.airBreak.enabled) {
+                    myTankPosType = Tanki.interpolatedTankPosition;/*config.tank.position*/;
+                } else {
+                    myTankPosType = Tanki.interpolatedTankPosition;
+                };
+                if (config.hacks.flagTp.index) {
+                    config.hacks.flagTp.index = !config.hacks.flagTp.index;
+                    myTankPosType[Object.keys(myTankPosType)[0]] = Tanki.teamFlagPosition.v17_1;
+                    myTankPosType[Object.keys(myTankPosType)[1]] = Tanki.teamFlagPosition.w17_1;
+                    myTankPosType[Object.keys(myTankPosType)[2]] = Tanki.teamFlagPosition.x17_1;
+                } else {
+                    config.hacks.flagTp.index = !config.hacks.flagTp.index;
+                    myTankPosType[Object.keys(myTankPosType)[0]] = Tanki.enemyFlagPosition.v17_1;
+                    myTankPosType[Object.keys(myTankPosType)[1]] = Tanki.enemyFlagPosition.w17_1;
+                    myTankPosType[Object.keys(myTankPosType)[2]] = Tanki.enemyFlagPosition.x17_1;
+                };
+            };
+            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('4')) {
+                config.hacks.spectate.enabled = !config.hacks.spectate.enabled;
+                if (config.hacks.spectate.enabled) {
+                    setSpec();
+                } else {
+                    resetSpec();
+                };
+            };
+            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('5')) {
+                config.hacks.turretAim.enabled = !config.hacks.turretAim.enabled;
+            };
+            config.hacks.airBreak.enabled ? (Bools[0].textContent = 'Enabled', Bools[0].style.color = 'green') : (Bools[0].textContent = 'Disabled', Bools[0].style.color = 'red');
+            config.hacks.antiAim.enabled ? (Bools[1].textContent = 'Enabled', Bools[1].style.color = 'green') : (Bools[1].textContent = 'Disabled', Bools[1].style.color = 'red');
+            config.hacks.followTank.enabled ? (Bools[2].textContent = 'Enabled', Bools[2].style.color = 'green') : (Bools[2].textContent = 'Disabled', Bools[2].style.color = 'red');
+            config.hacks.spectate.enabled ? (Bools[3].textContent = 'Enabled', Bools[3].style.color = 'green') : (Bools[3].textContent = 'Disabled', Bools[3].style.color = 'red');
         }
     },
     {
@@ -1209,6 +1251,8 @@ var eventListeners = [
                 if (config.hacks.spectate.enabled) {
                     specPlayer(nick);
                 };
+                otherTankPos = getPositionOfTank(getTanks('player' + nick)[0]);
+                Extras[3].textContent = 'Target: ' + nick;
             };
         }
     }
@@ -1217,6 +1261,11 @@ function addEventListeners() {
     eventListeners.forEach(e => {
         e.elm.addEventListener(e.type, e.func);
         console.log(`added ${e.type} to ${e.elm}`);
+    });
+    interval = setInterval(() => {
+        mines.forEach(mine => {
+            mineRemFunc(mine);
+        });
     });
     try {
         aa();
@@ -1481,9 +1530,11 @@ function aa() {
                 };
                 if (config.keysPressed.includes('f')) {
                     config.hacks.followTank.height += config.hacks.airBreak.speed;
+                    Extras[4].textContent = 'Height: ' + config.hacks.followTank.height;
                 };
                 if (config.keysPressed.includes('v')) {
                     config.hacks.followTank.height -= config.hacks.airBreak.speed;
+                    Extras[4].textContent = 'Height: ' + config.hacks.followTank.height;
                 };
                 myTankPos.v17_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], otherTankPos.v17_1));
                 myTankPos.w17_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], otherTankPos.w17_1));
@@ -1496,6 +1547,7 @@ function aa() {
             };
         };
         if (config.hacks.neverFlip.enabled) {
+            if (!myTankInfo[1]) return;
             if ((Math.abs(myTankInfo[1].b1b_1) > config.hacks.neverFlip.amount && (myTankInfo[1].b1b_1 = Math.sign(myTankInfo[1].b1b_1) * config.hacks.neverFlip.amount), Math.abs(myTankInfo[1].a1b_1) > config.hacks.neverFlip.amount)) {
                 myTankInfo[1].a1b_1 = Math.sign(myTankInfo[1].a1b_1) * config.hacks.neverFlip.amount;
             };
@@ -1929,14 +1981,14 @@ function faceTargetQuaternion(myTankPos, otherTankPos, myTankInfo) {
 };
 function getTankYaw() {
     const { c1b_1, b1b_1, a1b_1, z1a_1 } = myTankInfo[1];
-    const sinY = 2 * (z1a_1 * c1b_1 + b1b_1 * c1b_1);
-    const cosY = 1 - 2 * (c1b_1 * c1b_1 + b1b_1 * b1b_1);
+    const sinY = 2 * (z1a_1 * c1b_1 + a1b_1 * c1b_1);
+    const cosY = 1 - 2 * (c1b_1 * c1b_1 + a1b_1 * a1b_1);
     return Math.atan2(sinY, cosY);
 };
 function getTankYaw2(t) {
     const { c1b_1, b1b_1, a1b_1, z1a_1 } = t[1];
-    const sinY = 2 * (z1a_1 * c1b_1 + b1b_1 * c1b_1);
-    const cosY = 1 - 2 * (c1b_1 * c1b_1 + b1b_1 * b1b_1);
+    const sinY = 2 * (z1a_1 * c1b_1 + a1b_1 * c1b_1);
+    const cosY = 1 - 2 * (c1b_1 * c1b_1 + a1b_1 * a1b_1);
     return Math.atan2(sinY, cosY);
 };
 function normalizeAngle(angle) {
@@ -1944,3 +1996,145 @@ function normalizeAngle(angle) {
     while (angle < -Math.PI) angle += 2 * Math.PI;
     return angle;
 };
+if (localStorage['Config']) {
+    loadConfig();
+};
+function getYawFromDirection(x, y, z) {
+    let direction = { x: x, y: y, z: z };
+    let magnitude = Math.sqrt(direction.x * direction.x + direction.y * direction.y + direction.z * direction.z);
+    let unitDirection = {
+        x: direction.x / magnitude,
+        y: direction.y / magnitude,
+        z: direction.z / magnitude
+    };
+    let yaw = Math.atan2(unitDirection.x, unitDirection.y);
+    return yaw;
+};
+function findClosestEnemy(tankPosition, cameraDirection, enemies) {
+    tankPosition = myTankPos;
+    cameraDirection = Tanki.cameraDirection + Math.PI/2;
+    if (!tankPosition || !cameraDirection || !enemies.length > 0) return;
+    const normalize = vector => {
+        const length = Math.sqrt(vector.x ** 2 + vector.z ** 2);
+        return { x: vector.x / length, z: vector.z / length };
+    };
+    const dotProduct = (vec1, vec2) => vec1.x * vec2.x + vec1.z * vec2.z;
+    const cameraVector = {
+        x: Math.cos(cameraDirection),
+        z: Math.sin(cameraDirection)
+    };
+    const closestEnemy = enemies
+        .map(enemy => {
+            enemy = getPositionOfTank(enemy);
+            const vectorToEnemy = {
+                x: enemy.v17_1 - tankPosition.v17_1,
+                z: enemy.w17_1 - tankPosition.w17_1
+            };
+            const normalizedVector = normalize(vectorToEnemy);
+            const cosineTheta = dotProduct(cameraVector, normalizedVector);
+            const angle = Math.acos(cosineTheta);
+            return { enemy, angle };
+        })
+        .reduce((closest, current) =>
+            current.angle < closest.angle ? current : closest
+        ).enemy;
+    return closestEnemy;
+};
+function getRelativePosition(myTankPos, otherTankPos, cameraDirection) {
+    var deltaX = otherTankPos.v17_1 - myTankPos.v17_1;
+    var deltaY = otherTankPos.w17_1 - myTankPos.w17_1;
+    var dirYaw = Math.atan2(deltaY, deltaX);
+    var relativeAngle = Math.atan2(Math.sin(dirYaw - cameraDirection), Math.cos(dirYaw - cameraDirection));
+    if (relativeAngle > 0) return "right";
+    if (relativeAngle < 0) return "left";
+    return "front";
+};
+
+
+(() => {
+  var indicator = document.createElement('div');
+indicator.style.cssText = `
+position: absolute;
+z-index: 9999999999999999;
+top: 70%;
+left: 50%;
+width: 500px;
+height: 300px;
+transform: translate(-50%, -50%);
+pointer-events: none;
+transition: all 0.5s ease-in-out;
+filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.5));
+opacity: 0;
+`;
+document.body.appendChild(indicator);
+
+var indicatorPart1 = document.createElement('div');
+indicatorPart1.style.cssText = `
+position: absolute;
+z-index: 99999999;
+background: conic-gradient(
+    #00ffcc 0 ${(aimAmount / 4) - 2}deg, 
+    rgba(0, 0, 0, 0.7) ${(aimAmount / 4) - 2}deg ${(aimAmount / 4)}deg, 
+    transparent ${(aimAmount / 4)}deg 360deg
+);
+width: 500px;
+height: 300px;
+border-radius: 50%;
+transition: background 0.3s ease-in-out;
+box-shadow: 0 0 20px #00ffcc;
+`;
+indicator.appendChild(indicatorPart1);
+
+var indicatorPart2 = document.createElement('div');
+indicatorPart2.style.cssText = `
+position: absolute;
+z-index: 99999999;
+background: conic-gradient(
+    #00ffcc 0 ${(aimAmount / 4) - 2}deg, 
+    rgba(0, 0, 0, 0.7) ${(aimAmount / 4) - 2}deg ${(aimAmount / 4)}deg, 
+    transparent ${(aimAmount / 4)}deg 360deg
+);
+transform: rotateY(180deg);
+width: 500px;
+height: 300px;
+border-radius: 50%;
+transition: background 0.3s ease-in-out;
+box-shadow: 0 0 20px #00ffcc;
+`;
+indicator.appendChild(indicatorPart2);
+
+window['aim-assist-range'].addEventListener('input', () => {
+    indicator.style.opacity = '1';
+    setTimeout(() => {
+        indicator.style.opacity = '0';
+    }, 500);
+    indicatorPart1.style.background = `conic-gradient(
+        #00ffcc 0 ${(aimAmount / 4) - 2}deg, 
+        rgba(0, 0, 0, 0.7) ${(aimAmount / 4) - 2}deg ${(aimAmount / 4)}deg, 
+        transparent ${(aimAmount / 4)}deg 360deg
+    )`;
+    indicatorPart2.style.background = `conic-gradient(
+        #00ffcc 0 ${(aimAmount / 4) - 2}deg, 
+        rgba(0, 0, 0, 0.7) ${(aimAmount / 4) - 2}deg ${(aimAmount / 4)}deg, 
+        transparent ${(aimAmount / 4)}deg 360deg
+    )`;
+});
+
+window['aim-assist-range'].parentElement.children[3].addEventListener('input', () => {
+    indicator.style.opacity = '1';
+    setTimeout(() => {
+        indicator.style.opacity = '0';
+    }, 500);
+    indicatorPart1.style.background = `conic-gradient(
+        #00ffcc 0 ${(aimAmount / 4) - 2}deg, 
+        rgba(0, 0, 0, 0.7) ${(aimAmount / 4) - 2}deg ${(aimAmount / 4)}deg, 
+        transparent ${(aimAmount / 4)}deg 360deg
+    )`;
+    indicatorPart2.style.background = `conic-gradient(
+        #00ffcc 0 ${(aimAmount / 4) - 2}deg, 
+        rgba(0, 0, 0, 0.7) ${(aimAmount / 4) - 2}deg ${(aimAmount / 4)}deg, 
+        transparent ${(aimAmount / 4)}deg 360deg
+    )`;
+});
+})();
+function sendMessage(e){window?.messageElm||(window.messageElm=document.createElement("div"),messageElm.style.cssText="position: absolute;left: 50%;top: 50%;transform: translate(-50%, -50%);color: red;font-size: 30px;z-index: 999999;",document.body.appendChild(messageElm)),messageElm.textContent=e,setTimeout((()=>{messageElm.textContent=""}),2e3)}
