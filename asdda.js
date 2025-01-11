@@ -297,11 +297,6 @@ document.body.insertAdjacentHTML('beforeend', `
             <label for='esp-check' class="switch-label">ESP</label>
         </div>
 
-        <div class="switch-item">
-            <input id='speed-check' class='hotkey' type='checkbox'>
-            <label for='speed-check' class="slider"></label>
-            <label for='speed-check' class="switch-label">Speed</label>
-        </div>
 
         <div class="switch-item">
             <input id='aimbot' class='hotkey' type='checkbox'>
@@ -309,18 +304,9 @@ document.body.insertAdjacentHTML('beforeend', `
             <label for='aimbot' class="switch-label">Aimbot</label>
         </div>
 
-        <div class="switch-item">
-            <input id='aimbot2' class='hotkey' type='checkbox'>
-            <label for='aimbot2' class="slider"></label>
-            <label for='aimbot2' class="switch-label">Vertical Aim</label>
-        </div>
+        
 
-        <div class="switch-item">
-            <input id='neverFlip' class='hotkey' type='checkbox'>
-            <label for='neverFlip' class="slider"></label>
-            <label for='neverFlip' class="switch-label">Never Flip</label>
-        </div>
-
+        
         <div class="switch-item">
             <input type="color" id="colorPicker"/>
             <label for='colorPicker' class="switch-label">Enemy Esp Color</label>
@@ -349,23 +335,7 @@ document.body.insertAdjacentHTML('beforeend', `
             <output id="aim-output" contenteditable="true">12</output>
         </div>
 
-        <div class="control-item">
-            <label for="speed">Speed:</label>
-            <input type='range' id="speed" min="0" max="100" value='1'>
-            <output id="speed-output" contenteditable="true">1</output>
-        </div>
-
-        <div class="control-item">
-            <label for="turn-speed">Turn Speed:</label>
-            <input type='range' id="turn-speed" min="0" max="100" value='1'>
-            <output id="turn-speed-output" contenteditable="true">1</output>
-        </div>
-
-        <div class="control-item">
-            <label for="acceleration">Acceleration:</label>
-            <input type='range' id="acceleration" min="0" max="100" value='1'>
-            <output id="acceleration-output" contenteditable="true">1</output>
-        </div>
+        
     </div>
 </div>
 
@@ -802,7 +772,7 @@ input[type='checkbox']:checked + .slider:before {
     opacity: 1;
     transform: translateY(0);
 }
-`][Math.floor(Math.random()*2)]}
+`][0]}
 </style>
 `);
 const colorPicker = document.getElementById("colorPicker");
@@ -877,11 +847,7 @@ try {
 } catch (error) {};
 Hull.value = SelectedTank.hull[Object.entries(SelectedTank.hull)[0][0]];
 Turret.value = SelectedTank.turret[Object.entries(SelectedTank.turret)[0][0]];
-window.Hack = document.getElementById('speed-check').checked;
 window.Aimbot = document.getElementById('aimbot').checked;
-window.Aimbot2 = document.getElementById('aimbot2').checked;
-window.Speed = 1;
-window.Acceleration = 1;
 window.aimAmount = 12;
 window.espEnabled = false;
 if (localStorage['apap'] == 'true') {
@@ -914,33 +880,10 @@ if (localStorage['apap'] == 'true') {
     };
 };
 
-// Get references to the output elements
-const speedOutput = document.getElementById('speed-output');
-const turnSpeedOutput = document.getElementById('turn-speed-output');
-const accelerationOutput = document.getElementById('acceleration-output');
+
 const aimOutput = document.getElementById('aim-output');
 
-// Add event listeners to handle user input
-speedOutput.addEventListener('input', function () {
-    let value = parseFloat(this.textContent);
-    value = Math.max(0, Math.min(100, value));
-    document.getElementById('speed').value = value;
-    window.Speed = value;
-});
 
-turnSpeedOutput.addEventListener('input', function () {
-    let value = parseFloat(this.textContent);
-    value = Math.max(0, Math.min(100, value));
-    document.getElementById('turn-speed').value = value;
-    window.turnSpeed = value;
-});
-
-accelerationOutput.addEventListener('input', function () {
-    let value = parseFloat(this.textContent);
-    value = Math.max(0, Math.min(100, value));
-    document.getElementById('acceleration').value = value;
-    window.Acceleration = value;
-});
 
 aimOutput.addEventListener('input', function () {
     let value = parseFloat(this.textContent);
@@ -950,20 +893,6 @@ aimOutput.addEventListener('input', function () {
     updateAimAmount();
 });
 
-document.getElementById('speed').addEventListener('input', function () {
-    speedOutput.textContent = this.value;
-    window.Speed = parseFloat(this.value);
-});
-
-document.getElementById('turn-speed').addEventListener('input', function () {
-    turnSpeedOutput.textContent = this.value;
-    window.turnSpeed = parseFloat(this.value);
-});
-
-document.getElementById('acceleration').addEventListener('input', function () {
-    accelerationOutput.textContent = this.value;
-    window.Acceleration = parseFloat(this.value);
-});
 
 document.getElementById('aim').addEventListener('input', function () {
     aimOutput.textContent = this.value;
@@ -971,67 +900,8 @@ document.getElementById('aim').addEventListener('input', function () {
     updateAimAmount();
 });
 
-document.getElementById('speed-check').addEventListener('change', function () {
-    window.Hack = this.checked;
-});
-
 document.getElementById('aimbot').addEventListener('change', function () {
     window.Aimbot = this.checked;
-});
-
-document.getElementById('neverFlip').addEventListener('change', function () {
-    config.hacks.neverFlip.enabled = this.checked;
-});
-
-document.getElementById('aimbot2').addEventListener('change', function () {
-    window.Aimbot2 = this.checked;
-    AIM = null;
-    clearInterval(tempInt);
-    if (Aimbot2) {
-        var tempInt = setInterval(() => {
-            if (AIM) {
-                var first = searchInObject(AIM, '==1')[0];
-                var second = searchInObject(first, '==1')[0];
-                var third = searchInObject(second, '==1')[0];
-                for (const k in third) {
-                    if (third[k] < 0) {
-                        if (!firstVAim) {
-                            window.firstVAim = third[k];
-                        };
-                        third[k] = -2;
-                    };
-                    if ((third[k] > 0) && third[k] < 2) {
-                        if (!secVAim) {
-                            window.secVAim = third[k];
-                        };
-                        third[k] = 2;
-                    };
-                };
-                clearInterval(tempInt);
-            };
-        }, 1000);
-    } else {
-        var tempInt = setInterval(() => {
-            if (AIM) {
-                var first = searchInObject(AIM, '==1')[0];
-                var second = searchInObject(first, '==1')[0];
-                var third = searchInObject(second, '==1')[0];
-                for (const k in third) {
-                    if (third[k] == -2) {
-                        third[k] = firstVAim;
-                    };
-                    if (third[k] == 2) {
-                        third[k] = secVAim;
-                    };
-                };
-                clearInterval(tempInt);
-            };
-        }, 1000);
-    };
-});
-
-document.getElementById('esp-check').addEventListener('change', function () {
-    window.espEnabled = this.checked;
 });
 
 document.getElementById('skin-check').addEventListener('change', function () {
@@ -1215,47 +1085,6 @@ function onJoinGame() {
     otherTanks = getTanks('others');
     AIM = null;
     clearInterval(tempInt);
-    if (Aimbot2) {
-        tempInt = setInterval(() => {
-            if (AIM) {
-                var first = searchInObject(AIM, '==1')[0];
-                var second = searchInObject(first, '==1')[0];
-                var third = searchInObject(second, '==1')[0];
-                for (const k in third) {
-                    if (third[k] < 0) {
-                        if (!firstVAim) {
-                            window.firstVAim = third[k];
-                        };
-                        third[k] = -2;
-                    };
-                    if ((third[k] > 0) && third[k] < 2) {
-                        if (!secVAim) {
-                            window.secVAim = third[k];
-                        };
-                        third[k] = 2;
-                    };
-                };
-                clearInterval(tempInt);
-            };
-        }, 1000);
-    } else {
-        tempInt = setInterval(() => {
-            if (AIM) {
-                var first = searchInObject(AIM, '==1')[0];
-                var second = searchInObject(first, '==1')[0];
-                var third = searchInObject(second, '==1')[0];
-                for (const k in third) {
-                    if (third[k] == -2) {
-                        third[k] = firstVAim;
-                    };
-                    if (third[k] == 2) {
-                        third[k] = secVAim;
-                    };
-                };
-                clearInterval(tempInt);
-            };
-        }, 1000);
-    };
     try {
         myTank = getTanks('self')[0];
         if (!tankMovable) {
@@ -1356,105 +1185,6 @@ var eventListeners = [
             if (!config.keysPressed.includes(e.key)) {
                 config.keysPressed.push(e.key);
             };
-            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('1')) {
-                e.preventDefault();
-                config.hacks.airBreak.enabled = !config.hacks.airBreak.enabled;
-                config.tank.position.x = myTankPos.v17_1;
-                config.tank.position.y = myTankPos.w17_1;
-                config.tank.position.z = myTankPos.x17_1;
-                myTank = getTanks('self')[0];
-                if (!tankMovable) {
-                    tankMovable = Object.entries(myTank).filter(t => typeof t[1] == 'boolean' && t[1])[0][0];
-                };
-                if (config.hacks.airBreak.type == 'tilt' && config.hacks.airBreak.enabled) {
-                    myTank[tankMovable] = false;
-                } else {
-                    myTank[tankMovable] = true;
-                };
-            };
-            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('2')) {
-                e.preventDefault();
-                /*if (!myTankIntPos) {
-                    window.tankPhysicsComponent = searchInLargeObject(root, 'p152_1');
-                    myTankIntPos = Object.values(searchInObject(tankPhysicsComponent.value, '==41'))[1];
-                };*/
-                if (config.hacks.antiAim.enabled && !config.hacks.antiAim.top) {
-                    config.hacks.antiAim.top = true;
-                    return;
-                };
-                config.hacks.antiAim.enabled = !config.hacks.antiAim.enabled;
-                config.hacks.antiAim.top = false;
-            };
-            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('+')) {
-                e.preventDefault();
-                config.hacks.airBreak.speed += 5;
-            };
-            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('-')) {
-                e.preventDefault();
-                config.hacks.airBreak.speed -= 5;
-            };
-            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('3')) {
-                e.preventDefault();
-                config.hacks.followTank.enabled = !config.hacks.followTank.enabled;
-                otherTankPos = getPositionOfTank(getTanks('others')[config.hacks.followTank.index]);
-            };
-            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('y')) {
-                e.preventDefault();
-                otherTanks = getTanks('others');
-                config.hacks.followTank.index = (config.hacks.followTank.index + 1) % otherTanks.length;
-                otherTankPos = getPositionOfTank(otherTanks[config.hacks.followTank.index]);
-            };
-            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('t')) {
-                e.preventDefault();
-                otherTanks = getTanks('others');
-                config.hacks.followTank.index = (config.hacks.followTank.index - 1 + otherTanks.length) % otherTanks.length;
-                otherTankPos = getPositionOfTank(otherTanks[config.hacks.followTank.index]);
-            };
-            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('b')) {
-                e.preventDefault();
-                try {
-                    sendShells(Object.values(Object.values(searchInObject(getTanks('player' + nick)[0], '=== 2'))[0])[3]);
-                    //sendShells(getClosestPlayer(myTankPos, otherTanks));
-                } catch (er) {};
-            };
-            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('v')) {
-                e.preventDefault();
-                var myTankPosType;
-                /*if (!myTankIntPos) {
-                    window.tankPhysicsComponent = searchInLargeObject(root, 'p152_1');
-                    myTankIntPos = Object.values(searchInObject(tankPhysicsComponent.value, '==41'))[1];
-                };*/
-                if (config.hacks.airBreak.enabled) {
-                    myTankPosType = Tanki.interpolatedTankPosition;/*config.tank.position*/;
-                } else {
-                    myTankPosType = Tanki.interpolatedTankPosition;
-                };
-                if (config.hacks.flagTp.index) {
-                    config.hacks.flagTp.index = !config.hacks.flagTp.index;
-                    myTankPosType[Object.keys(myTankPosType)[0]] = Tanki.teamFlagPosition.v17_1;
-                    myTankPosType[Object.keys(myTankPosType)[1]] = Tanki.teamFlagPosition.w17_1;
-                    myTankPosType[Object.keys(myTankPosType)[2]] = Tanki.teamFlagPosition.x17_1;
-                } else {
-                    config.hacks.flagTp.index = !config.hacks.flagTp.index;
-                    myTankPosType[Object.keys(myTankPosType)[0]] = Tanki.enemyFlagPosition.v17_1;
-                    myTankPosType[Object.keys(myTankPosType)[1]] = Tanki.enemyFlagPosition.w17_1;
-                    myTankPosType[Object.keys(myTankPosType)[2]] = Tanki.enemyFlagPosition.x17_1;
-                };
-            };
-            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('4')) {
-                config.hacks.spectate.enabled = !config.hacks.spectate.enabled;
-                if (config.hacks.spectate.enabled) {
-                    setSpec();
-                } else {
-                    resetSpec();
-                };
-            };
-            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('5')) {
-                config.hacks.turretAim.enabled = !config.hacks.turretAim.enabled;
-            };
-            if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('7')) {
-                setVars();
-            };
         }
     },
     {
@@ -1487,11 +1217,6 @@ function addEventListeners() {
     eventListeners.forEach(e => {
         e.elm.addEventListener(e.type, e.func);
         console.log(`added ${e.type} to ${e.elm}`);
-    });
-    interval = setInterval(() => {
-        mines.forEach(mine => {
-            mineRemFunc(mine);
-        });
     });
     try {
         aa();
