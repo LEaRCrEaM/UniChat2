@@ -1548,8 +1548,19 @@ function aa() {
         };
         if (config.hacks.neverFlip.enabled) {
             if (!myTankInfo[1]) return;
-            if ((Math.abs(myTankInfo[1].b1b_1) > config.hacks.neverFlip.amount && (myTankInfo[1].b1b_1 = Math.sign(myTankInfo[1].b1b_1) * config.hacks.neverFlip.amount), Math.abs(myTankInfo[1].a1b_1) > config.hacks.neverFlip.amount)) {
-                myTankInfo[1].a1b_1 = Math.sign(myTankInfo[1].a1b_1) * config.hacks.neverFlip.amount;
+            const maxAmount = config.hacks.neverFlip.amount;
+            const dampingFactor = 0.8;
+            if (Math.abs(myTankInfo[1].b1b_1) > maxAmount) {
+                myTankInfo[1].b1b_1 *= dampingFactor;
+                if (Math.abs(myTankInfo[1].b1b_1) < maxAmount) {
+                    myTankInfo[1].b1b_1 = Math.sign(myTankInfo[1].b1b_1) * maxAmount;
+                };
+            };
+            if (Math.abs(myTankInfo[1].a1b_1) > maxAmount) {
+                myTankInfo[1].a1b_1 *= dampingFactor; // Apply damping
+                if (Math.abs(myTankInfo[1].a1b_1) < maxAmount) {
+                    myTankInfo[1].a1b_1 = Math.sign(myTankInfo[1].a1b_1) * maxAmount;
+                };
             };
         };
         if (config.hacks.turretAim.enabled && otherTankPos?.v17_1) {
