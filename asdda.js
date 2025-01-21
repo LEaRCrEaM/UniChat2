@@ -1991,9 +1991,9 @@ function faceTargetQuaternion(myTankPos, otherTankPos, myTankInfo) {
     return quaternion;
 };
 function getTankYaw() {
-    const { i1b_1, h1b_1, g1b_1, j1b_1 } = myTankInfo[1];
-    const sinY = 2 * (j1b_1 * i1b_1 + g1b_1 * i1b_1);
-    const cosY = 1 - 2 * (i1b_1 * i1b_1 + g1b_1 * g1b_1);
+    const { g1b_1: w, i1b_1: x, j1b_1: y, h1b_1: z } = myTankInfo[1];
+    const sinY = 2 * (w * y + x * z);
+    const cosY = 1 - 2 * (y * y + z * z);
     return Math.atan2(sinY, cosY);
 };
 function getTankYaw2(t) {
