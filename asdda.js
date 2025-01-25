@@ -1630,7 +1630,7 @@ const followSmoothingFactor = 0.1;
 function b() {}
 function getSpec() {
     var first2 = searchInObject(Utils.followCamera, '==1');
-    var second2 = searchInObject(Object.values(first2)[3], '==41');
+    var second2 = searchInObject(Object.values(first2)[3], '==43');
     return Object.values(second2)[0];
 };
 function getCamYaw() {
