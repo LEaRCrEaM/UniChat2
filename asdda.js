@@ -1556,13 +1556,42 @@ function aa() {
                     myTankInfo[1].h1b_1 = Math.sign(myTankInfo[1].h1b_1) * maxAmount;
                 };
             };
-            if (Math.abs(myTankInfo[1].g1b_1) > maxAmount) {
-                myTankInfo[1].g1b_1 *= dampingFactor; // Apply damping
-                if (Math.abs(myTankInfo[1].g1b_1) < maxAmount) {
-                    myTankInfo[1].g1b_1 = Math.sign(myTankInfo[1].g1b_1) * maxAmount;
+            if (Math.abs(myTankInfo[1].i1b_1) > maxAmount) {
+                myTankInfo[1].i1b_1 *= dampingFactor;
+                if (Math.abs(myTankInfo[1].i1b_1) < maxAmount) {
+                    myTankInfo[1].i1b_1 = Math.sign(myTankInfo[1].i1b_1) * maxAmount;
                 };
             };
         };
+        /*if (config.hacks.neverFlip.enabled) {
+            if (!myTankInfo[1]) return;
+            const maxAmount = config.hacks.neverFlip.amount; // Max tilt before applying correction
+            const springFactor = 0.1; // Strength of the corrective spring
+            const dampingFactor = 0.95; // Damping to reduce oscillations
+            const maxSpringForce = 2; // Cap for the spring force
+            const balanceTarget = 0; // Target upright orientation
+            const adjustmentSpeed = 0.02; // Speed at which the script applies corrections
+            if (!myTankInfo[1].velocity) {
+                myTankInfo[1].velocity = { h: 0, i: 0 };
+            };
+            const handleAxis = (axis, velocityAxis) => {
+                const currentValue = myTankInfo[1][axis];
+                const overshoot = currentValue - Math.sign(currentValue) * maxAmount;
+                const deviation = currentValue - balanceTarget;
+                let springForce = -deviation * springFactor;
+                if (Math.abs(currentValue) > maxAmount) {
+                    springForce += -overshoot * springFactor;
+                };
+                springForce = Math.sign(springForce) * Math.min(Math.abs(springForce), maxSpringForce);
+                const blendedForce = 
+                    (springForce - myTankInfo[1].velocity[velocityAxis]) * adjustmentSpeed;
+                myTankInfo[1].velocity[velocityAxis] = 
+                    myTankInfo[1].velocity[velocityAxis] * dampingFactor + blendedForce;
+                myTankInfo[1][axis] += myTankInfo[1].velocity[velocityAxis];
+            };
+            handleAxis('h1b_1', 'h');
+            handleAxis('i1b_1', 'i');
+        };*/
         if (config.hacks.turretAim.enabled && otherTankPos?.c18_1) {
             switch (config.hacks.turretAim.type) {
                 case 'camera':
