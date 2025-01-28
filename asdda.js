@@ -1546,7 +1546,7 @@ function aa() {
                 tPos.e18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.e18_1));
             };
         };
-        if (config.hacks.neverFlip.enabled) {
+        /*if (config.hacks.neverFlip.enabled) {
             if (!myTankInfo[1]) return;
             const maxAmount = config.hacks.neverFlip.amount;
             const dampingFactor = 0.8;
@@ -1562,12 +1562,12 @@ function aa() {
                     myTankInfo[1].i1b_1 = Math.sign(myTankInfo[1].i1b_1) * maxAmount;
                 };
             };
-        };
-        /*if (config.hacks.neverFlip.enabled) {
+        };*/
+        if (config.hacks.neverFlip.enabled) {
             if (!myTankInfo[1]) return;
             const maxAmount = config.hacks.neverFlip.amount; // Max tilt before applying correction
             const springFactor = 0.1; // Strength of the corrective spring
-            const dampingFactor = 0.95; // Damping to reduce oscillations
+            const dampingFactor = 0.7; // Damping to reduce oscillations
             const maxSpringForce = 2; // Cap for the spring force
             const balanceTarget = 0; // Target upright orientation
             const adjustmentSpeed = 0.02; // Speed at which the script applies corrections
@@ -1591,7 +1591,7 @@ function aa() {
             };
             handleAxis('h1b_1', 'h');
             handleAxis('i1b_1', 'i');
-        };*/
+        };
         if (config.hacks.turretAim.enabled && otherTankPos?.c18_1) {
             switch (config.hacks.turretAim.type) {
                 case 'camera':
