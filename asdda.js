@@ -599,7 +599,8 @@ function updateAimAmount() {
             if ((AIM[key][key2].toString() == window.prevAimAmount.toString()) || (AIM[key][key2] == 0)) {
                 if (isAllowed) {
                   //AIM[key][key2] = window.aimAmount;
-                  Object.values(searchInObject(AIM, '==3'))[0][Object.keys(Object.values(searchInObject(AIM, '==3'))[0])[0]] = window.aimAmount
+                  Object.values(searchInObject(AIM, '==3'))[0][Object.keys(Object.values(searchInObject(AIM, '==3'))[0])[0]] = window.aimAmount;
+                  Object.values(searchInObject(AIM, '==3'))[0][Object.keys(Object.values(searchInObject(AIM, '==3'))[0])[1]] = 0.0034906584520148633;
                   prevAimAmount = aimAmount;
                 } else {
                   aimAmount = 0;
