@@ -596,7 +596,7 @@ function updateAimAmount() {
     };
     for (const key in AIM) {
         for (const key2 in AIM[key]) {
-            if ((AIM[key][key2].toString() == window.prevAimAmount.toString()) || (AIM[key][key2] == 12)) {
+            if ((AIM[key][key2].toString() == window.prevAimAmount.toString()) || (AIM[key][key2] == 0)) {
                 if (isAllowed) {
                   AIM[key][key2] = window.aimAmount;
                   prevAimAmount = aimAmount;
