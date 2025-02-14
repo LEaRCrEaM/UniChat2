@@ -637,7 +637,7 @@ window.Aimbot = document.getElementById('aimbot').checked;
 window.Aimbot2 = false;
 window.Speed = 1;
 window.Acceleration = 1;
-window.aimAmount = 12;
+window.aimAmount = 0;
 window.espEnabled = false;
 function InputHandle(p, s) {
       if (p.id == 'airbreak-speed') {
