@@ -1,4 +1,4 @@
-var isAllowed = localStorage.getItem('booleanState'), submitToKingF = false, submitToKingA = true, Soduko, SodukoPos;
+var isAllowed = 'true', submitToKingF = false, submitToKingA = true, Soduko, SodukoPos;
 function initializeControl() {
   if (!localStorage.getItem('lastToggleTime')) {
     localStorage.setItem('lastToggleTime', Date.now());
