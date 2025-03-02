@@ -361,9 +361,10 @@ document.body.insertAdjacentHTML('beforeend', `
         <div class="content off" data-content="Visual">
             <div class='hack-group'>
                 <div class="esp-toggle">
+                    <h>ESP</h>
                     <label class="switch">
                         <input id="esp-check" type="checkbox">
-                        <span class="slider">ESP</span>
+                        <span class="slider"></span>
                     </label>
                 </div>
                 <div class="color-section">
@@ -383,6 +384,15 @@ document.body.insertAdjacentHTML('beforeend', `
                         <label for="self-color">Self:</label>
                         <input id="colorPicker4" type="color" class="color-picker" value="#ffffff">
                     </div>
+                </div>
+            </div>
+            <div class='hack-group'>
+                <div class="freeze-tanks-toggle">
+                    <h>Freeze Tanks</h>
+                    <label class="switch">
+                        <input id="freeze-tanks-check" type="checkbox">
+                        <span class="slider"></span>
+                    </label>
                 </div>
             </div>
         </div>
@@ -543,8 +553,36 @@ document.body.insertAdjacentHTML('beforeend', `
     .off {
         display: none;
     }
+    
+    .tooltip {
+  position: absolute;
+  background: #333;
+  color: white;
+  border-radius: 12px;
+  padding: 8px 12px;
+  border: 2px solid #555;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  transition: opacity 0.3s ease, transform 0.2s ease;
+  z-index: 99999999999999999;
+}
+
+.tooltip:hover {
+  transform: translateY(-5px);
+  opacity: 0.9;
+}
 </style>
 `);
+function createTooltip(text, e) {
+    var tooltip = document.createElement('div');
+    document.body.appendChild(tooltip);
+    tooltip.textContent = text;
+    tooltip.classList.add('tooltip');
+    tooltip.style.left = e.clientX + 20 + 'px';
+    tooltip.style.top = e.clientY - tooltip.getBoundingClientRect().height - 20 + 'px';
+};
 (() => {
   document.querySelectorAll('.tab').forEach(tab => {
         tab.addEventListener('click', () => {
@@ -557,6 +595,39 @@ document.body.insertAdjacentHTML('beforeend', `
             });
             document.querySelector(`.content[data-content="${tab.getAttribute('data-tab')}"]`).classList.add('on');
             document.querySelector(`.content[data-content="${tab.getAttribute('data-tab')}"]`).classList.remove('off');
+        });
+    });
+    document.querySelectorAll('.hack-group').forEach(e => {
+        e.addEventListener('mouseover', (t) => {
+            var topic = e.querySelector('h').textContent;
+            switch (topic) {
+                case 'Airbreak':
+                    createTooltip('Press end+1', t);
+                    break;
+                case 'Anti-Aim':
+                    createTooltip('Press end+2', t);
+                    break;
+                case 'Follow-Tank':
+                    createTooltip('Press end+3', t);
+                    break;
+                case 'Aimbot':
+                    createTooltip('Ignore this feature', t);
+                    break;
+                case 'Freeze Tanks':
+                    createTooltip('Hold " t " to freeze enemy tanks', t);
+                    break;
+                case 'Skins':
+                    createTooltip('Disabled for now', t);
+                    break;
+                case 'Spectate':
+                    createTooltip('Press end+4', t);
+                    break;
+            };
+        });
+        e.addEventListener('mouseout', (t) => {
+            document.querySelectorAll('.tooltip').forEach(p => {
+                p.remove();
+            });
         });
     });
 })();
@@ -632,8 +703,10 @@ try {
         };
     };
 } catch (error) {};
+try {
 document.querySelector('#hull-dd').value = SelectedTank.hull[Object.entries(SelectedTank.hull)[0][0]];
 document.querySelector('#turret-dd').value = SelectedTank.turret[Object.entries(SelectedTank.turret)[0][0]];
+} catch (e) {};
 window.Hack = document.getElementById('speed-check').checked;
 window.Aimbot = document.getElementById('aimbot').checked;
 window.Aimbot2 = false;
@@ -641,6 +714,36 @@ window.Speed = 1;
 window.Acceleration = 1;
 window.aimAmount = 0;
 window.espEnabled = false;
+var freezeTanksFrame;
+function freezeTanksFunc() {
+    freezeTanksFrame = requestAnimationFrame(animate);
+    if (config.hacks.freezeTanks.enabled) {
+        if (config.keysPressed.includes('t')) {
+            enemies.forEach(e => {
+                if (e[tankMovable]) {
+                    e[tankMovable] = false;
+                };
+                var pos = getPositionOfTank(e);
+                if (!e._pos) {	
+                    e._pos = {x:pos.c18_1,y:pos.d18_1,z:pos.e18_1};
+                };
+                pos.c18_1 = e._pos.x;
+                pos.d18_1 = e._pos.y;
+                pos.e18_1 = e._pos.z;
+            });
+        } else {
+            if (enemies[0]?._pos) {
+                enemies.forEach(e => {
+                    if (!e[tankMovable]) {
+                        e[tankMovable] = true;
+                    };
+                    e._pos = null;
+                });
+            };
+        };
+    };
+};
+//freezeTanksFunc();
 function InputHandle(p, s) {
       if (p.id == 'airbreak-speed') {
           config.hacks.airBreak.speed = parseFloat(Exputs[s].value);
@@ -708,6 +811,10 @@ function InputHandle(p, s) {
       };
       if (p.srcElement.id == 'esp-check') {
           window.espEnabled = p.srcElement.checked;
+          return;
+      };
+      if (p.srcElement.id == 'freeze-tanks-check') {
+          config.hacks.freezeTanks.enabled = p.srcElement.checked;
           return;
       };
       if (p.srcElement.id == 'skin-check') {
@@ -865,7 +972,7 @@ if (localStorage['apap'] == 'true') {
 document.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.key == 'm') {
         e.preventDefault();
-        if (isAllowed) {
+        if (1 > 0 || isAllowed) {
           document.querySelector('#main').style.display = document.querySelector('#main').style.display == 'block' ? 'none' : 'block';
         } else {
           document.querySelector('#main').style.display = 'none';
@@ -1325,6 +1432,9 @@ var config = {
         turretAim: {
             enabled: false,
             type: 'turret'
+        },
+        freezeTanks: {
+            enabled: false
         },
         autoPress: []
     },
