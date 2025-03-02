@@ -716,7 +716,7 @@ window.aimAmount = 0;
 window.espEnabled = false;
 var freezeTanksFrame;
 function freezeTanksFunc() {
-    freezeTanksFrame = requestAnimationFrame(animate);
+    freezeTanksFrame = requestAnimationFrame(freezeTanksFunc);
     if (config.hacks.freezeTanks.enabled) {
         if (config.keysPressed.includes('t')) {
             enemies.forEach(e => {
