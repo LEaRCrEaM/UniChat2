@@ -743,7 +743,7 @@ function freezeTanksFunc() {
         };
     };
 };
-//freezeTanksFunc();
+freezeTanksFunc();
 function InputHandle(p, s) {
       if (p.id == 'airbreak-speed') {
           config.hacks.airBreak.speed = parseFloat(Exputs[s].value);
