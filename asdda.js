@@ -1437,6 +1437,13 @@ var config = {
         freezeTanks: {
             enabled: false
         },
+        hitbox: {
+            enabled: false,
+            amount: 2
+        },
+        noClip: {
+            enabled: false
+        },
         autoPress: []
     },
     keysPressed: []
@@ -1719,6 +1726,28 @@ function aa() {
                     Tanki.turretDirection = (dirYaw - getTankYaw()) - Math.PI/2;
                     break;
             };
+        };
+        if (config.hacks.hitbox.enabled) {
+            enemies.forEach(e => {
+                var body = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(e, '==14'))[0], '==3'))[0], '==43'))[0];
+                if (body.scaled) return;
+                for (const k in body) {
+                    if (typeof body[k] == 'number') {
+                        body[k] *= config.hacks.hitbox.amount;
+                    };
+                };
+                body.scaled = true;
+            });
+        };
+        if (config.hacks.noClip.enabled) {
+            var body = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(getTanks('self')[0], '==14'))[0], '==3'))[0], '==43'))[0];
+            if (body.scaled) return;
+            for (const k in body) {
+                if (typeof body[k] == 'number') {
+                    body[k] *= 0;
+                };
+            };
+            body.scaled = true;
         };
         if (submitToKingA && SodukoPos) {
             var deltaX = SodukoPos.c18_1 - myTankPos.c18_1;
