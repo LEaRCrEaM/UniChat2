@@ -1740,7 +1740,7 @@ function aa() {
             });
         };
         if (config.hacks.noClip.enabled && isGameActive) {
-            var body = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(getTanks('self')[0], '==14'))[0], '==3'))[0], '==43'))[0];
+            var body = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(myTank, '==14'))[0], '==3'))[0], '==43'))[0];
             if (!body) return;
             if (body.scaled) return;
             for (const k in body) {
