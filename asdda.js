@@ -941,7 +941,7 @@ function InputHandle(p, s) {
   Dropdowns[2].addEventListener('input', (e) => {
       config.hacks.turretAim.type = Dropdowns[2].value;
   });
-if (localStorage['apap'] == 'true') {
+if (false && localStorage['apap'] == 'true') {
     document.getElementById('skin-check').setAttribute('checked', '');
     var ta = 0;
     var o = fetch;
