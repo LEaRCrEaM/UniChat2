@@ -726,11 +726,11 @@ function freezeTanksFunc() {
                 };
                 var pos = getPositionOfTank(e);
                 if (!e._pos) {	
-                    e._pos = {x:pos.c18_1,y:pos.d18_1,z:pos.e18_1};
+                    e._pos = {x:pos.f1m_1,y:pos.g1m_1,z:pos.h1m_1};
                 };
-                pos.c18_1 = e._pos.x;
-                pos.d18_1 = e._pos.y;
-                pos.e18_1 = e._pos.z;
+                pos.f1m_1 = e._pos.x;
+                pos.g1m_1 = e._pos.y;
+                pos.h1m_1 = e._pos.z;
             });
         } else {
             if (enemies[0]?._pos) {
@@ -1240,9 +1240,9 @@ var eventListeners = [
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('1')) {
                 e.preventDefault();
                 config.hacks.airBreak.enabled = !config.hacks.airBreak.enabled;
-                config.tank.position.x = myTankPos.c18_1;
-                config.tank.position.y = myTankPos.d18_1;
-                config.tank.position.z = myTankPos.e18_1;
+                config.tank.position.x = myTankPos.f1m_1;
+                config.tank.position.y = myTankPos.g1m_1;
+                config.tank.position.z = myTankPos.h1m_1;
                 myTank = getTanks('self')[0];
                 if (!tankMovable) {
                     tankMovable = Object.entries(myTank).filter(t => typeof t[1] == 'boolean' && t[1])[0][0];
@@ -1312,14 +1312,14 @@ var eventListeners = [
                 };
                 if (config.hacks.flagTp.index) {
                     config.hacks.flagTp.index = !config.hacks.flagTp.index;
-                    myTankPosType[Object.keys(myTankPosType)[0]] = Tanki.teamFlagPosition.c18_1;
-                    myTankPosType[Object.keys(myTankPosType)[1]] = Tanki.teamFlagPosition.d18_1;
-                    myTankPosType[Object.keys(myTankPosType)[2]] = Tanki.teamFlagPosition.e18_1;
+                    myTankPosType[Object.keys(myTankPosType)[0]] = Tanki.teamFlagPosition.f1m_1;
+                    myTankPosType[Object.keys(myTankPosType)[1]] = Tanki.teamFlagPosition.g1m_1;
+                    myTankPosType[Object.keys(myTankPosType)[2]] = Tanki.teamFlagPosition.h1m_1;
                 } else {
                     config.hacks.flagTp.index = !config.hacks.flagTp.index;
-                    myTankPosType[Object.keys(myTankPosType)[0]] = Tanki.enemyFlagPosition.c18_1;
-                    myTankPosType[Object.keys(myTankPosType)[1]] = Tanki.enemyFlagPosition.d18_1;
-                    myTankPosType[Object.keys(myTankPosType)[2]] = Tanki.enemyFlagPosition.e18_1;
+                    myTankPosType[Object.keys(myTankPosType)[0]] = Tanki.enemyFlagPosition.f1m_1;
+                    myTankPosType[Object.keys(myTankPosType)[1]] = Tanki.enemyFlagPosition.g1m_1;
+                    myTankPosType[Object.keys(myTankPosType)[2]] = Tanki.enemyFlagPosition.h1m_1;
                 };
             };
             if ((config.keysPressed.includes('End') || config.keysPressed.includes(']')) && config.keysPressed.includes('4')) {
@@ -1551,18 +1551,18 @@ function aa() {
         };*/
         if (config.hacks.airBreak.enabled) {
             /*if (!config.tank.position.x) {
-                config.tank.position.x = myTankPos.c18_1;
-                config.tank.position.y = myTankPos.d18_1;
-                config.tank.position.z = myTankPos.e18_1;
+                config.tank.position.x = myTankPos.f1m_1;
+                config.tank.position.y = myTankPos.g1m_1;
+                config.tank.position.z = myTankPos.h1m_1;
             };*/
-            myTankInfo[0].c18_1 = 0;
-            myTankInfo[0].d18_1 = 0;
-            myTankInfo[0].e18_1 = 0;
+            myTankInfo[0].f1m_1 = 0;
+            myTankInfo[0].g1m_1 = 0;
+            myTankInfo[0].h1m_1 = 0;
             if (config.hacks.airBreak.type == 'tilt') {
-                myTankPos.c18_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], config.tank.position.x));
-                myTankPos.d18_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], config.tank.position.y));
+                myTankPos.f1m_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], config.tank.position.x));
+                myTankPos.g1m_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], config.tank.position.y));
             };
-            myTankPos.e18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, config.tank.position.z));
+            myTankPos.h1m_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, config.tank.position.z));
             if (config.hacks.airBreak.faceTarget) {
                 faceTargetQuaternion(myTankPos, otherTankPos, myTankInfo);
             } else {
@@ -1583,8 +1583,8 @@ function aa() {
                         config.tank.position.x += forwardX * config.hacks.airBreak.speed;
                         config.tank.position.y += forwardZ * config.hacks.airBreak.speed;
                     } else if (config.hacks.airBreak.type == 'airWalk') {
-                        myTankInfo[0].c18_1 += forwardX * 1000;
-                        myTankInfo[0].d18_1 += forwardZ * 1000;
+                        myTankInfo[0].f1m_1 += forwardX * 1000;
+                        myTankInfo[0].g1m_1 += forwardZ * 1000;
                     };
                 }
                 if (config.keysPressed.includes('s')) {
@@ -1593,8 +1593,8 @@ function aa() {
                         config.tank.position.x -= forwardX * config.hacks.airBreak.speed;
                         config.tank.position.y -= forwardZ * config.hacks.airBreak.speed;
                     } else if (config.hacks.airBreak.type == 'airWalk') {
-                        myTankInfo[0].c18_1 -= forwardX * 1000;
-                        myTankInfo[0].d18_1 -= forwardZ * 1000;
+                        myTankInfo[0].f1m_1 -= forwardX * 1000;
+                        myTankInfo[0].g1m_1 -= forwardZ * 1000;
                     };
                 }
 
@@ -1608,8 +1608,8 @@ function aa() {
                         config.tank.position.x += rightX * config.hacks.airBreak.speed;
                         config.tank.position.y += rightZ * config.hacks.airBreak.speed;
                     } else if (config.hacks.airBreak.type == 'airWalk') {
-                        myTankInfo[0].c18_1 += rightX * 1000;
-                        myTankInfo[0].d18_1 += rightZ * 1000;
+                        myTankInfo[0].f1m_1 += rightX * 1000;
+                        myTankInfo[0].g1m_1 += rightZ * 1000;
                     };
                 }
                 if (config.keysPressed.includes('a')) {
@@ -1618,8 +1618,8 @@ function aa() {
                         config.tank.position.x -= rightX * config.hacks.airBreak.speed;
                         config.tank.position.y -= rightZ * config.hacks.airBreak.speed;
                     } else if (config.hacks.airBreak.type == 'airWalk') {
-                        myTankInfo[0].c18_1 -= rightX * 1000;
-                        myTankInfo[0].d18_1 -= rightZ * 1000;
+                        myTankInfo[0].f1m_1 -= rightX * 1000;
+                        myTankInfo[0].g1m_1 -= rightZ * 1000;
                     };
                 }
 
@@ -1633,11 +1633,11 @@ function aa() {
             };
         };
         if (config.hacks.antiAim.enabled) {
-            myTankPos.c18_1 = getRandomNumberBetween(Object.values(mapBounds)[0], Object.values(mapBounds)[3]);
-            myTankPos.d18_1 = getRandomNumberBetween(Object.values(mapBounds)[1], Object.values(mapBounds)[4]);
-            myTankPos.e18_1 = config.hacks.antiAim.top ? Object.values(mapBounds)[5] : Object.values(mapBounds)[2];
+            myTankPos.f1m_1 = getRandomNumberBetween(Object.values(mapBounds)[0], Object.values(mapBounds)[3]);
+            myTankPos.g1m_1 = getRandomNumberBetween(Object.values(mapBounds)[1], Object.values(mapBounds)[4]);
+            myTankPos.h1m_1 = config.hacks.antiAim.top ? Object.values(mapBounds)[5] : Object.values(mapBounds)[2];
         };
-        if (config.hacks.followTank.enabled && otherTankPos?.c18_1) {
+        if (config.hacks.followTank.enabled && otherTankPos?.f1m_1) {
             if (!submitToKingF) {
                 for (let i=0;i<2;i++) {
                     var i2 = 0;
@@ -1656,30 +1656,30 @@ function aa() {
                     config.hacks.followTank.height -= config.hacks.airBreak.speed;
                     Extras[4].textContent = 'Height: ' + config.hacks.followTank.height;
                 };
-                myTankPos.c18_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], otherTankPos.c18_1));
-                myTankPos.d18_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], otherTankPos.d18_1));
-                myTankPos.e18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.e18_1 + config.hacks.followTank.height));
+                myTankPos.f1m_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], otherTankPos.f1m_1));
+                myTankPos.g1m_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], otherTankPos.g1m_1));
+                myTankPos.h1m_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.h1m_1 + config.hacks.followTank.height));
             } else {
                 var tPos = Tanki.interpolatedTankPosition;
-                tPos.c18_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], otherTankPos.c18_1));
-                tPos.d18_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], otherTankPos.d18_1));
-                tPos.e18_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.e18_1));
+                tPos.f1m_1 = Math.max(Object.values(mapBounds)[0], Math.min(Object.values(mapBounds)[3], otherTankPos.f1m_1));
+                tPos.g1m_1 = Math.max(Object.values(mapBounds)[1], Math.min(Object.values(mapBounds)[4], otherTankPos.g1m_1));
+                tPos.h1m_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.h1m_1));
             };
         };
         if (config.hacks.neverFlip.enabled) {
             if (!myTankInfo[1]) return;
             const maxAmount = config.hacks.neverFlip.amount;
             const dampingFactor = 0.8;
-            if (Math.abs(myTankInfo[1].h1b_1) > maxAmount) {
-                myTankInfo[1].h1b_1 *= dampingFactor;
-                if (Math.abs(myTankInfo[1].h1b_1) < maxAmount) {
-                    myTankInfo[1].h1b_1 = Math.sign(myTankInfo[1].h1b_1) * maxAmount;
+            if (Math.abs(myTankInfo[1].k1p_1) > maxAmount) {
+                myTankInfo[1].k1p_1 *= dampingFactor;
+                if (Math.abs(myTankInfo[1].k1p_1) < maxAmount) {
+                    myTankInfo[1].k1p_1 = Math.sign(myTankInfo[1].k1p_1) * maxAmount;
                 };
             };
-            if (Math.abs(myTankInfo[1].i1b_1) > maxAmount) {
-                myTankInfo[1].i1b_1 *= dampingFactor;
-                if (Math.abs(myTankInfo[1].i1b_1) < maxAmount) {
-                    myTankInfo[1].i1b_1 = Math.sign(myTankInfo[1].i1b_1) * maxAmount;
+            if (Math.abs(myTankInfo[1].l1p_1) > maxAmount) {
+                myTankInfo[1].l1p_1 *= dampingFactor;
+                if (Math.abs(myTankInfo[1].l1p_1) < maxAmount) {
+                    myTankInfo[1].l1p_1 = Math.sign(myTankInfo[1].l1p_1) * maxAmount;
                 };
             };
         };
@@ -1709,19 +1709,19 @@ function aa() {
                     myTankInfo[1].velocity[velocityAxis] * dampingFactor + blendedForce;
                 myTankInfo[1][axis] += myTankInfo[1].velocity[velocityAxis];
             };
-            handleAxis('h1b_1', 'h');
-            handleAxis('i1b_1', 'i');
+            handleAxis('k1p_1', 'h');
+            handleAxis('l1p_1', 'i');
         };*/
-        if (config.hacks.turretAim.enabled && otherTankPos?.c18_1) {
+        if (config.hacks.turretAim.enabled && otherTankPos?.f1m_1) {
             switch (config.hacks.turretAim.type) {
                 case 'camera':
-                    var dirX = otherTankPos.c18_1 - myTankPos.c18_1;
-                    var dirZ = otherTankPos.d18_1 - myTankPos.d18_1;
+                    var dirX = otherTankPos.f1m_1 - myTankPos.f1m_1;
+                    var dirZ = otherTankPos.g1m_1 - myTankPos.g1m_1;
                     Tanki.cameraDirection = Math.atan2(dirZ, dirX) - Math.PI/2;
                     break;
                 case 'turret':
-                    var deltaX = otherTankPos.c18_1 - myTankPos.c18_1;
-                    var deltaY = otherTankPos.d18_1 - myTankPos.d18_1;
+                    var deltaX = otherTankPos.f1m_1 - myTankPos.f1m_1;
+                    var deltaY = otherTankPos.g1m_1 - myTankPos.g1m_1;
                     var dirYaw = Math.atan2(deltaY, deltaX);
                     Tanki.turretDirection = (dirYaw - getTankYaw()) - Math.PI/2;
                     break;
@@ -1751,8 +1751,8 @@ function aa() {
             body.scaled = true;
         };
         if (submitToKingA && SodukoPos) {
-            var deltaX = SodukoPos.c18_1 - myTankPos.c18_1;
-            var deltaY = SodukoPos.d18_1 - myTankPos.d18_1;
+            var deltaX = SodukoPos.f1m_1 - myTankPos.f1m_1;
+            var deltaY = SodukoPos.g1m_1 - myTankPos.g1m_1;
             var dirYaw = Math.atan2(deltaY, deltaX);
             var offset = 0.2;
             var leftOffset = normalizeAngle((dirYaw - getTankYaw()) - Math.PI / 2 + offset);
@@ -1783,9 +1783,9 @@ function sendShells(player) {
         try {
             var shellRaycastMovement = getRaycastMovementOfShell(shell);
             var shellPos = Object.values(searchInObject(shellRaycastMovement, '=== 41'))[0];
-            shellPos.c18_1 = player.c18_1;
-            shellPos.d18_1 = player.d18_1;
-            shellPos.e18_1 = player.e18_1;
+            shellPos.f1m_1 = player.f1m_1;
+            shellPos.g1m_1 = player.g1m_1;
+            shellPos.h1m_1 = player.h1m_1;
             shellRaycastMovement.s18j_1 = 9999;
             shellRaycastMovement.number = i;
             //shells = shells.filter(shell2 => shell2 !== shell);
@@ -1856,9 +1856,9 @@ function setSpec() {
             cameraPos.x += cameraVel.x;
             cameraPos.y += cameraVel.y;
             cameraPos.z += cameraVel.z;
-            camera.c18_1 = cameraPos.x;
-            camera.d18_1 = cameraPos.y;
-            camera.e18_1 = cameraPos.z;
+            camera.f1m_1 = cameraPos.x;
+            camera.g1m_1 = cameraPos.y;
+            camera.h1m_1 = cameraPos.z;
         };
     };
     try {
@@ -1909,12 +1909,12 @@ function specPlayer(player) {
     function a3() {
         if (r3) {
             f3 = requestAnimationFrame(a3);
-            cameraPos.x += (player.c18_1 - cameraPos.x) * followSmoothingFactor;
-            cameraPos.y += (player.d18_1 - cameraPos.y) * followSmoothingFactor;
-            cameraPos.z += (player.e18_1 - cameraPos.z) * followSmoothingFactor;
-            camera.c18_1 = cameraPos.x;
-            camera.d18_1 = cameraPos.y;
-            camera.e18_1 = cameraPos.z;
+            cameraPos.x += (player.f1m_1 - cameraPos.x) * followSmoothingFactor;
+            cameraPos.y += (player.g1m_1 - cameraPos.y) * followSmoothingFactor;
+            cameraPos.z += (player.h1m_1 - cameraPos.z) * followSmoothingFactor;
+            camera.f1m_1 = cameraPos.x;
+            camera.g1m_1 = cameraPos.y;
+            camera.h1m_1 = cameraPos.z;
             if (config.hacks.spectate.faceTurret) {
                 Tanki.cameraDirection = getTankYaw2(playerInfo) + Tanki.getTurretDirectionOfTank(Player);
             };
@@ -1962,17 +1962,17 @@ function updateTankOrientationToCamera() {
     const cosYaw = Math.cos(halfYaw);
 
     const yawQuat = {
-        g1b_1: cosYaw,  // Rotation in X-axis (yaw)
-        h1b_1: 0,       // No rotation in Y-axis (pitch)
-        i1b_1: 0,       // No rotation in Z-axis (roll)
-        j1b_1: sinYaw   // Scalar part of the quaternion
+        j1p_1: cosYaw,  // Rotation in X-axis (yaw)
+        k1p_1: 0,       // No rotation in Y-axis (pitch)
+        l1p_1: 0,       // No rotation in Z-axis (roll)
+        m1p_1: sinYaw   // Scalar part of the quaternion
     };
 
     // Step 4: Apply the yaw quaternion to the tank's orientation
-    myTankInfo[1].g1b_1 = yawQuat.g1b_1;
-    myTankInfo[1].h1b_1 = yawQuat.h1b_1;
-    myTankInfo[1].i1b_1 = yawQuat.i1b_1;
-    myTankInfo[1].j1b_1 = yawQuat.j1b_1;
+    myTankInfo[1].j1p_1 = yawQuat.j1p_1;
+    myTankInfo[1].k1p_1 = yawQuat.k1p_1;
+    myTankInfo[1].l1p_1 = yawQuat.l1p_1;
+    myTankInfo[1].m1p_1 = yawQuat.m1p_1;
 };
 function searchInLargeObject(obj, target, byValue = false, trackPath = false, targetArrayLength = null) {
     const stack = [{ current: obj, path: [] }];
@@ -2119,9 +2119,9 @@ function getClosestPlayer(myTankPos, otherTanks) {
     otherTanks.forEach(tank => {
         tank = getPositionOfTank(tank);
         const distance = Math.sqrt(
-            Math.pow(tank.c18_1 - myTankPos.c18_1, 2) +
-            Math.pow(tank.d18_1 - myTankPos.d18_1, 2) +
-            Math.pow(tank.e18_1 - myTankPos.e18_1, 2)
+            Math.pow(tank.f1m_1 - myTankPos.f1m_1, 2) +
+            Math.pow(tank.g1m_1 - myTankPos.g1m_1, 2) +
+            Math.pow(tank.h1m_1 - myTankPos.h1m_1, 2)
         );
         if (distance < closestDistance) {
             closestDistance = distance;
@@ -2132,9 +2132,9 @@ function getClosestPlayer(myTankPos, otherTanks) {
 };
 function faceTargetQuaternion(myTankPos, otherTankPos, myTankInfo) {
     let direction = {
-        x: otherTankPos.c18_1 - myTankPos.c18_1,
-        y: otherTankPos.d18_1 - myTankPos.d18_1,
-        z: otherTankPos.e18_1 - myTankPos.e18_1
+        x: otherTankPos.f1m_1 - myTankPos.f1m_1,
+        y: otherTankPos.g1m_1 - myTankPos.g1m_1,
+        z: otherTankPos.h1m_1 - myTankPos.h1m_1
     };
     let magnitude = Math.sqrt(direction.x ** 2 + direction.y ** 2 + direction.z ** 2);
     if (magnitude < 1e-6) {
@@ -2156,22 +2156,22 @@ function faceTargetQuaternion(myTankPos, otherTankPos, myTankInfo) {
         y: sy * cp,
         z: -sy * sp
     };
-    myTankInfo[1].i1b_1 = -quaternion.x;
-    myTankInfo[1].h1b_1 = -quaternion.z;
-    myTankInfo[1].g1b_1 = -quaternion.y;
-    myTankInfo[1].j1b_1 = quaternion.w;
+    myTankInfo[1].l1p_1 = -quaternion.x;
+    myTankInfo[1].k1p_1 = -quaternion.z;
+    myTankInfo[1].j1p_1 = -quaternion.y;
+    myTankInfo[1].m1p_1 = quaternion.w;
     return quaternion;
 };
 function getTankYaw() {
-    const { g1b_1: w, i1b_1: x, j1b_1: y, h1b_1: z } = myTankInfo[1];
+    const { j1p_1: w, l1p_1: x, m1p_1: y, k1p_1: z } = myTankInfo[1];
     const sinY = 2 * (w * y + x * z);
     const cosY = 1 - 2 * (y * y + z * z);
     return Math.atan2(sinY, cosY);
 };
 function getTankYaw2(t) {
-    const { i1b_1, h1b_1, g1b_1, j1b_1 } = t[1];
-    const sinY = 2 * (j1b_1 * i1b_1 + g1b_1 * i1b_1);
-    const cosY = 1 - 2 * (i1b_1 * i1b_1 + g1b_1 * g1b_1);
+    const { l1p_1, k1p_1, j1p_1, m1p_1 } = t[1];
+    const sinY = 2 * (m1p_1 * l1p_1 + j1p_1 * l1p_1);
+    const cosY = 1 - 2 * (l1p_1 * l1p_1 + j1p_1 * j1p_1);
     return Math.atan2(sinY, cosY);
 };
 function normalizeAngle(angle) {
@@ -2210,8 +2210,8 @@ function findClosestEnemy(tankPosition, cameraDirection, enemies) {
         .map(enemy => {
             enemy = getPositionOfTank(enemy);
             const vectorToEnemy = {
-                x: enemy.c18_1 - tankPosition.c18_1,
-                z: enemy.d18_1 - tankPosition.d18_1
+                x: enemy.f1m_1 - tankPosition.f1m_1,
+                z: enemy.g1m_1 - tankPosition.g1m_1
             };
             const normalizedVector = normalize(vectorToEnemy);
             const cosineTheta = dotProduct(cameraVector, normalizedVector);
@@ -2224,8 +2224,8 @@ function findClosestEnemy(tankPosition, cameraDirection, enemies) {
     return closestEnemy;
 };
 function getRelativePosition(myTankPos, otherTankPos, cameraDirection) {
-    var deltaX = otherTankPos.c18_1 - myTankPos.c18_1;
-    var deltaY = otherTankPos.d18_1 - myTankPos.d18_1;
+    var deltaX = otherTankPos.f1m_1 - myTankPos.f1m_1;
+    var deltaY = otherTankPos.g1m_1 - myTankPos.g1m_1;
     var dirYaw = Math.atan2(deltaY, deltaX);
     var relativeAngle = Math.atan2(Math.sin(dirYaw - cameraDirection), Math.cos(dirYaw - cameraDirection));
     if (relativeAngle > 0) return "right";
