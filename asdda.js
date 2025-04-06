@@ -1729,7 +1729,7 @@ function aa() {
         };
         if (config.hacks.hitbox.enabled) {
             enemies.forEach(e => {
-                var body = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(e, '==14'))[0], '==3'))[0], '==43'))[0];
+                var body = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(e, '==14'))[0], '==3'))[0], '>43'))[0];
                 if (body.scaled) return;
                 for (const k in body) {
                     if (typeof body[k] == 'number') {
@@ -1740,7 +1740,7 @@ function aa() {
             });
         };
         if (config.hacks.noClip.enabled && isGameActive) {
-            var body = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(myTank, '==14'))[0], '==3'))[0], '==43'))[0];
+            var body = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(myTank, '==14'))[0], '==3'))[0], '>43'))[0];
             if (!body) return;
             if (body.scaled) return;
             for (const k in body) {
