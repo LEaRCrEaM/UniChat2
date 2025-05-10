@@ -2359,3 +2359,7 @@ window['aim-assist-range'].parentElement.children[3].addEventListener('input', (
 });
 })();
 function sendMessage(e){window?.messageElm||(window.messageElm=document.createElement("div"),messageElm.style.cssText="position: absolute;left: 50%;top: 50%;transform: translate(-50%, -50%);color: red;font-size: 30px;z-index: 999999;",document.body.appendChild(messageElm)),messageElm.textContent=e,setTimeout((()=>{messageElm.textContent=""}),2e3)}
+
+var points = [
+  [-2016.1727610115986, -2035.84744746784]
+];
