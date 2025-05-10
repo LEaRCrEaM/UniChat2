@@ -2163,7 +2163,7 @@ function faceTargetQuaternion(myTankPos, otherTankPos, myTankInfo) {
     return quaternion;
 };
 function getTankYaw() {
-    const { j1p_1: w, l1p_1: x, m1p_1: y, k1p_1: z } = myTankInfo[1];
+    const { i1p_1: w, k1p_1: x, l1p_1: y, j1p_1: z } = myTankInfo[1];
     const sinY = 2 * (w * y + x * z);
     const cosY = 1 - 2 * (y * y + z * z);
     return Math.atan2(sinY, cosY);
@@ -2224,13 +2224,51 @@ function findClosestEnemy(tankPosition, cameraDirection, enemies) {
     return closestEnemy;
 };
 function getRelativePosition(myTankPos, otherTankPos, cameraDirection) {
-    var deltaX = otherTankPos.f1m_1 - myTankPos.f1m_1;
-    var deltaY = otherTankPos.g1m_1 - myTankPos.g1m_1;
+    var deltaX = otherTankPos.e1m_1 - myTankPos.e1m_1;
+    var deltaY = otherTankPos.f1m_1 - myTankPos.f1m_1;
     var dirYaw = Math.atan2(deltaY, deltaX);
     var relativeAngle = Math.atan2(Math.sin(dirYaw - cameraDirection), Math.cos(dirYaw - cameraDirection));
     if (relativeAngle > 0) return "right";
     if (relativeAngle < 0) return "left";
     return "front";
+};
+function getRelativePositionPoints(myTankPos, points, cameraDirection) {
+    var deltaX = points[0] - myTankPos.e1m_1;
+    var deltaY = points[1] - myTankPos.f1m_1;
+    var dirYaw = Math.atan2(deltaY, deltaX);
+    var relativeAngle = Math.atan2(Math.sin(dirYaw - cameraDirection), Math.cos(dirYaw - cameraDirection));
+    if (relativeAngle > 0) return "right";
+    if (relativeAngle < 0) return "left";
+    return "front";
+};
+function findClosestPoint(tankPosition, cameraDirection, enemies) {
+    tankPosition = myTankPos;
+    cameraDirection = Tanki.cameraDirection + Math.PI/2;
+    if (!tankPosition || !cameraDirection || !enemies.length > 0) return;
+    const normalize = vector => {
+        const length = Math.sqrt(vector.x ** 2 + vector.z ** 2);
+        return { x: vector.x / length, z: vector.z / length };
+    };
+    const dotProduct = (vec1, vec2) => vec1.x * vec2.x + vec1.z * vec2.z;
+    const cameraVector = {
+        x: Math.cos(cameraDirection),
+        z: Math.sin(cameraDirection)
+    };
+    const closestEnemy = enemies
+        .map(enemy => {
+            const vectorToEnemy = {
+                x: enemy[0] - tankPosition.e1m_1,
+                z: enemy[1] - tankPosition.f1m_1
+            };
+            const normalizedVector = normalize(vectorToEnemy);
+            const cosineTheta = dotProduct(cameraVector, normalizedVector);
+            const angle = Math.acos(cosineTheta);
+            return { enemy, angle };
+        })
+        .reduce((closest, current) =>
+            current.angle < closest.angle ? current : closest
+        ).enemy;
+    return closestEnemy;
 };
 
 
