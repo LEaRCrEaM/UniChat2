@@ -728,9 +728,9 @@ function freezeTanksFunc() {
                 if (!e._pos) {	
                     e._pos = {x:pos.f1m_1,y:pos.g1m_1,z:pos.h1m_1};
                 };
-                pos.f1m_1 = e._pos.x;
-                pos.g1m_1 = e._pos.y;
-                pos.h1m_1 = e._pos.z;
+                pos.e1m_1 = e._pos.x;
+                pos.f1m_1 = e._pos.y;
+                pos.g1m_1 = e._pos.z;
             });
         } else {
             if (enemies[0]?._pos) {
