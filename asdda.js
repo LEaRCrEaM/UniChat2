@@ -726,7 +726,7 @@ function freezeTanksFunc() {
                 };
                 var pos = getPositionOfTank(e);
                 if (!e._pos) {	
-                    e._pos = {x:pos.f1m_1,y:pos.g1m_1,z:pos.h1m_1};
+                    e._pos = {x:pos.e1m_1,y:pos.f1m_1,z:pos.g1m_1};
                 };
                 pos.e1m_1 = e._pos.x;
                 pos.f1m_1 = e._pos.y;
