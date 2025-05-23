@@ -973,7 +973,7 @@ if (false && localStorage['apap'] == 'true') {
 document.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.key == 'm') {
         e.preventDefault();
-        alert('changed keybind to the "Insert" key');
+        alert('changed keybind to the "Insert" or "0" key');
         /*if (1 > 0 || isAllowed) {
           document.querySelector('#main').style.display = document.querySelector('#main').style.display == 'block' ? 'none' : 'block';
         } else {
