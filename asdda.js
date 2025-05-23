@@ -2566,7 +2566,7 @@ box-shadow: 0 0 20px #00ffcc;
         });
         spectate.addMonitor(config.hacks.spectate, 'enabled');
         document.addEventListener('keydown', (e) => {
-            if (e.key == 'Insert') {
+            if ((e.key == 'Insert') || (e.key == '0')) {
                 pane.hidden = pane.hidden ? false : true;
             };
         });
