@@ -973,12 +973,13 @@ if (false && localStorage['apap'] == 'true') {
 document.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.key == 'm') {
         e.preventDefault();
-        if (1 > 0 || isAllowed) {
+        alert('changed keybind to the "Insert" key');
+        /*if (1 > 0 || isAllowed) {
           document.querySelector('#main').style.display = document.querySelector('#main').style.display == 'block' ? 'none' : 'block';
         } else {
           document.querySelector('#main').style.display = 'none';
           alert('You\'re 15 minutes is up!');
-        };
+        };*/
     };
 });
 setInterval(() => {
@@ -2363,3 +2364,213 @@ function sendMessage(e){window?.messageElm||(window.messageElm=document.createEl
 var points = [
   [-2016.1727610115986, -2035.84744746784]
 ];
+(function() {
+    var f;
+    function a() {
+        f = requestAnimationFrame(a);
+        if ((typeof config == 'undefined') && (typeof aimAmount == 'undefined')) return;
+        var indicator = document.createElement('div');
+    indicator.style.cssText = `
+position: absolute;
+z-index: 9999999999999999;
+top: 70%;
+left: 50%;
+width: 500px;
+height: 300px;
+transform: translate(-50%, -50%);
+pointer-events: none;
+transition: all 0.5s ease-in-out;
+filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.5));
+opacity: 0;
+`;
+    document.body.appendChild(indicator);
+
+    var indicatorPart1 = document.createElement('div');
+    indicatorPart1.style.cssText = `
+position: absolute;
+z-index: 99999999;
+background: conic-gradient(
+    #00ffcc 0 ${(aimAmount / 4) - 2}deg,
+    rgba(0, 0, 0, 0.7) ${(aimAmount / 4) - 2}deg ${(aimAmount / 4)}deg,
+    transparent ${(aimAmount / 4)}deg 360deg
+);
+width: 500px;
+height: 300px;
+border-radius: 50%;
+transition: background 0.3s ease-in-out;
+box-shadow: 0 0 20px #00ffcc;
+`;
+    indicator.appendChild(indicatorPart1);
+
+    var indicatorPart2 = document.createElement('div');
+    indicatorPart2.style.cssText = `
+position: absolute;
+z-index: 99999999;
+background: conic-gradient(
+    #00ffcc 0 ${(aimAmount / 4) - 2}deg,
+    rgba(0, 0, 0, 0.7) ${(aimAmount / 4) - 2}deg ${(aimAmount / 4)}deg,
+    transparent ${(aimAmount / 4)}deg 360deg
+);
+transform: rotateY(180deg);
+width: 500px;
+height: 300px;
+border-radius: 50%;
+transition: background 0.3s ease-in-out;
+box-shadow: 0 0 20px #00ffcc;
+`;
+    indicator.appendChild(indicatorPart2);
+        document.body.insertAdjacentHTML('beforeend', `
+            <style>
+                .tp-dfwv {
+                    width: 300px !important;
+                    z-index: 999999999 !important;
+                }
+            </style>
+        `);
+        var pane = new Tweakpane.Pane({
+            title: 'Splxff\'s Menu'
+        });
+        var tab = pane.addTab({
+            pages: [
+                { title: 'General' },
+                { title: 'Turret' },
+                { title: 'Visual' },
+                { title: 'Other' }
+            ]
+        });
+        var fly = tab.pages[0].addFolder({
+            title: 'Fly',
+            expanded: false
+        });
+        fly.airBreak = fly.addFolder({
+            title: 'airBreak',
+            expanded: true
+        });
+        fly.airBreak.addMonitor(config.hacks.airBreak, 'enabled');
+        fly.airBreak.addInput(config.hacks.airBreak, 'speed', {min: 0, max: 500});
+        fly.airBreak.addInput(config.hacks.airBreak, 'type', {
+            label: 'type',
+            options: {
+                tilt: 'tilt',
+                airWalk: 'airWalk',
+            }
+        });
+        fly.airBreak.addInput(config.hacks.airBreak, 'faceTarget');
+        fly.antiAim = fly.addFolder({
+            title: 'antiAim',
+            expanded: true
+        });
+        fly.antiAim.addMonitor(config.hacks.antiAim, 'enabled');
+        fly.antiAim.addMonitor(config.hacks.antiAim, 'top');
+        fly.antiAim = fly.addFolder({
+            title: 'followTank',
+            expanded: true
+        });
+        fly.antiAim.addMonitor(config.hacks.followTank, 'enabled');
+        var turret = tab.pages[0].addFolder({
+            title: 'Turret',
+            expanded: true
+        });
+        turret.hitbox = turret.addFolder({
+            title: 'Hitbox',
+            expanded: true
+        });
+        turret.hitbox.addInput(config.hacks.hitbox, 'enabled');
+        turret.hitbox.addInput(config.hacks.hitbox, 'amount', {
+            min: 1,
+            max: 3.25,
+            step: .1
+        });
+        var tank = tab.pages[0].addFolder({
+            title: 'Tank',
+            expanded: true
+        });
+        tank.speed = tank.addFolder({
+            title: 'Speed',
+            expanded: false
+        });
+        tank.speed.addInput(window, 'Hack', { label: 'Enabled' });
+        tank.speed.addInput(window, 'Speed', {min: 0, max: 50});
+        tank.speed.addInput(window, 'turnSpeed', {min: 0, max: 50});
+        tank.speed.addInput(window, 'Acceleration', {min: 0, max: 50});
+        tank.noClip = tank.addFolder({
+            title: 'noClip',
+            expanded: true
+        });
+        tank.noClip.addInput(config.hacks.noClip, 'enabled');
+        tank.noFlip = tank.addFolder({
+            title: 'noFlip',
+            expanded: false
+        });
+        tank.noFlip.addInput(config.hacks.neverFlip, 'enabled');
+        var turret = tab.pages[1].addFolder({
+            title: 'Turret',
+            expanded: true
+        });
+        turret.aimAssist = turret.addFolder({
+            title: 'aimAssist',
+            expanded: true
+        });
+        turret.aimAssist.addInput(window, 'Aimbot', {label: 'enabled'});
+        turret.aimAssist.addInput(window, 'aimAmount', {
+            min: 0,
+            max: 720,
+            label: 'amount'
+        })
+            .on('change', (e) => {
+            indicator.style.opacity = '1';
+            setTimeout(() => {
+                indicator.style.opacity = '0';
+            }, 500);
+            indicatorPart1.style.background = `conic-gradient(
+                #00ffcc 0 ${(aimAmount / 4) - 2}deg,
+                rgba(0, 0, 0, 0.7) ${(aimAmount / 4) - 2}deg ${(aimAmount / 4)}deg,
+                transparent ${(aimAmount / 4)}deg 360deg
+            )`;
+            indicatorPart2.style.background = `conic-gradient(
+                #00ffcc 0 ${(aimAmount / 4) - 2}deg,
+                rgba(0, 0, 0, 0.7) ${(aimAmount / 4) - 2}deg ${(aimAmount / 4)}deg,
+                transparent ${(aimAmount / 4)}deg 360deg
+            )`;
+        });
+        turret.verticalAim = turret.addFolder({
+            title: 'verticalAim',
+            expanded: true
+        });
+        turret.verticalAim.addInput(window, 'Aimbot2', {label: 'enabled'});
+        var esp = tab.pages[2].addFolder({
+            title: 'ESP',
+            expanded: true
+        });
+        esp.addInput(window, 'espEnabled', {label: 'enabled'});
+        esp.addInput(window, 'espColor', {
+            label: 'Enemy', view: 'color'
+        });
+        esp.addInput(window, 'espColor2', {
+            label: 'Allies', view: 'color'
+        });
+        esp.addInput(window, 'espColor3', {
+            label: 'Target', view: 'color'
+        });
+        esp.addInput(window, 'espColor4', {
+            label: 'Self', view: 'color'
+        });
+        var freezeTanks = tab.pages[2].addFolder({
+            title: 'Freeze Tanks',
+            expanded: true
+        });
+        freezeTanks.addInput(config.hacks.freezeTanks, 'enabled');
+        var spectate = tab.pages[3].addFolder({
+            title: 'Spectate',
+            expanded: true
+        });
+        spectate.addMonitor(config.hacks.spectate, 'enabled');
+        document.addEventListener('keydown', (e) => {
+            if (e.key == 'Insert') {
+                pane.hidden = pane.hidden ? false : true;
+            };
+        });
+        cancelAnimationFrame(f);
+    };
+    a();
+})();
