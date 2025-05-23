@@ -1671,16 +1671,16 @@ function aa() {
             if (!myTankInfo[1]) return;
             const maxAmount = config.hacks.neverFlip.amount;
             const dampingFactor = 0.8;
+            if (Math.abs(myTankInfo[1].j1p_1) > maxAmount) {
+                myTankInfo[1].j1p_1 *= dampingFactor;
+                if (Math.abs(myTankInfo[1].j1p_1) < maxAmount) {
+                    myTankInfo[1].j1p_1 = Math.sign(myTankInfo[1].j1p_1) * maxAmount;
+                };
+            };
             if (Math.abs(myTankInfo[1].k1p_1) > maxAmount) {
                 myTankInfo[1].k1p_1 *= dampingFactor;
                 if (Math.abs(myTankInfo[1].k1p_1) < maxAmount) {
                     myTankInfo[1].k1p_1 = Math.sign(myTankInfo[1].k1p_1) * maxAmount;
-                };
-            };
-            if (Math.abs(myTankInfo[1].l1p_1) > maxAmount) {
-                myTankInfo[1].l1p_1 *= dampingFactor;
-                if (Math.abs(myTankInfo[1].l1p_1) < maxAmount) {
-                    myTankInfo[1].l1p_1 = Math.sign(myTankInfo[1].l1p_1) * maxAmount;
                 };
             };
         };
