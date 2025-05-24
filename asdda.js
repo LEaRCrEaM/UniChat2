@@ -808,6 +808,15 @@ function InputHandle(p, s) {
       };
       if (p.srcElement.id == 'neverFlip') {
           config.hacks.neverFlip.enabled = p.srcElement.checked;
+          if (config.hacks.neverFlip.enabled && myTankInfo[1]) {
+              const max = config.hacks.neverFlip.amount;
+              lockTankValue(myTankInfo[1], "j1p_1", max);
+              lockTankValue(myTankInfo[1], "k1p_1", max);
+          };
+          if (!config.hacks.neverFlip.enabled && myTankInfo[1]) {
+              unlockTankValue(myTankInfo[1], "j1p_1");
+              unlockTankValue(myTankInfo[1], "k1p_1");
+          };
           return;
       };
       if (p.srcElement.id == 'esp-check') {
@@ -1668,7 +1677,7 @@ function aa() {
                 tPos.h1m_1 = Math.max(Object.values(mapBounds)[2], Math.min(Object.values(mapBounds)[5]+100, otherTankPos.h1m_1));
             };
         };
-        if (config.hacks.neverFlip.enabled) {
+        /*if (config.hacks.neverFlip.enabled) {
             if (!myTankInfo[1]) return;
             if (!config.hacks.neverFlip.done) {
                 const max = config.hacks.neverFlip.amount;
@@ -1689,7 +1698,7 @@ function aa() {
                 if (Math.abs(myTankInfo[1].k1p_1) < maxAmount) {
                     myTankInfo[1].k1p_1 = Math.sign(myTankInfo[1].k1p_1) * maxAmount;
                 };
-            };*/
+            };*\/
         } else {
             if (!myTankInfo[1]) return;
             if (config.hacks.neverFlip.done) {
@@ -1697,7 +1706,7 @@ function aa() {
                 unlockTankValue(myTankInfo[1], "k1p_1");
                 config.hacks.neverFlip.done = false;
             };
-        };
+        };*/
         /*if (config.hacks.neverFlip.enabled) {
             if (!myTankInfo[1]) return;
             const maxAmount = config.hacks.neverFlip.amount; // Max tilt before applying correction
