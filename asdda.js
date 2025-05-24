@@ -1429,7 +1429,8 @@ var config = {
         },
         neverFlip: {
             enabled: false,
-            amount: .4
+            amount: .4,
+            done: false
         },
         turretAim: {
             enabled: false,
@@ -1669,7 +1670,13 @@ function aa() {
         };
         if (config.hacks.neverFlip.enabled) {
             if (!myTankInfo[1]) return;
-            const maxAmount = config.hacks.neverFlip.amount;
+            if (!config.hacks.neverFlip.done) {
+                const max = config.hacks.neverFlip.amount;
+                lockTankValue(myTankInfo[1], "j1p_1", max);
+                lockTankValue(myTankInfo[1], "k1p_1", max);
+                config.hacks.neverFlip.done = true;
+            };
+            /*const maxAmount = config.hacks.neverFlip.amount;
             const dampingFactor = 0.8;
             if (Math.abs(myTankInfo[1].j1p_1) > maxAmount) {
                 myTankInfo[1].j1p_1 *= dampingFactor;
@@ -1682,6 +1689,13 @@ function aa() {
                 if (Math.abs(myTankInfo[1].k1p_1) < maxAmount) {
                     myTankInfo[1].k1p_1 = Math.sign(myTankInfo[1].k1p_1) * maxAmount;
                 };
+            };*/
+        } else {
+            if (!myTankInfo[1]) return;
+            if (config.hacks.neverFlip.done) {
+                unlockTankValue(myTankInfo[1], "j1p_1");
+                unlockTankValue(myTankInfo[1], "k1p_1");
+                config.hacks.neverFlip.done = false;
             };
         };
         /*if (config.hacks.neverFlip.enabled) {
@@ -2223,6 +2237,25 @@ function findClosestEnemy(tankPosition, cameraDirection, enemies) {
             current.angle < closest.angle ? current : closest
         ).enemy;
     return closestEnemy;
+};
+function lockTankValue(obj, key, maxAmount) {
+    let internalValue = obj[key] || 0;
+    Object.defineProperty(obj, key, {
+        get() {
+            return internalValue;
+        },
+        set(val) {
+            const absVal = Math.abs(val);
+            internalValue = absVal > maxAmount ? Math.sign(val) * maxAmount : val;
+        },
+        configurable: true,
+        enumerable: true
+    });
+};
+function unlockTankValue(obj, key) {
+    const currentValue = obj[key];
+    delete obj[key];
+    obj[key] = currentValue;
 };
 function getRelativePosition(myTankPos, otherTankPos, cameraDirection) {
     var deltaX = otherTankPos.e1m_1 - myTankPos.e1m_1;
