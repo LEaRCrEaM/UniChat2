@@ -1080,7 +1080,7 @@ function getInfoOfTank(t) {
     return Object.values(Object.values(searchInObject(t, '=== 2'))[0])
 };
 function getRaycastMovementOfShell(t) {
-    return Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(t, '==18'))[0], '==0'))[0], '==3'))[1], '==8'))[0], '==6'))[1];
+    return Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(t, '==17'))[0], '==0'))[0], '==3'))[1], '==8'))[0], '==6'))[1];
 };
 function isChatOpen() {
     return document.querySelectorAll('input[type="text"]').length > 0;
@@ -2131,10 +2131,10 @@ var Tanki = {
         return Utils.turret[Tanki.turretDirectionName] = t;
     },
     getTurretDirectionOfTank: function (t) {
-        return Object.values(Object.values(searchInObject(Object.values(searchInObject(Object.entries(Object.values(Object.values(searchInObject(Object.values(searchInObject(t.espInfo, '==15'))[0], '==18'))[0])[0]).filter(t => t[1]?.m12z_1)[0][1], '==14'))[0], '==19'))[1])[1][0][Tanki.turretDirectionName];
+        return Object.values(Object.values(searchInObject(Object.values(searchInObject(Object.entries(Object.values(Object.values(searchInObject(Object.values(searchInObject(t.espInfo, '==15'))[0], '==17'))[0])[0]).filter(t => t[1]?.m12z_1)[0][1], '==14'))[0], '==19'))[1])[1][0][Tanki.turretDirectionName];
     },
     setTurretDirectionOfTank: function (t, p) {
-        return Object.values(Object.values(searchInObject(Object.values(searchInObject(Object.entries(Object.values(Object.values(searchInObject(Object.values(searchInObject(t.espInfo, '==15'))[0], '==18'))[0])[0]).filter(t => t[1]?.m12z_1)[0][1], '==14'))[0], '==19'))[1])[1][0][Tanki.turretDirectionName] = p;
+        return Object.values(Object.values(searchInObject(Object.values(searchInObject(Object.entries(Object.values(Object.values(searchInObject(Object.values(searchInObject(t.espInfo, '==15'))[0], '==17'))[0])[0]).filter(t => t[1]?.m12z_1)[0][1], '==14'))[0], '==19'))[1])[1][0][Tanki.turretDirectionName] = p;
     }
 };
 function getClosestPlayer(myTankPos, otherTanks) {
