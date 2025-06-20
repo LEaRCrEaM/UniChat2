@@ -1195,28 +1195,28 @@ function getTanks(t) {
     if (t == 'others') {
         return Object.values(Tanki.allTanks).filter(p => {
             var first1 = Object.values(searchInObject(Object.values(p).filter(t => t?.__proto__), '=== 15'))[0];
-            var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 18');
+            var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 17');
             var third1 = searchInObject(Object.values(Object.values(second1)[0])[0], '==8');
             return typeof Object.values(searchInObject(Object.values(third1)[1], '==0'))[2] == 'number';
         });
     } else if (t == 'self') {
         return Object.values(Tanki.allTanks).filter(p => {
             var first1 = Object.values(searchInObject(Object.values(p).filter(t => t?.__proto__), '=== 15'))[0];
-            var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 18');
+            var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 17');
             var third1 = searchInObject(Object.values(Object.values(second1)[0])[0], '==8');
             return typeof Object.values(searchInObject(Object.values(third1)[1], '==0'))[2] == 'boolean';
         });
     } else if (t.includes('player')) {
         return Object.values(Tanki.allTanks).filter(p => {
             var first1 = Object.values(searchInObject(Object.values(p).filter(t => t?.__proto__), '=== 15'))[0];
-            var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 18');
+            var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 17');
             var third1 = searchInObject(Object.values(Object.values(second1)[0])[0], '==8');
             return Object.values(searchInObject(Object.values(third1)[1], '==0'))[1]?.toString()?.includes(t.replace('player', ''));
         });
     } else if (t.includes('enemies')) {
         return Object.values(Tanki.allTanks).filter(p => {
             var first1 = Object.values(searchInObject(Object.values(p).filter(t => t?.__proto__), '=== 15'))[0];
-            var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 18');
+            var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 17');
             var third1 = searchInObject(Object.values(Object.values(second1)[0])[0], '==8');
             var fourth1;
             try {
@@ -1227,7 +1227,7 @@ function getTanks(t) {
     } else if (t.includes('allies')) {
         return Object.values(Tanki.allTanks).filter(p => {
             var first1 = Object.values(searchInObject(Object.values(p).filter(t => t?.__proto__), '=== 15'))[0];
-            var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 18');
+            var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 17');
             var third1 = searchInObject(Object.values(Object.values(second1)[0])[0], '==8');
             var fourth1;
             try {
