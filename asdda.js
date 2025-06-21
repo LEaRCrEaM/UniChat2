@@ -1753,8 +1753,13 @@ function aa() {
         };
         if (config.hacks.hitbox.enabled) {
             enemies.forEach(e => {
-                var body = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(e, '==16'))[0], '==3'))[0], '>43'))[0];
-                if (body.scaled) return;
+                var body;
+                try {
+                    body = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(e, '==16'))[0], '==3'))[0], '>43'))[0];
+                } catch (er) {
+                    return;
+                };
+                if (body?.scaled) return;
                 for (const k in body) {
                     if (typeof body[k] == 'number') {
                         body[k] *= config.hacks.hitbox.amount;
