@@ -41,8 +41,8 @@ class CustomAudioBuffer {
 var oF = CanvasRenderingContext2D.prototype.fillText;
 var oS = CanvasRenderingContext2D.prototype.strokeText;
 CanvasRenderingContext2D.prototype.fillText = function() {
-    if (arguments[0] && typeof arguments[0] == 'string' && ['Soduko', 'Scars'].some(t => arguments[0].includes(t))) {
-        arguments[0] = arguments[0].replaceAll('Soduko', 'King').replaceAll('Scars', 'King');
+    if (arguments[0] && typeof arguments[0] == 'string' && ['Leave', 'Scars'].some(t => arguments[0].includes(t))) {
+        arguments[0] = arguments[0].replaceAll('Leave', 'King').replaceAll('Scars', 'King');
         return oF.apply(this, arguments);
     };
     if (arguments[0] && typeof arguments[0] == 'string' && ['Sick', 'Thrife'].some(t => arguments[0].includes(t))) {
@@ -52,8 +52,8 @@ CanvasRenderingContext2D.prototype.fillText = function() {
     return oF.apply(this, arguments);
 };
 CanvasRenderingContext2D.prototype.strokeText = function() {
-    if (arguments[0] && typeof arguments[0] == 'string' && ['Soduko', 'Scars'].some(t => arguments[0].includes(t))) {
-        arguments[0] = arguments[0].replaceAll('Soduko', 'King').replaceAll('Scars', 'King');
+    if (arguments[0] && typeof arguments[0] == 'string' && ['Leave', 'Scars'].some(t => arguments[0].includes(t))) {
+        arguments[0] = arguments[0].replaceAll('Leave', 'King').replaceAll('Scars', 'King');
         return oS.apply(this, arguments);
     };
     if (arguments[0] && typeof arguments[0] == 'string' && ['Sick', 'Thrife'].some(t => arguments[0].includes(t))) {
