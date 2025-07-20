@@ -1831,7 +1831,7 @@ const followSmoothingFactor = 0.1;
 function b() {}
 function getSpec() {
     var first2 = searchInObject(Utils.followCamera, '==1');
-    var second2 = searchInObject(Object.values(first2)[3], '==43');
+    var second2 = searchInObject(Object.values(first2)[4], '>43');
     return Object.values(second2)[0];
 };
 function getCamYaw() {
@@ -1842,10 +1842,10 @@ function saveCameraFuncs() {
         cameraFuncs[k] = t[k];
     };
 };
-var camSpeed = 100;
+var camSpeed = 25;
 function setSpec() {
     config.hacks.spectate.enabled = true;
-    myTank[tankMovable] = false;
+    //myTank[tankMovable] = false;
     for (const k in t = camera) {
         if (typeof t[k] == 'function') {
             t[k] = function() {};
