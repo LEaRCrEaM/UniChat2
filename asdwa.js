@@ -44,7 +44,7 @@
                     User.patata = '';
                 }, 5000);*/
                 if ((User.name.length > 2) && ([/*'Midway', 'Queen.of.Spain', 'Arpecu9_KunuT_Bo_MHe', 'DerMar'*//*, 'Who_Boss', 'POLYANASMEHA', '0_0_PBX_2.0', '30P', 'NewAguero', 'Shot.Of.Liquor_43', 'NertZ''Lend'*/, 'Luciana', 'Zeppelin', 'GoneGhost', 'FeD-K9', 'Sandy', 'Softer', 'Queen.exe', 'ThinkTwice', 'ArmadiIlo'].includes(User.name))) {
-                    alert(`No Access. Contant '.r3y_' on Discord.`);
+                    alert(`No Access. Contact '.r3y_' on Discord.`);
                     for (const k in window) {
                         window[k] = 't';
                     };
