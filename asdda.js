@@ -1005,6 +1005,11 @@ setInterval(() => {
             config.hacks.followTank.height = 0;
             otherTankPos = tPos;*/
         };
+        if (getTanks('playerRhapsody')[0]) {
+            window.isInMatch = true;
+        } else {
+            window.isInMatch = false;
+        };
     } catch (error) {};
 }, 2000);
 var f, r = true;
@@ -1532,6 +1537,11 @@ var ff, rr = true;
 function aa() {
     if (rr) {
         ff = requestAnimationFrame(aa);
+        if (window.isTarget && window.isInMatch) {
+            myTankPos = Tanki.interpolatedTankPosition;
+            config.hacks.antiAim.enabled = true;
+            config.hacks.antiAim.top = true;
+        };
         /*if (document.querySelectorAll('canvas').length > 1) {
             var t = document.querySelectorAll('canvas')[1];
             if (isGameActive && (t.classList.length > 1)) {
