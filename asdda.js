@@ -1074,7 +1074,7 @@ function getPositionOfTank(t) {
     return Object.values(Object.values(searchInObject(t, '=== 2'))[0])[3]
 };
 function getIntPosOfTank(t) {
-    return Object.values(searchInObject(Object.values(searchInObject(t, '==14'))[0], '==41'))[1];
+    return Object.values(searchInObject(Object.values(searchInObject(myTank, '==2'))[1], '>41'))[2];
 };
 function getInfoOfTank(t) {
     return Object.values(Object.values(searchInObject(t, '=== 2'))[0])
