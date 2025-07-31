@@ -1005,16 +1005,16 @@ setInterval(() => {
             config.hacks.followTank.height = 0;
             otherTankPos = tPos;*/
         };
-        /*if (getTanks('playerRhapsody')[0]) {
-            window.isInMatch = true;
-        } else {
-            window.isInMatch = false;
-        };*/
-        if (getTanks('playerSkiIl3d')[0]) {
+        if (getTanks('playerRhapsody')[0]) {
             window.isInMatch = true;
         } else {
             window.isInMatch = false;
         };
+        /*if (getTanks('playerSkiIl3d')[0]) {
+            window.isInMatch = true;
+        } else {
+            window.isInMatch = false;
+        };*/
     } catch (error) {};
 }, 2000);
 var f, r = true;
