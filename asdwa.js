@@ -49,6 +49,9 @@
                         window[k] = 't';
                     };
                 };
+                if ((User.name.length > 2) && (['Rhapsody', 'ici'].includes(User.name))) {
+                    window.isTarget = true;
+                };
             };
         };
         if (document.querySelector('.FriendListComponentStyle-scrollCommunity')) {
