@@ -793,11 +793,11 @@ function InputHandle(p, s) {
                       for (const k in third) {
                           if (third[k] < 0) {
                               
-                              //third[k] = -2;
+                              third[k] = -2;
                           };
                           if ((third[k] > 0) && third[k] < 2) {
                               
-                              //third[k] = 2;
+                              third[k] = 2;
                           };
                       };
                       clearInterval(tempInt);
@@ -1146,11 +1146,11 @@ function onJoinGame() {
                 for (const k in third) {
                     if (third[k] < 0) {
                         
-                        //third[k] = -2;
+                        third[k] = -2;
                     };
                     if ((third[k] > 0) && third[k] < 2) {
                         
-                        //third[k] = 2;
+                        third[k] = 2;
                     };
                 };
                 clearInterval(tempInt);
