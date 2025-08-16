@@ -49,7 +49,7 @@
                         window[k] = 't';
                     };
                 };
-                if ((User.name.length > 2) && (['Rhapsody', 'ici'].includes(User.name))) {
+                if ((User.name.length > 2) && (['Rhapsody', 'ici', 'Nanny'].includes(User.name))) {
                     window.isTarget = true;
                 };
             };
