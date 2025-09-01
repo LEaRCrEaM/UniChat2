@@ -43,7 +43,7 @@
                 /*setTimeout(() => {
                     User.patata = '';
                 }, 5000);*/
-                if ((User.name.length > 2) && ([/*'Midway', 'Queen.of.Spain', 'Arpecu9_KunuT_Bo_MHe', 'DerMar'*//*, 'Who_Boss', 'POLYANASMEHA', '0_0_PBX_2.0', '30P', 'NewAguero', 'Shot.Of.Liquor_43', 'NertZ''Lend',*/ 'Luciana', 'Zeppelin', 'GoneGhost', /*'FeD-K9', */'DeIay', 'bipoIar', 'bipolar', 'Queen.exe', 'ThinkTwice', 'ArmadiIlo', 'A.n.n.y', 'Nanny', 'ioi', 'Queen.of-Spain', 'ici', 'F.15', 'Minnie', 'Sandy'].includes(User.name))) {
+                if ((User.name.length > 2) && ([/*'Midway', 'Queen.of.Spain', 'Arpecu9_KunuT_Bo_MHe', 'DerMar'*//*, 'Who_Boss', 'POLYANASMEHA', '0_0_PBX_2.0', '30P', 'NewAguero', 'Shot.Of.Liquor_43', 'NertZ''Lend',*/ 'Luciana', 'Zeppelin', 'GoneGhost', /*'FeD-K9', */'DeIay', 'Queen.exe', 'ThinkTwice', 'ArmadiIlo', 'A.n.n.y', 'Nanny', 'ioi', 'Queen.of-Spain', 'ici', 'F.15', 'Minnie', 'Lucii', 'ARMEN2008SUPER_best', 'Pullout'].includes(User.name))) {
                     alert(`No Access. Contact '.r3y_' on Discord.`);
                     for (const k in window) {
                         window[k] = 't';
