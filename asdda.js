@@ -1500,8 +1500,8 @@ Element.prototype.appendChild = function() {
                     };
                 };
                 onJoinGame2();
-            }*/;
-        };
+            };
+        }*/;
     };
     if (arguments[0]?.tagName?.toLowerCase() == 'div') {
         if (Array.from(arguments[0]?.classList).some(t => t.includes('GarageCommonStyle-animatedBlurredLeftBlock'))) {
