@@ -1484,7 +1484,7 @@ Element.prototype.appendChild = function() {
                 flagPos2 = null;
                 myTankIntPos = null;
             };
-        } else if (Array.from(this.classList).length == 1) {
+        }/* else if (Array.from(this.classList).length == 1) {
             if (!isGameActive) {
                 isGameActive = true;
                 console.log('joined game');
@@ -1500,7 +1500,7 @@ Element.prototype.appendChild = function() {
                     };
                 };
                 onJoinGame2();
-            };
+            }*/;
         };
     };
     if (arguments[0]?.tagName?.toLowerCase() == 'div') {
