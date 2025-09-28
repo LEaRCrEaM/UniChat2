@@ -1214,7 +1214,7 @@ function getTanks(t) {
             var first1 = Object.values(searchInObject(Object.values(p).filter(t => t?.__proto__), '=== 15'))[0];
             var second1 = searchInObject(Object.values(first1).filter(t => t?.__proto__), '=== 17');
             var third1 = searchInObject(Object.values(Object.values(second1)[0])[0], '==8');
-            return typeof Object.values(searchInObject(Object.values(third1)[1], '==0'))[3] == 'boolean';
+            return typeof Object.values(searchInObject(Object.values(third1)[1], '==0'))[1] == 'boolean';
         });
     } else if (t.includes('player')) {
         return Object.values(Tanki.allTanks).filter(p => {
