@@ -1807,6 +1807,7 @@ function aa() {
                         body[k] = config.hacks.noClip.oSize[k];
                     };
                 };
+                body.scaled = false;
             };
         };
         if (submitToKingA && SodukoPos) {
