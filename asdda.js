@@ -1463,7 +1463,8 @@ var config = {
             amount: 2
         },
         noClip: {
-            enabled: false
+            enabled: false,
+            oSize: null
         },
         autoPress: []
     },
@@ -1789,10 +1790,24 @@ function aa() {
             if (body.scaled) return;
             for (const k in body) {
                 if (typeof body[k] == 'number') {
+                    if (!config.hacks.noClip.oSize[k]) config.hacks.noClip.oSize[k] = body[k];
                     body[k] = 0;
                 };
             };
             body.scaled = true;
+        };
+        if (!config.hacks.noClip.enabled && isGameActive) {
+            var body = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(myTank, '==16'))[0], '==3'))[0], '>43'))[0];
+            if (!body) return;
+            if (!body.scaled) {
+                return;
+            } else {
+                for (const k in body) {
+                    if (typeof body[k] == 'number') {
+                        body[k] = config.hacks.noClip.oSize[k];
+                    };
+                };
+            };
         };
         if (submitToKingA && SodukoPos) {
             var deltaX = SodukoPos.e1m_1 - myTankPos.e1m_1;
