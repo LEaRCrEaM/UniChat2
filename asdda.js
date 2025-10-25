@@ -1464,7 +1464,7 @@ var config = {
         },
         noClip: {
             enabled: false,
-            oSize: null
+            oSize: {}
         },
         autoPress: []
     },
@@ -1790,7 +1790,7 @@ function aa() {
             if (body.scaled) return;
             for (const k in body) {
                 if (typeof body[k] == 'number') {
-                    if (!config.hacks.noClip.oSize[k]) config.hacks.noClip.oSize[k] = body[k];
+                    if (!config.hacks.noClip.oSize?.[k]) config.hacks.noClip.oSize[k] = body[k];
                     body[k] = 0;
                 };
             };
