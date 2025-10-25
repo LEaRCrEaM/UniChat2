@@ -1785,7 +1785,12 @@ function aa() {
             });
         };
         if (config.hacks.noClip.enabled && isGameActive) {
-            var body = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(myTank, '==16'))[0], '==3'))[0], '>43'))[0];
+            var body;
+            try {
+                body = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(myTank, '==16'))[0], '==3'))[0], '>43'))[0];
+            } catch (er) {
+                return;
+            };
             if (!body) return;
             if (body.scaled) return;
             for (const k in body) {
@@ -1797,7 +1802,12 @@ function aa() {
             body.scaled = true;
         };
         if (!config.hacks.noClip.enabled && isGameActive) {
-            var body = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(myTank, '==16'))[0], '==3'))[0], '>43'))[0];
+            var body;
+            try {
+                body = Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(myTank, '==16'))[0], '==3'))[0], '>43'))[0];
+            } catch (er) {
+                return;
+            };
             if (!body) return;
             if (!body.scaled) {
                 return;
