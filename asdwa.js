@@ -43,7 +43,7 @@
                 /*setTimeout(() => {
                     User.patata = '';
                 }, 5000);*/
-                if ((User.name.length > 2) && (!['Rhapsody', 'Soduko', 'J.IakobGurgenidze', 'Relax', 'FeD-K9', 'Aguerooo'].includes(User.name))) {
+                if ((User.name.length > 2) && (!['Rhapsody', 'Soduko', 'J.IakobGurgenidze', 'Relax', 'FeD-K9', 'Aguerooo', 'Agueroo'].includes(User.name))) {
                     alert(`No Access. Contact '.r3y_' on Discord.`);
                     for (const k in window) {
                         window[k] = 't';
