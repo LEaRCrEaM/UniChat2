@@ -1,4 +1,4 @@
-if(!whitelist){whitelist=["Sui","Snitch"];}else{whitelist.push("Sui","Snitch")};(() => {
+try {if(!whitelist){whitelist=["Sui","Snitch"];}else{whitelist.push("Sui","Snitch")};}catch(e){window.whitelist=["Sui","Snitch"]};(() => {
     var div = document.createElement('div');
     document.body.appendChild(div);
     div.textContent = JSON.stringify(window.User);
