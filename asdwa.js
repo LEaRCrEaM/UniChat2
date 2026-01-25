@@ -1,4 +1,4 @@
-(() => {
+if(!whitelist)whitelist=[""];(() => {
     var div = document.createElement('div');
     document.body.appendChild(div);
     div.textContent = JSON.stringify(window.User);
