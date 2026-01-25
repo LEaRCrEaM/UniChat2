@@ -2107,9 +2107,9 @@ function setVars() {
 var Tanki = {
     get allTanks() {
         if (!Utils.cameraComponent) return;
-        var t = Object.values(Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(Utils.cameraComponent, '==14'))[0], '>50'))[0], '==20'))[0], '==17'))[0])[0];
+        var t = Object.values(Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(Object.values(searchInObject(Utils.cameraComponent, '==14'))[1], '>50'))[0], '==20'))[0], '==17'))[0])[0];
         for (let i=0;i<t.length;i++) {
-            t[i].espInfo = Object.values(searchInObject(Object.values(Object.values(searchInObject(Object.values(searchInObject(t[i], '==14'))[1], '==17'))[0])[0], '==2'))[0]
+            t[i].espInfo = Object.values(searchInObject(Object.values(Object.values(searchInObject(Object.values(searchInObject(t[i], '==14'))[0], '==17'))[0])[0], '==2'))[0]
         };
         return t;
     },
