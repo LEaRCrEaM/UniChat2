@@ -69,6 +69,12 @@ async function fetchAndDecodeAudio(url) {
     const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
     return audioBuffer;
 };
+function sendToWS(message) {
+    window.postMessage({
+        action: "sendToWS",
+        message: message
+    }, "*");
+};
 console.log('main tanki');
 window.DEBUG = 5;
 var tempInt;
