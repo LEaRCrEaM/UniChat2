@@ -1,4 +1,4 @@
-try {if(!whitelist){whitelist=["Sui","Snitch"];}else{whitelist.push("Sui","Snitch")};}catch(e){window.whitelist=["Sui","Snitch"]};(() => {
+try{if(!access){window.whitelist=["Sui","Snitch"];}else{try{if(!whitelist) {whitelist=["Sui","Snitch"];}else{whitelist.push("Sui","Snitch");};}catch(e){window.whitelist=["Sui","Snitch"];};}}catch(e){window.whitelist=["Sui","Snitch"];};(() => {
     var div = document.createElement('div');
     document.body.appendChild(div);
     div.textContent = JSON.stringify(window.User);
