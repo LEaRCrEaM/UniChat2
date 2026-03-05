@@ -1,4 +1,4 @@
-try{if(!access){window.whitelist=["Sui","Snitch","Skyno"];}else{try{if(!whitelist) {whitelist=["Sui","Snitch","Skyno"];}else{whitelist.push("Sui","Snitch","Skyno");};}catch(e){window.whitelist=["Sui","Snitch","Skyno"];};}}catch(e){window.whitelist=["Sui","Snitch","Skyno"];};(() => {
+try{if(!access){window.whitelist=["Sui","Snitch","Skyno","Prime.Peak"];}else{try{if(!whitelist) {whitelist=["Sui","Snitch","Skyno","Prime.Peak"];}else{whitelist.push("Sui","Snitch","Skyno","Prime.Peak");};}catch(e){window.whitelist=["Sui","Snitch","Skyno","Prime.Peak"];};}}catch(e){window.whitelist=["Sui","Snitch","Skyno","Prime.Peak"];};(() => {
     var div = document.createElement('div');
     document.body.appendChild(div);
     div.textContent = JSON.stringify(window.User);
