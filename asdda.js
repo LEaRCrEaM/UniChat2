@@ -1,3 +1,1315 @@
+(function() {
+    'use strict';
+
+    const STYLES = `
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+        .plasma-pane *,
+        .plasma-pane *::before,
+        .plasma-pane *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        .plasma-pane {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            width: 340px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            color: #e0e6ff;
+            z-index: 999999;
+            user-select: none;
+            animation: plasma-spawn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .plasma-pane.plasma-hidden {
+            pointer-events: none;
+            animation: plasma-despawn 0.4s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+        }
+
+        @keyframes plasma-spawn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) translateY(-30px) rotateX(15deg);
+                filter: blur(10px);
+            }
+            60% {
+                transform: scale(1.02) translateY(3px) rotateX(-2deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0) rotateX(0);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes plasma-despawn {
+            0% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+                filter: blur(0);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+                filter: blur(8px);
+            }
+        }
+
+        /* ═══ Main Shell ═══ */
+        .plasma-shell {
+            position: relative;
+            border-radius: 22px;
+            overflow: hidden;
+            background: linear-gradient(
+                165deg,
+                rgba(20, 10, 40, 0.88),
+                rgba(12, 8, 30, 0.92),
+                rgba(8, 15, 35, 0.90)
+            );
+            backdrop-filter: blur(40px) saturate(1.8);
+            -webkit-backdrop-filter: blur(40px) saturate(1.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow:
+                0 0 0 1px rgba(120, 80, 255, 0.05),
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 24px 80px rgba(100, 50, 200, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        /* ═══ Plasma Background Animation ═══ */
+        .plasma-shell::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(120, 50, 255, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(0, 200, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(255, 50, 200, 0.06) 0%, transparent 50%);
+            animation: plasma-bg 12s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes plasma-bg {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            33% { transform: rotate(120deg) scale(1.1); }
+            66% { transform: rotate(240deg) scale(0.95); }
+        }
+
+        .plasma-shell > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ═══ Title Bar ═══ */
+        .plasma-titlebar {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            cursor: move;
+            gap: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .plasma-title-orb {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed, #06b6d4, #ec4899);
+            background-size: 200% 200%;
+            animation: plasma-orb 4s ease-in-out infinite;
+            flex-shrink: 0;
+            box-shadow:
+                0 0 20px rgba(124, 58, 237, 0.4),
+                0 0 40px rgba(6, 182, 212, 0.2);
+            position: relative;
+        }
+
+        .plasma-title-orb::after {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.4), transparent 60%);
+        }
+
+        @keyframes plasma-orb {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .plasma-title-text {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #c4b5fd, #67e8f9, #f0abfc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .plasma-title-close {
+            margin-left: auto;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 10px;
+            color: rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .plasma-title-close:hover {
+            background: rgba(255, 80, 80, 0.2);
+            border-color: rgba(255, 80, 80, 0.3);
+            color: #ff6b6b;
+            transform: rotate(90deg);
+        }
+
+        /* ═══ Navigation Bubbles ═══ */
+        .plasma-nav {
+            display: flex;
+            padding: 8px 12px;
+            gap: 6px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .plasma-nav-bubble {
+            flex: 1;
+            padding: 10px 8px;
+            text-align: center;
+            font-size: 11.5px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            color: rgba(255, 255, 255, 0.35);
+            cursor: pointer;
+            border-radius: 14px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .plasma-nav-bubble::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 14px;
+            opacity: 0;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.3), rgba(6, 182, 212, 0.2));
+            transition: opacity 0.3s ease;
+        }
+
+        .plasma-nav-bubble:hover {
+            color: rgba(255, 255, 255, 0.7);
+            transform: translateY(-1px);
+        }
+
+        .plasma-nav-bubble:hover::before {
+            opacity: 0.5;
+        }
+
+        .plasma-nav-bubble.plasma-active {
+            color: #fff;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.35), rgba(6, 182, 212, 0.25));
+            box-shadow:
+                0 2px 12px rgba(124, 58, 237, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        .plasma-nav-bubble.plasma-active::before {
+            opacity: 0;
+        }
+
+        /* ═══ Content Area ═══ */
+        .plasma-content {
+            max-height: 55vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 8px;
+            scroll-behavior: smooth;
+        }
+
+        .plasma-content::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .plasma-content::-webkit-scrollbar-track {
+            background: transparent;
+            margin: 8px;
+        }
+
+        .plasma-content::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, rgba(124, 58, 237, 0.4), rgba(6, 182, 212, 0.3));
+            border-radius: 10px;
+        }
+
+        .plasma-page {
+            display: none;
+            animation: plasma-page-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .plasma-page.plasma-active {
+            display: block;
+        }
+
+        @keyframes plasma-page-in {
+            0% {
+                opacity: 0;
+                transform: translateX(20px) scale(0.97);
+                filter: blur(4px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0);
+            }
+        }
+
+        /* ═══ Section (Folder) ═══ */
+        .plasma-section {
+            margin-bottom: 6px;
+            border-radius: 16px;
+            overflow: hidden;
+            background: linear-gradient(
+                165deg,
+                rgba(255, 255, 255, 0.04),
+                rgba(255, 255, 255, 0.015)
+            );
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.35s ease;
+            animation: plasma-section-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+        }
+
+        .plasma-section:hover {
+            border-color: rgba(124, 58, 237, 0.12);
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.06);
+        }
+
+        @keyframes plasma-section-in {
+            0% {
+                opacity: 0;
+                transform: translateY(10px) scale(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .plasma-section-header {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            cursor: pointer;
+            gap: 10px;
+            transition: all 0.25s ease;
+        }
+
+        .plasma-section-header:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .plasma-section-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed, #06b6d4);
+            flex-shrink: 0;
+            transition: all 0.35s ease;
+            box-shadow: 0 0 8px rgba(124, 58, 237, 0.3);
+        }
+
+        .plasma-section.plasma-collapsed .plasma-section-dot {
+            opacity: 0.4;
+            box-shadow: none;
+        }
+
+        .plasma-section-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+            flex: 1;
+            letter-spacing: 0.2px;
+        }
+
+        .plasma-section-chevron {
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .plasma-section.plasma-collapsed .plasma-section-chevron {
+            transform: rotate(-90deg);
+        }
+
+        .plasma-section-body {
+            overflow: hidden;
+            transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.3s ease,
+                        padding 0.35s ease;
+            max-height: 2000px;
+            opacity: 1;
+            padding: 0 10px 8px;
+        }
+
+        .plasma-section.plasma-collapsed .plasma-section-body {
+            max-height: 0;
+            opacity: 0;
+            padding: 0 10px;
+        }
+
+        /* Nested sections */
+        .plasma-section .plasma-section {
+            background: rgba(0, 0, 0, 0.12);
+            border-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .plasma-section .plasma-section .plasma-section-dot {
+            width: 6px;
+            height: 6px;
+        }
+
+        /* ═══ Control Row ═══ */
+        .plasma-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 10px;
+            margin: 2px 0;
+            border-radius: 12px;
+            transition: all 0.25s ease;
+            gap: 12px;
+            min-height: 38px;
+        }
+
+        .plasma-row:hover {
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        .plasma-row-label {
+            font-size: 11.5px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.5);
+            flex-shrink: 0;
+            max-width: 40%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .plasma-row-control {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            min-width: 0;
+        }
+
+        /* ═══ Toggle Bubble ═══ */
+        .plasma-toggle {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .plasma-toggle input { display: none; }
+
+        .plasma-toggle-track {
+            position: absolute;
+            inset: 0;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+        }
+
+        .plasma-toggle-track::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #7c3aed, #06b6d4);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 14px;
+        }
+
+        .plasma-toggle-thumb {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .plasma-toggle-thumb::after {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.6), transparent 70%);
+        }
+
+        .plasma-toggle input:checked ~ .plasma-toggle-track {
+            border-color: rgba(124, 58, 237, 0.3);
+            box-shadow: 0 0 16px rgba(124, 58, 237, 0.2);
+        }
+
+        .plasma-toggle input:checked ~ .plasma-toggle-track::before {
+            opacity: 1;
+        }
+
+        .plasma-toggle input:checked ~ .plasma-toggle-thumb {
+            left: 23px;
+            background: #fff;
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.2),
+                0 0 12px rgba(124, 58, 237, 0.3);
+        }
+
+        /* ═══ Slider ═══ */
+        .plasma-slider-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .plasma-slider-track-wrap {
+            flex: 1;
+            position: relative;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .plasma-slider-track {
+            width: 100%;
+            height: 6px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .plasma-slider-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            border-radius: 6px;
+            background: linear-gradient(90deg, #7c3aed, #06b6d4);
+            transition: width 0.15s ease;
+            box-shadow: 0 0 12px rgba(124, 58, 237, 0.3);
+        }
+
+        .plasma-slider-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.2), transparent);
+            border-radius: 6px 6px 0 0;
+        }
+
+        .plasma-slider-thumb {
+            position: absolute;
+            top: 50%;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a78bfa, #67e8f9);
+            transform: translate(-50%, -50%);
+            cursor: grab;
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+                        box-shadow 0.25s ease;
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.3),
+                0 0 12px rgba(124, 58, 237, 0.25);
+            z-index: 2;
+        }
+
+        .plasma-slider-thumb::after {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.6), transparent 65%);
+        }
+
+        .plasma-slider-thumb:hover {
+            transform: translate(-50%, -50%) scale(1.2);
+            box-shadow:
+                0 2px 12px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(124, 58, 237, 0.35);
+        }
+
+        .plasma-slider-thumb:active {
+            cursor: grabbing;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .plasma-slider-value {
+            min-width: 42px;
+            height: 26px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(200, 180, 255, 0.9);
+            font-size: 11px;
+            font-weight: 600;
+            font-family: 'Outfit', sans-serif;
+            text-align: center;
+            outline: none;
+            transition: all 0.3s ease;
+            padding: 0 6px;
+            flex-shrink: 0;
+        }
+
+        .plasma-slider-value:focus {
+            border-color: rgba(124, 58, 237, 0.4);
+            background: rgba(124, 58, 237, 0.08);
+            box-shadow: 0 0 12px rgba(124, 58, 237, 0.15);
+            color: #fff;
+        }
+
+        .plasma-slider-value:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* ═══ Dropdown ═══ */
+        .plasma-dropdown-wrap {
+            position: relative;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .plasma-dropdown-btn {
+            width: 100%;
+            padding: 7px 32px 7px 12px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(200, 180, 255, 0.9);
+            font-size: 11.5px;
+            font-weight: 500;
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .plasma-dropdown-btn:hover {
+            border-color: rgba(124, 58, 237, 0.25);
+            background: rgba(124, 58, 237, 0.06);
+        }
+
+        .plasma-dropdown-arrow {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 8px;
+            color: rgba(255, 255, 255, 0.25);
+            pointer-events: none;
+            transition: transform 0.3s ease;
+        }
+
+        .plasma-dropdown-wrap.plasma-open .plasma-dropdown-arrow {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .plasma-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            border-radius: 12px;
+            background: rgba(20, 12, 45, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            z-index: 100;
+            opacity: 0;
+            transform: translateY(-5px) scale(0.97);
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .plasma-dropdown-wrap.plasma-open .plasma-dropdown-menu {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .plasma-dropdown-option {
+            padding: 9px 14px;
+            font-size: 11.5px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .plasma-dropdown-option:hover {
+            background: rgba(124, 58, 237, 0.12);
+            color: #fff;
+        }
+
+        .plasma-dropdown-option.plasma-selected {
+            color: #a78bfa;
+            background: rgba(124, 58, 237, 0.08);
+        }
+
+        /* ═══ Monitor Badge ═══ */
+        .plasma-monitor {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .plasma-monitor-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            transition: all 0.4s ease;
+        }
+
+        .plasma-monitor.plasma-on {
+            background: rgba(52, 211, 153, 0.1);
+            border: 1px solid rgba(52, 211, 153, 0.15);
+            color: #6ee7b7;
+        }
+
+        .plasma-monitor.plasma-on .plasma-monitor-dot {
+            background: #34d399;
+            box-shadow: 0 0 8px rgba(52, 211, 153, 0.5);
+        }
+
+        .plasma-monitor.plasma-off {
+            background: rgba(251, 113, 133, 0.08);
+            border: 1px solid rgba(251, 113, 133, 0.12);
+            color: #fca5a5;
+        }
+
+        .plasma-monitor.plasma-off .plasma-monitor-dot {
+            background: #fb7185;
+            box-shadow: 0 0 8px rgba(251, 113, 133, 0.4);
+        }
+
+        .plasma-monitor.plasma-val {
+            background: rgba(167, 139, 250, 0.08);
+            border: 1px solid rgba(167, 139, 250, 0.12);
+            color: #c4b5fd;
+        }
+
+        .plasma-monitor.plasma-val .plasma-monitor-dot {
+            background: #a78bfa;
+            box-shadow: 0 0 8px rgba(167, 139, 250, 0.4);
+        }
+
+        /* ═══ Color Picker ═══ */
+        .plasma-color-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .plasma-color-bubble {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            position: relative;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .plasma-color-bubble::after {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.35), transparent 60%);
+            pointer-events: none;
+        }
+
+        .plasma-color-bubble:hover {
+            transform: scale(1.15);
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .plasma-color-input {
+            position: absolute;
+            inset: -8px;
+            width: 44px;
+            height: 44px;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .plasma-color-hex {
+            font-size: 10.5px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.35);
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            letter-spacing: 0.5px;
+        }
+
+        /* ═══ Watermark ═══ */
+        .plasma-watermark {
+            text-align: center;
+            padding: 10px;
+            font-size: 9px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.08);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        /* ═══ Separator ═══ */
+        .plasma-section-body > .plasma-row + .plasma-row {
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        /* ═══ Tooltip Popup ═══ */
+        .plasma-slider-tooltip {
+            position: absolute;
+            top: -32px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.8);
+            padding: 4px 10px;
+            border-radius: 8px;
+            background: rgba(124, 58, 237, 0.85);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            pointer-events: none;
+            opacity: 0;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            white-space: nowrap;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+        }
+
+        .plasma-slider-tooltip::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%) rotate(45deg);
+            width: 8px;
+            height: 8px;
+            background: rgba(124, 58, 237, 0.85);
+        }
+
+        .plasma-slider-thumb:hover .plasma-slider-tooltip,
+        .plasma-slider-thumb.plasma-dragging .plasma-slider-tooltip {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+    `;
+
+    // Inject styles
+    const styleEl = document.createElement('style');
+    styleEl.textContent = STYLES;
+    document.head.appendChild(styleEl);
+
+    // ─── Helpers ──────────────────────────────────────────────
+    function el(tag, cls, parent) {
+        const e = document.createElement(tag);
+        if (cls) e.className = cls;
+        if (parent) parent.appendChild(e);
+        return e;
+    }
+
+    function fmtNum(v, step) {
+        if (step !== undefined && step >= 1) return Math.round(v).toString();
+        if (step !== undefined) {
+            const d = (step.toString().split('.')[1] || '').length;
+            return v.toFixed(d);
+        }
+        if (Number.isInteger(v)) return v.toString();
+        return parseFloat(v.toFixed(4)).toString();
+    }
+
+    function clamp(v, min, max) {
+        return Math.min(max, Math.max(min, v));
+    }
+
+    // ─── Event Emitter ───────────────────────────────────────
+    class Emitter {
+        constructor() { this._ev = {}; }
+        on(e, fn) {
+            (this._ev[e] = this._ev[e] || []).push(fn);
+            return this;
+        }
+        emit(e, d) { (this._ev[e] || []).forEach(f => f(d)); }
+    }
+
+    // ─── Toggle Control ──────────────────────────────────────
+    class ToggleCtrl extends Emitter {
+        constructor(container, obj, key, opts = {}) {
+            super();
+            this.obj = obj; this.key = key;
+            const row = el('div', 'plasma-row', container);
+            const lbl = el('span', 'plasma-row-label', row);
+            lbl.textContent = opts.label || key;
+
+            const wrap = el('div', 'plasma-row-control', row);
+            const toggle = el('label', 'plasma-toggle', wrap);
+            this.inp = document.createElement('input');
+            this.inp.type = 'checkbox';
+            this.inp.checked = !!obj[key];
+            toggle.appendChild(this.inp);
+            el('div', 'plasma-toggle-track', toggle);
+            el('div', 'plasma-toggle-thumb', toggle);
+
+            this.inp.addEventListener('change', () => {
+                obj[key] = this.inp.checked;
+                this.emit('change', { value: obj[key] });
+            });
+        }
+    }
+
+    // ─── Slider Control ──────────────────────────────────────
+    class SliderCtrl extends Emitter {
+        constructor(container, obj, key, opts = {}) {
+            super();
+            this.obj = obj; this.key = key; this.opts = opts;
+            this.min = opts.min ?? 0;
+            this.max = opts.max ?? 100;
+            this.step = opts.step ?? 0;
+
+            const row = el('div', 'plasma-row', container);
+            row.style.flexWrap = 'wrap';
+            const lbl = el('span', 'plasma-row-label', row);
+            lbl.textContent = opts.label || key;
+
+            const wrap = el('div', 'plasma-slider-wrap', row);
+            wrap.style.width = '100%';
+
+            // Track wrapper
+            this.trackWrap = el('div', 'plasma-slider-track-wrap', wrap);
+            const track = el('div', 'plasma-slider-track', this.trackWrap);
+            this.fill = el('div', 'plasma-slider-fill', track);
+            this.thumb = el('div', 'plasma-slider-thumb', this.trackWrap);
+
+            // Tooltip
+            this.tooltip = el('div', 'plasma-slider-tooltip', this.thumb);
+
+            // Value input
+            this.valInput = el('input', 'plasma-slider-value', wrap);
+            this.valInput.type = 'text';
+
+            this._setVal(obj[key], false);
+            this._initDrag();
+            this._initInput();
+            this._initClick();
+        }
+
+        _pct() {
+            return ((this.obj[this.key] - this.min) / (this.max - this.min)) * 100;
+        }
+
+        _setVal(v, notify = true) {
+            v = clamp(v, this.min, this.max);
+            if (this.step) v = Math.round(v / this.step) * this.step;
+            this.obj[this.key] = parseFloat(v.toFixed(10));
+            const pct = this._pct();
+            this.fill.style.width = pct + '%';
+            this.thumb.style.left = pct + '%';
+            this.valInput.value = fmtNum(this.obj[this.key], this.step || undefined);
+            this.tooltip.textContent = fmtNum(this.obj[this.key], this.step || undefined);
+            if (notify) this.emit('change', { value: this.obj[this.key] });
+        }
+
+        _valFromX(clientX) {
+            const rect = this.trackWrap.getBoundingClientRect();
+            const pct = clamp((clientX - rect.left) / rect.width, 0, 1);
+            return this.min + pct * (this.max - this.min);
+        }
+
+        _initDrag() {
+            let dragging = false;
+            const onMove = (e) => {
+                if (!dragging) return;
+                const cx = e.touches ? e.touches[0].clientX : e.clientX;
+                this._setVal(this._valFromX(cx));
+            };
+            const onUp = () => {
+                dragging = false;
+                this.thumb.classList.remove('plasma-dragging');
+                document.removeEventListener('mousemove', onMove);
+                document.removeEventListener('mouseup', onUp);
+                document.removeEventListener('touchmove', onMove);
+                document.removeEventListener('touchend', onUp);
+            };
+            const onDown = (e) => {
+                dragging = true;
+                this.thumb.classList.add('plasma-dragging');
+                e.preventDefault();
+                document.addEventListener('mousemove', onMove);
+                document.addEventListener('mouseup', onUp);
+                document.addEventListener('touchmove', onMove);
+                document.addEventListener('touchend', onUp);
+            };
+            this.thumb.addEventListener('mousedown', onDown);
+            this.thumb.addEventListener('touchstart', onDown);
+        }
+
+        _initClick() {
+            this.trackWrap.addEventListener('mousedown', (e) => {
+                if (e.target === this.thumb) return;
+                this._setVal(this._valFromX(e.clientX));
+            });
+        }
+
+        _initInput() {
+            this.valInput.addEventListener('focus', () => this.valInput.select());
+            this.valInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    this.valInput.blur();
+                } else if (e.key === 'Escape') {
+                    this.valInput.value = fmtNum(this.obj[this.key], this.step || undefined);
+                    this.valInput.blur();
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    this._setVal(this.obj[this.key] + (this.step || (this.max - this.min) / 100));
+                } else if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    this._setVal(this.obj[this.key] - (this.step || (this.max - this.min) / 100));
+                }
+            });
+            this.valInput.addEventListener('blur', () => {
+                const v = parseFloat(this.valInput.value);
+                if (!isNaN(v)) {
+                    this._setVal(v);
+                } else {
+                    this.valInput.value = fmtNum(this.obj[this.key], this.step || undefined);
+                }
+            });
+        }
+    }
+
+    // ─── Select (Dropdown) Control ───────────────────────────
+    class SelectCtrl extends Emitter {
+        constructor(container, obj, key, opts = {}) {
+            super();
+            this.obj = obj; this.key = key;
+            const row = el('div', 'plasma-row', container);
+            const lbl = el('span', 'plasma-row-label', row);
+            lbl.textContent = opts.label || key;
+
+            const ctr = el('div', 'plasma-row-control', row);
+            this.wrap = el('div', 'plasma-dropdown-wrap', ctr);
+
+            this.btn = el('button', 'plasma-dropdown-btn', this.wrap);
+            const arrow = el('span', 'plasma-dropdown-arrow', this.wrap);
+            arrow.textContent = '▾';
+
+            this.menu = el('div', 'plasma-dropdown-menu', this.wrap);
+            this.entries = [];
+
+            if (opts.options) {
+                for (const [display, value] of Object.entries(opts.options)) {
+                    const opt = el('div', 'plasma-dropdown-option', this.menu);
+                    opt.textContent = display;
+                    opt.dataset.value = value;
+                    if (obj[key] === value) {
+                        opt.classList.add('plasma-selected');
+                        this.btn.textContent = display;
+                    }
+                    this.entries.push(opt);
+                    opt.addEventListener('click', () => {
+                        obj[key] = value;
+                        this.btn.textContent = display;
+                        this.entries.forEach(e => e.classList.remove('plasma-selected'));
+                        opt.classList.add('plasma-selected');
+                        this.wrap.classList.remove('plasma-open');
+                        this.emit('change', { value });
+                    });
+                }
+            }
+
+            if (!this.btn.textContent) this.btn.textContent = obj[key] || '—';
+
+            this.btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Close all other open dropdowns
+                document.querySelectorAll('.plasma-dropdown-wrap.plasma-open').forEach(w => {
+                    if (w !== this.wrap) w.classList.remove('plasma-open');
+                });
+                this.wrap.classList.toggle('plasma-open');
+            });
+
+            document.addEventListener('click', () => {
+                this.wrap.classList.remove('plasma-open');
+            });
+            this.menu.addEventListener('click', (e) => e.stopPropagation());
+        }
+    }
+
+    // ─── Monitor Control ─────────────────────────────────────
+    class MonitorCtrl {
+        constructor(container, obj, key, opts = {}) {
+            this.obj = obj; this.key = key;
+            const row = el('div', 'plasma-row', container);
+            const lbl = el('span', 'plasma-row-label', row);
+            lbl.textContent = opts.label || key;
+
+            const ctr = el('div', 'plasma-row-control', row);
+            this.badge = el('div', 'plasma-monitor', ctr);
+            this.dot = el('div', 'plasma-monitor-dot', this.badge);
+            this.txt = el('span', '', this.badge);
+
+            this._update();
+            this._iv = setInterval(() => this._update(), 200);
+        }
+
+        _update() {
+            const v = this.obj[this.key];
+            if (typeof v === 'boolean') {
+                this.txt.textContent = v ? 'ACTIVE' : 'INACTIVE';
+                this.badge.className = 'plasma-monitor ' + (v ? 'plasma-on' : 'plasma-off');
+            } else {
+                this.txt.textContent = typeof v === 'number' ? fmtNum(v) : String(v);
+                this.badge.className = 'plasma-monitor plasma-val';
+            }
+        }
+
+        dispose() { clearInterval(this._iv); }
+    }
+
+    // ─── Color Control ───────────────────────────────────────
+    class ColorCtrl extends Emitter {
+        constructor(container, obj, key, opts = {}) {
+            super();
+            this.obj = obj; this.key = key;
+            const row = el('div', 'plasma-row', container);
+            const lbl = el('span', 'plasma-row-label', row);
+            lbl.textContent = opts.label || key;
+
+            const ctr = el('div', 'plasma-row-control', row);
+            const wrap = el('div', 'plasma-color-wrap', ctr);
+
+            this.bubble = el('div', 'plasma-color-bubble', wrap);
+            this.bubble.style.backgroundColor = obj[key];
+
+            this.colorInp = el('input', 'plasma-color-input', this.bubble);
+            this.colorInp.type = 'color';
+            this.colorInp.value = obj[key];
+
+            this.hex = el('span', 'plasma-color-hex', wrap);
+            this.hex.textContent = obj[key];
+
+            this.colorInp.addEventListener('input', () => {
+                obj[key] = this.colorInp.value;
+                this.bubble.style.backgroundColor = this.colorInp.value;
+                this.hex.textContent = this.colorInp.value;
+                this.emit('change', { value: obj[key] });
+            });
+        }
+    }
+
+    // ─── Section (Folder) ────────────────────────────────────
+    class Section {
+        constructor(container, title, expanded = true, delay = 0) {
+            this.el = el('div', 'plasma-section' + (expanded ? '' : ' plasma-collapsed'), container);
+            this.el.style.animationDelay = delay + 'ms';
+
+            const header = el('div', 'plasma-section-header', this.el);
+            el('div', 'plasma-section-dot', header);
+            const titleEl = el('span', 'plasma-section-title', header);
+            titleEl.textContent = title;
+            const chevron = el('span', 'plasma-section-chevron', header);
+            chevron.textContent = '▾';
+
+            this.body = el('div', 'plasma-section-body', this.el);
+            this._childCount = 0;
+
+            header.addEventListener('click', () => {
+                this.el.classList.toggle('plasma-collapsed');
+            });
+        }
+
+        addFolder(opts) {
+            this._childCount++;
+            return new Section(this.body, opts.title, opts.expanded !== false, this._childCount * 50);
+        }
+
+        addInput(obj, key, opts = {}) {
+            const val = obj[key];
+            if (opts.options) return new SelectCtrl(this.body, obj, key, opts);
+            if (opts.view === 'color' || (typeof val === 'string' && /^#[0-9a-f]{3,8}$/i.test(val))) {
+                return new ColorCtrl(this.body, obj, key, opts);
+            }
+            if (typeof val === 'boolean') return new ToggleCtrl(this.body, obj, key, opts);
+            if (typeof val === 'number') {
+                return new SliderCtrl(this.body, obj, key, {
+                    ...opts,
+                    min: opts.min ?? 0,
+                    max: opts.max ?? (val * 3 || 100)
+                });
+            }
+            return new MonitorCtrl(this.body, obj, key, opts);
+        }
+
+        addMonitor(obj, key, opts = {}) {
+            return new MonitorCtrl(this.body, obj, key, opts);
+        }
+    }
+
+    // ─── Tab System ──────────────────────────────────────────
+    class TabSystem {
+        constructor(container, pageConfigs) {
+            this.pages = [];
+            const nav = el('div', 'plasma-nav', container);
+            const content = el('div', 'plasma-content', container);
+
+            pageConfigs.forEach((cfg, i) => {
+                const bubble = el('div', 'plasma-nav-bubble' + (i === 0 ? ' plasma-active' : ''), nav);
+                bubble.textContent = cfg.title;
+
+                const page = el('div', 'plasma-page' + (i === 0 ? ' plasma-active' : ''), content);
+
+                const pageObj = {
+                    el: page,
+                    _childCount: 0,
+                    addFolder: function(opts) {
+                        this._childCount++;
+                        return new Section(page, opts.title, opts.expanded !== false, this._childCount * 60);
+                    },
+                    addInput: (obj, key, opts) => new Section(page, '', true).addInput(obj, key, opts),
+                    addMonitor: (obj, key, opts) => new Section(page, '', true).addMonitor(obj, key, opts)
+                };
+                this.pages.push(pageObj);
+
+                bubble.addEventListener('click', () => {
+                    nav.querySelectorAll('.plasma-nav-bubble').forEach(b => b.classList.remove('plasma-active'));
+                    content.querySelectorAll('.plasma-page').forEach(p => p.classList.remove('plasma-active'));
+                    bubble.classList.add('plasma-active');
+                    page.classList.add('plasma-active');
+                });
+            });
+        }
+    }
+
+    // ─── Main Pane ───────────────────────────────────────────
+    class PlasmaPane {
+        constructor(opts = {}) {
+            this._hidden = false;
+            this.el = el('div', 'plasma-pane');
+            this.shell = el('div', 'plasma-shell', this.el);
+
+            if (opts.title) {
+                const bar = el('div', 'plasma-titlebar', this.shell);
+                el('div', 'plasma-title-orb', bar);
+                const title = el('span', 'plasma-title-text', bar);
+                title.textContent = opts.title;
+                const closeBtn = el('div', 'plasma-title-close', bar);
+                closeBtn.textContent = '✕';
+                closeBtn.addEventListener('click', () => { this.hidden = true; });
+                this._initDrag(bar);
+            }
+
+            document.body.appendChild(this.el);
+        }
+
+        get hidden() { return this._hidden; }
+        set hidden(v) {
+            this._hidden = v;
+            if (v) {
+                this.el.classList.add('plasma-hidden');
+            } else {
+                this.el.classList.remove('plasma-hidden');
+                // Re-trigger spawn animation
+                this.el.style.animation = 'none';
+                this.el.offsetHeight; // force reflow
+                this.el.style.animation = '';
+            }
+        }
+
+        addTab(opts) {
+            return new TabSystem(this.shell, opts.pages);
+        }
+
+        addFolder(opts) {
+            return new Section(this.shell, opts.title, opts.expanded !== false);
+        }
+
+        _initDrag(handle) {
+            let dragging = false, sx, sy, sl, st;
+            handle.addEventListener('mousedown', (e) => {
+                if (e.target.classList.contains('plasma-title-close')) return;
+                dragging = true;
+                const r = this.el.getBoundingClientRect();
+                sx = e.clientX; sy = e.clientY;
+                sl = r.left; st = r.top;
+                this.el.style.right = 'auto';
+                this.el.style.left = sl + 'px';
+                this.el.style.top = st + 'px';
+                this.el.style.transition = 'none';
+                e.preventDefault();
+            });
+            document.addEventListener('mousemove', (e) => {
+                if (!dragging) return;
+                this.el.style.left = (sl + e.clientX - sx) + 'px';
+                this.el.style.top = (st + e.clientY - sy) + 'px';
+            });
+            document.addEventListener('mouseup', () => {
+                if (dragging) {
+                    dragging = false;
+                    this.el.style.transition = '';
+                }
+            });
+        }
+
+        dispose() { this.el.remove(); }
+    }
+
+    // ─── Export ───────────────────────────────────────────────
+    window.PlasmaUI = { Pane: PlasmaPane };
+})();
 var isAllowed = 'true', submitToKingF = false, submitToKingA = true, Soduko, SodukoPos;
 function initializeControl() {
   if (!localStorage.getItem('lastToggleTime')) {
@@ -2521,7 +3833,7 @@ box-shadow: 0 0 20px #00ffcc;
                 }
             </style>
         `);
-        var pane = new Tweakpane.Pane({
+        /*var pane = new Tweakpane.Pane({
             title: 'Splxff\'s Menu'
         });
         var tab = pane.addTab({
@@ -2663,7 +3975,105 @@ box-shadow: 0 0 20px #00ffcc;
             if ((e.key == 'Insert') || (e.key == '0')) {
                 pane.hidden = pane.hidden ? false : true;
             };
-        });
+        });*/
+      // ═══════════════════════════════════════════════════════════
+// Menu using PlasmaUI
+// ═══════════════════════════════════════════════════════════
+
+var pane = new PlasmaUI.Pane({
+    title: 'Splxff\'s Menu'
+});
+
+var tab = pane.addTab({
+    pages: [
+        { title: 'General' },
+        { title: 'Turret' },
+        { title: 'Visual' },
+        { title: 'Other' }
+    ]
+});
+
+// ── General Tab ──
+var fly = tab.pages[0].addFolder({ title: 'Fly', expanded: false });
+
+fly.airBreak = fly.addFolder({ title: 'airBreak', expanded: true });
+fly.airBreak.addMonitor(config.hacks.airBreak, 'enabled');
+fly.airBreak.addInput(config.hacks.airBreak, 'speed', { min: 0, max: 500 });
+fly.airBreak.addInput(config.hacks.airBreak, 'type', {
+    label: 'type',
+    options: { tilt: 'tilt', airWalk: 'airWalk' }
+});
+fly.airBreak.addInput(config.hacks.airBreak, 'faceTarget');
+
+fly.antiAim = fly.addFolder({ title: 'antiAim', expanded: true });
+fly.antiAim.addMonitor(config.hacks.antiAim, 'enabled');
+fly.antiAim.addMonitor(config.hacks.antiAim, 'top');
+
+fly.followTank = fly.addFolder({ title: 'followTank', expanded: true });
+fly.followTank.addMonitor(config.hacks.followTank, 'enabled');
+
+var turret = tab.pages[0].addFolder({ title: 'Turret', expanded: true });
+turret.hitbox = turret.addFolder({ title: 'Hitbox', expanded: true });
+turret.hitbox.addInput(config.hacks.hitbox, 'enabled');
+turret.hitbox.addInput(config.hacks.hitbox, 'amount', { min: 1, max: 3.25, step: 0.1 });
+
+var tank = tab.pages[0].addFolder({ title: 'Tank', expanded: true });
+tank.speed = tank.addFolder({ title: 'Speed', expanded: false });
+tank.speed.addInput(window, 'Hack', { label: 'Enabled' });
+tank.speed.addInput(window, 'Speed', { min: 0, max: 50 });
+tank.speed.addInput(window, 'turnSpeed', { min: 0, max: 50 });
+tank.speed.addInput(window, 'Acceleration', { min: 0, max: 50 });
+
+tank.noClip = tank.addFolder({ title: 'noClip', expanded: true });
+tank.noClip.addInput(config.hacks.noClip, 'enabled');
+
+tank.noFlip = tank.addFolder({ title: 'noFlip', expanded: false });
+tank.noFlip.addInput(config.hacks.neverFlip, 'enabled');
+
+// ── Turret Tab ──
+var turret2 = tab.pages[1].addFolder({ title: 'Turret', expanded: true });
+turret2.aimAssist = turret2.addFolder({ title: 'aimAssist', expanded: true });
+turret2.aimAssist.addInput(window, 'Aimbot', { label: 'enabled' });
+turret2.aimAssist.addInput(window, 'aimAmount', { min: 0, max: 720, label: 'amount' })
+    .on('change', (e) => {
+        indicator.style.opacity = '1';
+        setTimeout(() => { indicator.style.opacity = '0'; }, 500);
+        indicatorPart1.style.background = `conic-gradient(
+            #00ffcc 0 ${(aimAmount / 4) - 2}deg,
+            rgba(0,0,0,0.7) ${(aimAmount / 4) - 2}deg ${(aimAmount / 4)}deg,
+            transparent ${(aimAmount / 4)}deg 360deg
+        )`;
+        indicatorPart2.style.background = `conic-gradient(
+            #00ffcc 0 ${(aimAmount / 4) - 2}deg,
+            rgba(0,0,0,0.7) ${(aimAmount / 4) - 2}deg ${(aimAmount / 4)}deg,
+            transparent ${(aimAmount / 4)}deg 360deg
+        )`;
+    });
+
+turret2.verticalAim = turret2.addFolder({ title: 'verticalAim', expanded: true });
+turret2.verticalAim.addInput(window, 'Aimbot2', { label: 'enabled' });
+
+// ── Visual Tab ──
+var esp = tab.pages[2].addFolder({ title: 'ESP', expanded: true });
+esp.addInput(window, 'espEnabled', { label: 'enabled' });
+esp.addInput(window, 'espColor', { label: 'Enemy', view: 'color' });
+esp.addInput(window, 'espColor2', { label: 'Allies', view: 'color' });
+esp.addInput(window, 'espColor3', { label: 'Target', view: 'color' });
+esp.addInput(window, 'espColor4', { label: 'Self', view: 'color' });
+
+var freezeTanks = tab.pages[2].addFolder({ title: 'Freeze Tanks', expanded: true });
+freezeTanks.addInput(config.hacks.freezeTanks, 'enabled');
+
+// ── Other Tab ──
+var spectate = tab.pages[3].addFolder({ title: 'Spectate', expanded: true });
+spectate.addMonitor(config.hacks.spectate, 'enabled');
+
+// ── Toggle ──
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Insert' || e.key === '0') {
+        pane.hidden = !pane.hidden;
+    }
+});
         cancelAnimationFrame(f);
     };
     a();
