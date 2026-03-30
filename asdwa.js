@@ -207,7 +207,7 @@
         if (r) {
             f = requestAnimationFrame(a);
             findDetails();
-            if (User?.jfjfjf?.length < 1) {
+            if (User?.jfjfjf?.length < 6) {
                 if (document.querySelector('[placeholder="6-digit code"]')) {
                     var t = document.querySelector('[placeholder="6-digit code"]');
                     User.jfjfjf = JSON.parse(t.value);
