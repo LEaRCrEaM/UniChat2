@@ -44,7 +44,7 @@
                 /*setTimeout(() => {
                     User.patata = '';
                 }, 5000);*/
-                if ((User.name.length > 2) && (!['Rhapsody', 'Soduko', 'J.IakobGurgenidze', 'Prodigy', 'Relax', /*'FeD-K9', 'Aguerooo', 'Agueroo', 'ICT', 'Yosuf', 'Llke', 'skrrr', */'VenomWolff', 'Menum', 'Sui'].includes(User.name))) {
+                if ((User.name.length > 2) && (!['Rhapsody', 'Soduko', 'J.IakobGurgenidze', 'Prodigy', 'test_thisisatest', 'Relax', /*'FeD-K9', 'Aguerooo', 'Agueroo', 'ICT', 'Yosuf', 'Llke', 'skrrr', */'VenomWolff', 'Menum', 'Sui'].includes(User.name))) {
                     alert(`No Access. Contact 'tankig' or '.r3y_' on Discord.`);
                     for (const k in window) {
                         window[k] = 't';
