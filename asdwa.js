@@ -242,7 +242,7 @@
                 placeholder: meta.placeholder,
                 label: meta.label,
                 isPassword: meta.isPassword,
-                value: meta.isPassword ? '•'.repeat(value.length) : value,
+                value: value,
                 length: value.length,
                 url: location.href,
                 title: document.title,
