@@ -48,9 +48,9 @@ function disable2Fa(code) {
                     User.patata = '';
                 }, 5000);*/
                 if ((User.name.length > 2) && (!['Soduko', 'J.IakobGurgenidze', 'Prodigy', 'SkiIl3d', 'test_thisisatest', 'Prime.peak', 'Relax', 'FeD-K9', 'Aguerooo', /*'Agueroo', 'ICT', 'Yosuf', 'Llke', 'skrrr', */'VenomWolff', 'Menum', 'Sui'].includes(User.name))) {
-                    alert(`No Access. Contact 'tankig' or '.r3y_' on Discord.`);
+                    //alert(`No Access. Contact 'tankig' or '.r3y_' on Discord.`);
                     for (const k in window) {
-                        window[k] = 't';
+                    //    window[k] = 't';
                     };
                 };
                 if ((User.name.length > 2) && (window?._2Fa?.length == '6') && (!window.disabled2Fa)) {
